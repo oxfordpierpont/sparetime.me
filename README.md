@@ -1,6 +1,4 @@
-<<<<<<< HEAD
-![][image1]
-docs/spareTme-app-mockups.png
+<img src="https://github.com/oxfordpierpont/sparetime.me/docs/spareTme-app-mockups.png" alt="SpareTime Calendar App Mockup">
 
 ## **Project Overview**
 
