@@ -1,0 +1,172 @@
+<div id="onboarding-container" class="min-h-[800px] bg-neutral-50">
+  <!-- Header -->
+  <header id="header" class="bg-white border-b border-neutral-200 px-4 py-3">
+    <div class="flex items-center justify-between">
+      <button class="p-2">
+        <i class="fa-solid fa-arrow-left text-neutral-600"></i>
+      </button>
+      <div class="text-sm text-neutral-500">Step 1 of 3</div>
+    </div>
+  </header>
+
+  <!-- Welcome Screen -->
+  <main id="welcome-main" class="px-6 py-8">
+    <!-- Logo/Brand -->
+    <div class="text-center mb-8">
+      <div class="w-16 h-16 bg-neutral-400 rounded-lg mx-auto mb-4 flex items-center justify-center">
+        <span class="text-white text-xl">ST</span>
+      </div>
+      <h1 class="text-2xl text-neutral-800 mb-2">Welcome to SpareTime</h1>
+      <p class="text-neutral-600 text-base">Protect your personal time while staying responsive to others</p>
+    </div>
+
+    <!-- Feature Highlights -->
+    <div id="features-section" class="mb-12 space-y-6">
+      <div class="flex items-start space-x-4">
+        <div class="w-10 h-10 bg-neutral-300 rounded-full flex items-center justify-center flex-shrink-0">
+          <i class="fa-solid fa-calendar text-neutral-600"></i>
+        </div>
+        <div>
+          <h3 class="text-neutral-800 mb-1">Share Your Availability</h3>
+          <p class="text-neutral-600 text-sm">Create custom availability views for different audiences</p>
+        </div>
+      </div>
+
+      <div class="flex items-start space-x-4">
+        <div class="w-10 h-10 bg-neutral-300 rounded-full flex items-center justify-center flex-shrink-0">
+          <i class="fa-solid fa-shield text-neutral-600"></i>
+        </div>
+        <div>
+          <h3 class="text-neutral-800 mb-1">Protect Personal Time</h3>
+          <p class="text-neutral-600 text-sm">Set boundaries while appearing responsive</p>
+        </div>
+      </div>
+
+      <div class="flex items-start space-x-4">
+        <div class="w-10 h-10 bg-neutral-300 rounded-full flex items-center justify-center flex-shrink-0">
+          <i class="fa-solid fa-clock text-neutral-600"></i>
+        </div>
+        <div>
+          <h3 class="text-neutral-800 mb-1">Reduce Coordination</h3>
+          <p class="text-neutral-600 text-sm">Simplify scheduling conversations with clear availability</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA Buttons -->
+    <div id="cta-section" class="space-y-4">
+      <button class="w-full bg-neutral-800 text-white py-4 px-6 rounded-lg">
+        GET STARTED
+      </button>
+      
+      <div class="text-center">
+        <span class="text-neutral-500 text-sm">or</span>
+      </div>
+
+      <!-- OAuth Options -->
+      <button class="w-full border-2 border-neutral-200 bg-white py-4 px-6 rounded-lg text-neutral-800 flex items-center justify-center space-x-3">
+        <i class="fa-brands fa-google text-neutral-600"></i>
+        <span>CONTINUE WITH GOOGLE</span>
+      </button>
+
+      <button class="w-full border-2 border-neutral-200 bg-white py-4 px-6 rounded-lg text-neutral-800 flex items-center justify-center space-x-3">
+        <i class="fa-brands fa-apple text-neutral-600"></i>
+        <span>CONTINUE WITH APPLE</span>
+      </button>
+
+      <div class="text-center pt-4">
+        <p class="text-neutral-500 text-sm">
+          Already have an account? 
+          <button class="text-neutral-800 underline">Sign In</button>
+        </p>
+      </div>
+    </div>
+  </main>
+
+  <!-- Sign Up Form (Hidden initially) -->
+  <div id="signup-form" class="hidden px-6 py-8">
+    <div class="mb-6">
+      <h2 class="text-xl text-neutral-800 mb-2">Create Your Account</h2>
+      <p class="text-neutral-600 text-sm">Join SpareTime to start managing your availability</p>
+    </div>
+
+    <form class="space-y-4">
+      <div>
+        <label class="block text-sm text-neutral-700 mb-2">Full Name</label>
+        <input type="text" class="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-neutral-400" placeholder="Enter your full name">
+      </div>
+
+      <div>
+        <label class="block text-sm text-neutral-700 mb-2">Email Address</label>
+        <input type="email" class="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-neutral-400" placeholder="Enter your email">
+      </div>
+
+      <div>
+        <label class="block text-sm text-neutral-700 mb-2">Password</label>
+        <input type="password" class="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-neutral-400" placeholder="Create a password">
+      </div>
+
+      <div class="flex items-start space-x-3 pt-2">
+        <input type="checkbox" class="mt-1" id="terms">
+        <label for="terms" class="text-sm text-neutral-600">
+          I agree to the <button class="text-neutral-800 underline">Terms of Service</button> and <button class="text-neutral-800 underline">Privacy Policy</button>
+        </label>
+      </div>
+
+      <button type="submit" class="w-full bg-neutral-800 text-white py-4 px-6 rounded-lg mt-6">
+        CREATE ACCOUNT
+      </button>
+    </form>
+  </div>
+
+  <!-- Calendar Connection (Hidden initially) -->
+  <div id="calendar-connection" class="hidden px-6 py-8">
+    <div class="mb-8">
+      <h2 class="text-xl text-neutral-800 mb-2">Connect Your Calendar</h2>
+      <p class="text-neutral-600 text-sm">Connect your calendar to automatically show your availability</p>
+    </div>
+
+    <div class="space-y-4 mb-8">
+      <button class="w-full border-2 border-neutral-200 bg-white py-4 px-6 rounded-lg flex items-center justify-between hover:border-neutral-400">
+        <div class="flex items-center space-x-3">
+          <i class="fa-brands fa-google text-neutral-600"></i>
+          <span class="text-neutral-800">Google Calendar</span>
+        </div>
+        <i class="fa-solid fa-chevron-right text-neutral-400"></i>
+      </button>
+
+      <button class="w-full border-2 border-neutral-200 bg-white py-4 px-6 rounded-lg flex items-center justify-between hover:border-neutral-400">
+        <div class="flex items-center space-x-3">
+          <i class="fa-brands fa-apple text-neutral-800"></i>
+          <span class="text-neutral-800">Apple Calendar</span>
+        </div>
+        <i class="fa-solid fa-chevron-right text-neutral-400"></i>
+      </button>
+
+      <button class="w-full border-2 border-neutral-200 bg-white py-4 px-6 rounded-lg flex items-center justify-between hover:border-neutral-400">
+        <div class="flex items-center space-x-3">
+          <i class="fa-solid fa-calendar text-neutral-700"></i>
+          <span class="text-neutral-800">Outlook Calendar</span>
+        </div>
+        <i class="fa-solid fa-chevron-right text-neutral-400"></i>
+      </button>
+    </div>
+
+    <div class="text-center mb-6">
+      <button class="text-neutral-600 text-sm underline">Skip for now</button>
+    </div>
+
+    <button class="w-full bg-neutral-800 text-white py-4 px-6 rounded-lg">
+      CONTINUE
+    </button>
+  </div>
+
+  <!-- Progress Indicator -->
+  <div id="progress-bar" class="fixed bottom-0 left-0 right-0 bg-white border-t border-neutral-200 p-4">
+    <div class="flex space-x-2">
+      <div class="flex-1 h-2 bg-neutral-800 rounded"></div>
+      <div class="flex-1 h-2 bg-neutral-200 rounded"></div>
+      <div class="flex-1 h-2 bg-neutral-200 rounded"></div>
+    </div>
+  </div>
+</div>

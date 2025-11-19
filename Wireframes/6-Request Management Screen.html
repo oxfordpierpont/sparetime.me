@@ -1,0 +1,210 @@
+<div id="main" class="bg-neutral-50">
+  <!-- Header -->
+  <header id="header" class="bg-white border-b border-neutral-200 px-4 py-3">
+    <div class="flex items-center justify-between">
+      <button class="flex items-center text-neutral-600">
+        <i class="fa-solid fa-arrow-left mr-2"></i>
+      </button>
+      <h1 class="text-lg text-neutral-900">Requests</h1>
+      <button class="w-6 h-6 bg-neutral-600 rounded-full flex items-center justify-center">
+        <i class="fa-solid fa-filter text-white text-xs"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Filter Tabs -->
+  <section id="filter-tabs" class="bg-white px-4 py-3 border-b border-neutral-200">
+    <div class="flex space-x-1">
+      <button class="px-4 py-2 bg-neutral-600 text-white rounded-lg text-sm">All</button>
+      <button class="px-4 py-2 text-neutral-600 text-sm">Pending</button>
+      <button class="px-4 py-2 text-neutral-600 text-sm">Approved</button>
+      <button class="px-4 py-2 text-neutral-600 text-sm">Declined</button>
+    </div>
+  </section>
+
+  <!-- Request Count -->
+  <section id="request-count" class="px-4 py-3">
+    <div class="flex items-center justify-between">
+      <span class="text-sm text-neutral-600">12 requests</span>
+      <div class="flex items-center space-x-2">
+        <span class="w-2 h-2 bg-neutral-500 rounded-full"></span>
+        <span class="text-sm text-neutral-600">3 urgent</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Requests List -->
+  <section id="requests-list" class="px-4 pb-20">
+    <!-- Urgent Request -->
+    <div class="bg-white rounded-lg border border-neutral-200 mb-4 p-4">
+      <div class="flex items-start justify-between mb-3">
+        <div class="flex items-center space-x-3">
+          <img src="https://api.dicebear.com/7.x/notionists/svg?scale=200&seed=1234" alt="Avatar" class="w-10 h-10 rounded-full">
+          <div>
+            <h3 class="text-neutral-900 text-sm">Sarah Johnson</h3>
+            <p class="text-neutral-600 text-xs">sarah.j@company.com</p>
+          </div>
+        </div>
+        <div class="flex items-center space-x-2">
+          <span class="bg-neutral-100 text-neutral-700 px-2 py-1 rounded text-xs">Urgent</span>
+          <span class="bg-neutral-100 text-neutral-700 px-2 py-1 rounded text-xs">Pending</span>
+        </div>
+      </div>
+      
+      <div class="mb-3">
+        <p class="text-neutral-900 text-sm mb-1">Project Planning Meeting</p>
+        <p class="text-neutral-600 text-xs mb-2">Need 1 hour to discuss Q1 roadmap priorities</p>
+        <div class="flex items-center text-xs text-neutral-500">
+          <i class="fa-solid fa-calendar mr-1"></i>
+          <span>Requested for: Jan 15-17, 2025</span>
+        </div>
+      </div>
+
+      <div class="flex space-x-2">
+        <button class="flex-1 bg-neutral-600 text-white py-2 px-3 rounded-lg text-sm">
+          <i class="fa-solid fa-check mr-1"></i>
+          Approve
+        </button>
+        <button class="flex-1 border border-neutral-300 text-neutral-700 py-2 px-3 rounded-lg text-sm">
+          <i class="fa-solid fa-times mr-1"></i>
+          Decline
+        </button>
+        <button class="w-10 h-8 border border-neutral-300 rounded-lg flex items-center justify-center">
+          <i class="fa-solid fa-chevron-right text-neutral-500 text-xs"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Regular Request -->
+    <div class="bg-white rounded-lg border border-neutral-200 mb-4 p-4">
+      <div class="flex items-start justify-between mb-3">
+        <div class="flex items-center space-x-3">
+          <img src="https://api.dicebear.com/7.x/notionists/svg?scale=200&seed=5678" alt="Avatar" class="w-10 h-10 rounded-full">
+          <div>
+            <h3 class="text-neutral-900 text-sm">Mike Chen</h3>
+            <p class="text-neutral-600 text-xs">mike.chen@partner.com</p>
+          </div>
+        </div>
+        <span class="bg-neutral-100 text-neutral-700 px-2 py-1 rounded text-xs">Pending</span>
+      </div>
+      
+      <div class="mb-3">
+        <p class="text-neutral-900 text-sm mb-1">Coffee Chat</p>
+        <p class="text-neutral-600 text-xs mb-2">Catch up and discuss potential collaboration</p>
+        <div class="flex items-center text-xs text-neutral-500">
+          <i class="fa-solid fa-calendar mr-1"></i>
+          <span>Requested for: Jan 20-22, 2025</span>
+        </div>
+      </div>
+
+      <div class="flex space-x-2">
+        <button class="flex-1 bg-neutral-600 text-white py-2 px-3 rounded-lg text-sm">
+          <i class="fa-solid fa-check mr-1"></i>
+          Approve
+        </button>
+        <button class="flex-1 border border-neutral-300 text-neutral-700 py-2 px-3 rounded-lg text-sm">
+          <i class="fa-solid fa-times mr-1"></i>
+          Decline
+        </button>
+        <button class="w-10 h-8 border border-neutral-300 rounded-lg flex items-center justify-center">
+          <i class="fa-solid fa-chevron-right text-neutral-500 text-xs"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Approved Request -->
+    <div class="bg-white rounded-lg border border-neutral-200 mb-4 p-4 opacity-75">
+      <div class="flex items-start justify-between mb-3">
+        <div class="flex items-center space-x-3">
+          <img src="https://api.dicebear.com/7.x/notionists/svg?scale=200&seed=9101" alt="Avatar" class="w-10 h-10 rounded-full">
+          <div>
+            <h3 class="text-neutral-900 text-sm">Emma Davis</h3>
+            <p class="text-neutral-600 text-xs">emma.d@startup.io</p>
+          </div>
+        </div>
+        <span class="bg-neutral-100 text-neutral-700 px-2 py-1 rounded text-xs">Approved</span>
+      </div>
+      
+      <div class="mb-3">
+        <p class="text-neutral-900 text-sm mb-1">Design Review</p>
+        <p class="text-neutral-600 text-xs mb-2">Review new app mockups and provide feedback</p>
+        <div class="flex items-center text-xs text-neutral-500 mb-2">
+          <i class="fa-solid fa-calendar mr-1"></i>
+          <span>Scheduled: Jan 14, 2025 at 2:00 PM</span>
+        </div>
+        <div class="flex items-center text-xs text-neutral-600">
+          <i class="fa-solid fa-check-circle mr-1"></i>
+          <span>Calendar event created</span>
+        </div>
+      </div>
+
+      <button class="w-full border border-neutral-300 text-neutral-700 py-2 px-3 rounded-lg text-sm">
+        <i class="fa-solid fa-eye mr-1"></i>
+        View Details
+      </button>
+    </div>
+
+    <!-- Declined Request -->
+    <div class="bg-white rounded-lg border border-neutral-200 mb-4 p-4 opacity-75">
+      <div class="flex items-start justify-between mb-3">
+        <div class="flex items-center space-x-3">
+          <img src="https://api.dicebear.com/7.x/notionists/svg?scale=200&seed=1122" alt="Avatar" class="w-10 h-10 rounded-full">
+          <div>
+            <h3 class="text-neutral-900 text-sm">Alex Rodriguez</h3>
+            <p class="text-neutral-600 text-xs">alex.r@agency.com</p>
+          </div>
+        </div>
+        <span class="bg-neutral-100 text-neutral-700 px-2 py-1 rounded text-xs">Declined</span>
+      </div>
+      
+      <div class="mb-3">
+        <p class="text-neutral-900 text-sm mb-1">Strategy Session</p>
+        <p class="text-neutral-600 text-xs mb-2">Discuss marketing approach for new product</p>
+        <div class="flex items-center text-xs text-neutral-500 mb-2">
+          <i class="fa-solid fa-calendar mr-1"></i>
+          <span>Requested for: Jan 10-12, 2025</span>
+        </div>
+        <div class="flex items-center text-xs text-neutral-600">
+          <i class="fa-solid fa-times-circle mr-1"></i>
+          <span>Declined - Schedule conflict</span>
+        </div>
+      </div>
+
+      <button class="w-full border border-neutral-300 text-neutral-700 py-2 px-3 rounded-lg text-sm">
+        <i class="fa-solid fa-eye mr-1"></i>
+        View Details
+      </button>
+    </div>
+
+    <!-- Load More -->
+    <div class="text-center py-4">
+      <button class="text-neutral-600 text-sm underline">Load more requests</button>
+    </div>
+  </section>
+
+  <!-- Bottom Navigation -->
+  <nav id="bottom-nav" class="fixed bottom-0 left-0 right-0 bg-white border-t border-neutral-200">
+    <div class="flex">
+      <button class="flex-1 py-3 text-center">
+        <i class="fa-solid fa-home text-neutral-400 text-lg mb-1 block"></i>
+        <span class="text-xs text-neutral-400">Dashboard</span>
+      </button>
+      <button class="flex-1 py-3 text-center">
+        <i class="fa-solid fa-link text-neutral-400 text-lg mb-1 block"></i>
+        <span class="text-xs text-neutral-400">Links</span>
+      </button>
+      <button class="flex-1 py-3 text-center">
+        <i class="fa-solid fa-calendar text-neutral-400 text-lg mb-1 block"></i>
+        <span class="text-xs text-neutral-400">Calendar</span>
+      </button>
+      <button class="flex-1 py-3 text-center">
+        <i class="fa-solid fa-inbox text-neutral-600 text-lg mb-1 block"></i>
+        <span class="text-xs text-neutral-600">Requests</span>
+      </button>
+      <button class="flex-1 py-3 text-center">
+        <i class="fa-solid fa-user text-neutral-400 text-lg mb-1 block"></i>
+        <span class="text-xs text-neutral-400">Profile</span>
+      </button>
+    </div>
+  </nav>
+</div>

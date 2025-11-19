@@ -1,0 +1,226 @@
+<div id="calendar-main" class="h-[800px] bg-white">
+  <!-- Header -->
+  <header id="header" class="flex items-center justify-between p-4 bg-white border-b border-neutral-200">
+    <button class="text-neutral-500">
+      <i class="fa-solid fa-bars text-xl"></i>
+    </button>
+    <div class="text-lg text-neutral-900">Calendar</div>
+    <div class="flex items-center space-x-3">
+      <button class="text-neutral-500">
+        <i class="fa-solid fa-bell text-xl"></i>
+      </button>
+      <button class="text-neutral-500">
+        <i class="fa-solid fa-user-circle text-xl"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Calendar Controls -->
+  <div class="px-4 py-3 bg-white border-b border-neutral-200">
+    <div class="flex items-center justify-between mb-3">
+      <div class="flex items-center space-x-3">
+        <button class="text-neutral-500">
+          <i class="fa-solid fa-chevron-left"></i>
+        </button>
+        <h2 class="text-lg text-neutral-900">January 2025</h2>
+        <button class="text-neutral-500">
+          <i class="fa-solid fa-chevron-right"></i>
+        </button>
+      </div>
+      <button class="text-neutral-600 text-sm">Today</button>
+    </div>
+    
+    <!-- View Toggle -->
+    <div class="flex bg-neutral-100 rounded-lg p-1">
+      <button class="flex-1 py-2 text-sm text-neutral-900 bg-white rounded-md">Day</button>
+      <button class="flex-1 py-2 text-sm text-neutral-500">Week</button>
+      <button class="flex-1 py-2 text-sm text-neutral-500">Month</button>
+    </div>
+  </div>
+
+  <!-- Calendar Content -->
+  <div class="flex-1 overflow-y-auto">
+    <!-- Date Header -->
+    <div class="px-4 py-3 bg-neutral-50 border-b border-neutral-200">
+      <div class="text-center">
+        <div class="text-2xl text-neutral-900">15</div>
+        <div class="text-sm text-neutral-600">Wednesday</div>
+      </div>
+    </div>
+
+    <!-- Time Slots -->
+    <div class="px-4">
+      <!-- Morning -->
+      <div class="border-b border-neutral-100 py-3">
+        <div class="flex items-center">
+          <div class="w-16 text-sm text-neutral-500">9:00 AM</div>
+          <div class="flex-1 ml-4">
+            <div class="bg-neutral-100 border-l-4 border-neutral-500 rounded-r-lg p-3">
+              <div class="flex items-center justify-between">
+                <div>
+                  <div class="text-sm text-neutral-900">Available</div>
+                  <div class="text-xs text-neutral-600">Open for meetings</div>
+                </div>
+                <div class="w-2 h-2 bg-neutral-500 rounded-full"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="border-b border-neutral-100 py-3">
+        <div class="flex items-center">
+          <div class="w-16 text-sm text-neutral-500">10:00 AM</div>
+          <div class="flex-1 ml-4">
+            <div class="bg-neutral-100 border-l-4 border-neutral-500 rounded-r-lg p-3">
+              <div class="flex items-center justify-between">
+                <div>
+                  <div class="text-sm text-neutral-900">Team Meeting</div>
+                  <div class="text-xs text-neutral-600">Conference Room A</div>
+                </div>
+                <div class="w-2 h-2 bg-neutral-500 rounded-full"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="border-b border-neutral-100 py-3">
+        <div class="flex items-center">
+          <div class="w-16 text-sm text-neutral-500">11:00 AM</div>
+          <div class="flex-1 ml-4">
+            <div class="bg-neutral-100 border-l-4 border-neutral-500 rounded-r-lg p-3">
+              <div class="flex items-center justify-between">
+                <div>
+                  <div class="text-sm text-neutral-900">Negotiable</div>
+                  <div class="text-xs text-neutral-600">Can reschedule if needed</div>
+                </div>
+                <div class="w-2 h-2 bg-neutral-500 rounded-full"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lunch -->
+      <div class="border-b border-neutral-100 py-3">
+        <div class="flex items-center">
+          <div class="w-16 text-sm text-neutral-500">12:00 PM</div>
+          <div class="flex-1 ml-4">
+            <div class="bg-neutral-100 border-l-4 border-neutral-400 rounded-r-lg p-3">
+              <div class="flex items-center justify-between">
+                <div>
+                  <div class="text-sm text-neutral-900">Protected Time</div>
+                  <div class="text-xs text-neutral-600">Lunch break</div>
+                </div>
+                <i class="fa-solid fa-shield-halved text-neutral-500"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Afternoon -->
+      <div class="border-b border-neutral-100 py-3">
+        <div class="flex items-center">
+          <div class="w-16 text-sm text-neutral-500">1:00 PM</div>
+          <div class="flex-1 ml-4">
+            <div class="bg-neutral-100 border-l-4 border-neutral-500 rounded-r-lg p-3">
+              <div class="flex items-center justify-between">
+                <div>
+                  <div class="text-sm text-neutral-900">Available</div>
+                  <div class="text-xs text-neutral-600">Open for meetings</div>
+                </div>
+                <div class="w-2 h-2 bg-neutral-500 rounded-full"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="border-b border-neutral-100 py-3">
+        <div class="flex items-center">
+          <div class="w-16 text-sm text-neutral-500">2:00 PM</div>
+          <div class="flex-1 ml-4">
+            <div class="bg-neutral-100 border-l-4 border-neutral-500 rounded-r-lg p-3">
+              <div class="flex items-center justify-between">
+                <div>
+                  <div class="text-sm text-neutral-900">Client Call</div>
+                  <div class="text-xs text-neutral-600">Project review</div>
+                </div>
+                <div class="w-2 h-2 bg-neutral-500 rounded-full"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="border-b border-neutral-100 py-3">
+        <div class="flex items-center">
+          <div class="w-16 text-sm text-neutral-500">3:00 PM</div>
+          <div class="flex-1 ml-4">
+            <div class="bg-neutral-100 border-l-4 border-neutral-500 rounded-r-lg p-3">
+              <div class="flex items-center justify-between">
+                <div>
+                  <div class="text-sm text-neutral-900">Available</div>
+                  <div class="text-xs text-neutral-600">Open for meetings</div>
+                </div>
+                <div class="w-2 h-2 bg-neutral-500 rounded-full"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="border-b border-neutral-100 py-3">
+        <div class="flex items-center">
+          <div class="w-16 text-sm text-neutral-500">4:00 PM</div>
+          <div class="flex-1 ml-4">
+            <div class="bg-neutral-100 border-l-4 border-neutral-400 rounded-r-lg p-3">
+              <div class="flex items-center justify-between">
+                <div>
+                  <div class="text-sm text-neutral-900">Focus Time</div>
+                  <div class="text-xs text-neutral-600">Deep work block</div>
+                </div>
+                <i class="fa-solid fa-shield-halved text-neutral-500"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="py-8"></div>
+    </div>
+  </div>
+
+  <!-- Floating Add Button -->
+  <button class="fixed bottom-20 right-4 w-14 h-14 bg-neutral-600 text-white rounded-full shadow-lg flex items-center justify-center">
+    <i class="fa-solid fa-plus text-xl"></i>
+  </button>
+
+  <!-- Bottom Navigation -->
+  <nav id="bottom-nav" class="fixed bottom-0 left-0 right-0 bg-white border-t border-neutral-200">
+    <div class="flex">
+      <button class="flex-1 py-3 flex flex-col items-center text-neutral-500">
+        <i class="fa-solid fa-home text-lg mb-1"></i>
+        <span class="text-xs">Dashboard</span>
+      </button>
+      <button class="flex-1 py-3 flex flex-col items-center text-neutral-500">
+        <i class="fa-solid fa-link text-lg mb-1"></i>
+        <span class="text-xs">Links</span>
+      </button>
+      <button class="flex-1 py-3 flex flex-col items-center text-neutral-900">
+        <i class="fa-solid fa-calendar-days text-lg mb-1"></i>
+        <span class="text-xs">Calendar</span>
+      </button>
+      <button class="flex-1 py-3 flex flex-col items-center text-neutral-500">
+        <i class="fa-solid fa-clock text-lg mb-1"></i>
+        <span class="text-xs">Requests</span>
+      </button>
+      <button class="flex-1 py-3 flex flex-col items-center text-neutral-500">
+        <i class="fa-solid fa-user text-lg mb-1"></i>
+        <span class="text-xs">Profile</span>
+      </button>
+    </div>
+  </nav>
+</div>

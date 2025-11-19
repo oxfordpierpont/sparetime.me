@@ -1,0 +1,259 @@
+<div id="calendar-container" class="min-h-[800px] bg-neutral-50">
+  <!-- Header -->
+  <header id="header" class="bg-white border-b border-neutral-200 px-4 py-3">
+    <div class="flex items-center justify-between">
+      <button class="p-2">
+        <i class="fa-solid fa-arrow-left text-neutral-600"></i>
+      </button>
+      <h1 class="text-lg text-neutral-800">Calendar</h1>
+      <div class="flex items-center space-x-2">
+        <button class="p-2">
+          <i class="fa-solid fa-bell text-neutral-600"></i>
+        </button>
+        <button class="p-2">
+          <i class="fa-solid fa-plus text-neutral-600"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Calendar View Controls -->
+  <div id="calendar-controls" class="bg-white px-4 py-3 border-b border-neutral-200">
+    <div class="flex items-center justify-between mb-3">
+      <div class="flex items-center space-x-3">
+        <button class="p-2">
+          <i class="fa-solid fa-chevron-left text-neutral-600"></i>
+        </button>
+        <h2 class="text-lg text-neutral-800">January 2025</h2>
+        <button class="p-2">
+          <i class="fa-solid fa-chevron-right text-neutral-600"></i>
+        </button>
+      </div>
+      <button class="text-neutral-600 text-sm">Today</button>
+    </div>
+    
+    <!-- View Toggle -->
+    <div class="flex bg-neutral-100 rounded-lg p-1">
+      <button class="flex-1 py-2 px-3 text-sm text-neutral-600 rounded-md">Day</button>
+      <button class="flex-1 py-2 px-3 text-sm bg-white text-neutral-800 rounded-md shadow-sm">Week</button>
+      <button class="flex-1 py-2 px-3 text-sm text-neutral-600 rounded-md">Month</button>
+    </div>
+  </div>
+
+  <!-- Calendar Main Content -->
+  <main id="calendar-main" class="flex-1 bg-white">
+    <!-- Week Header -->
+    <div id="week-header" class="grid grid-cols-7 border-b border-neutral-200">
+      <div class="p-3 text-center">
+        <div class="text-xs text-neutral-500 mb-1">SUN</div>
+        <div class="text-sm text-neutral-400">19</div>
+      </div>
+      <div class="p-3 text-center">
+        <div class="text-xs text-neutral-500 mb-1">MON</div>
+        <div class="text-sm text-neutral-800">20</div>
+      </div>
+      <div class="p-3 text-center">
+        <div class="text-xs text-neutral-500 mb-1">TUE</div>
+        <div class="text-sm text-neutral-800">21</div>
+      </div>
+      <div class="p-3 text-center border-l-2 border-neutral-800">
+        <div class="text-xs text-neutral-500 mb-1">WED</div>
+        <div class="text-sm text-neutral-800 bg-neutral-800 text-white w-6 h-6 rounded-full flex items-center justify-center mx-auto">22</div>
+      </div>
+      <div class="p-3 text-center">
+        <div class="text-xs text-neutral-500 mb-1">THU</div>
+        <div class="text-sm text-neutral-800">23</div>
+      </div>
+      <div class="p-3 text-center">
+        <div class="text-xs text-neutral-500 mb-1">FRI</div>
+        <div class="text-sm text-neutral-800">24</div>
+      </div>
+      <div class="p-3 text-center">
+        <div class="text-xs text-neutral-500 mb-1">SAT</div>
+        <div class="text-sm text-neutral-400">25</div>
+      </div>
+    </div>
+
+    <!-- Time Slots and Events -->
+    <div id="calendar-grid" class="overflow-y-auto">
+      <!-- All Day Events -->
+      <div class="border-b border-neutral-200 p-4">
+        <div class="text-xs text-neutral-500 mb-2">All Day</div>
+        <div class="grid grid-cols-7 gap-1">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div class="bg-neutral-100 border border-neutral-200 rounded px-2 py-1">
+            <div class="text-xs text-neutral-800">Available</div>
+          </div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </div>
+
+      <!-- Time Grid -->
+      <div class="relative">
+        <!-- 9 AM -->
+        <div class="flex border-b border-neutral-100">
+          <div class="w-16 p-2 text-xs text-neutral-500 border-r border-neutral-200">9 AM</div>
+          <div class="flex-1 grid grid-cols-7">
+            <div class="h-12 border-r border-neutral-100"></div>
+            <div class="h-12 border-r border-neutral-100 relative">
+              <div class="absolute inset-x-1 top-1 bottom-1 bg-neutral-200 rounded text-xs px-2 py-1">
+                <div class="text-neutral-700">Team Meeting</div>
+              </div>
+            </div>
+            <div class="h-12 border-r border-neutral-100"></div>
+            <div class="h-12 border-r border-neutral-100 bg-neutral-50"></div>
+            <div class="h-12 border-r border-neutral-100"></div>
+            <div class="h-12 border-r border-neutral-100"></div>
+            <div class="h-12"></div>
+          </div>
+        </div>
+
+        <!-- 10 AM -->
+        <div class="flex border-b border-neutral-100">
+          <div class="w-16 p-2 text-xs text-neutral-500 border-r border-neutral-200">10 AM</div>
+          <div class="flex-1 grid grid-cols-7">
+            <div class="h-12 border-r border-neutral-100"></div>
+            <div class="h-12 border-r border-neutral-100 relative">
+              <div class="absolute inset-x-1 top-1 bottom-1 bg-neutral-200 rounded text-xs px-2 py-1">
+                <div class="text-neutral-700">Team Meeting</div>
+              </div>
+            </div>
+            <div class="h-12 border-r border-neutral-100"></div>
+            <div class="h-12 border-r border-neutral-100 bg-neutral-50"></div>
+            <div class="h-12 border-r border-neutral-100"></div>
+            <div class="h-12 border-r border-neutral-100"></div>
+            <div class="h-12"></div>
+          </div>
+        </div>
+
+        <!-- 11 AM -->
+        <div class="flex border-b border-neutral-100">
+          <div class="w-16 p-2 text-xs text-neutral-500 border-r border-neutral-200">11 AM</div>
+          <div class="flex-1 grid grid-cols-7">
+            <div class="h-12 border-r border-neutral-100"></div>
+            <div class="h-12 border-r border-neutral-100"></div>
+            <div class="h-12 border-r border-neutral-100 relative">
+              <div class="absolute inset-x-1 top-1 bottom-1 bg-neutral-100 border border-neutral-200 rounded text-xs px-2 py-1">
+                <div class="text-neutral-800">Protected Time</div>
+              </div>
+            </div>
+            <div class="h-12 border-r border-neutral-100 bg-neutral-50"></div>
+            <div class="h-12 border-r border-neutral-100"></div>
+            <div class="h-12 border-r border-neutral-100"></div>
+            <div class="h-12"></div>
+          </div>
+        </div>
+
+        <!-- 12 PM -->
+        <div class="flex border-b border-neutral-100">
+          <div class="w-16 p-2 text-xs text-neutral-500 border-r border-neutral-200">12 PM</div>
+          <div class="flex-1 grid grid-cols-7">
+            <div class="h-12 border-r border-neutral-100"></div>
+            <div class="h-12 border-r border-neutral-100"></div>
+            <div class="h-12 border-r border-neutral-100"></div>
+            <div class="h-12 border-r border-neutral-100 bg-neutral-50"></div>
+            <div class="h-12 border-r border-neutral-100"></div>
+            <div class="h-12 border-r border-neutral-100"></div>
+            <div class="h-12"></div>
+          </div>
+        </div>
+
+        <!-- 1 PM -->
+        <div class="flex border-b border-neutral-100">
+          <div class="w-16 p-2 text-xs text-neutral-500 border-r border-neutral-200">1 PM</div>
+          <div class="flex-1 grid grid-cols-7">
+            <div class="h-12 border-r border-neutral-100"></div>
+            <div class="h-12 border-r border-neutral-100"></div>
+            <div class="h-12 border-r border-neutral-100"></div>
+            <div class="h-12 border-r border-neutral-100 bg-neutral-50"></div>
+            <div class="h-12 border-r border-neutral-100 relative">
+              <div class="absolute inset-x-1 top-1 bottom-1 bg-neutral-100 border border-neutral-200 rounded text-xs px-2 py-1">
+                <div class="text-neutral-800">Lunch Break</div>
+              </div>
+            </div>
+            <div class="h-12 border-r border-neutral-100"></div>
+            <div class="h-12"></div>
+          </div>
+        </div>
+
+        <!-- 2 PM -->
+        <div class="flex border-b border-neutral-100">
+          <div class="w-16 p-2 text-xs text-neutral-500 border-r border-neutral-200">2 PM</div>
+          <div class="flex-1 grid grid-cols-7">
+            <div class="h-12 border-r border-neutral-100"></div>
+            <div class="h-12 border-r border-neutral-100"></div>
+            <div class="h-12 border-r border-neutral-100"></div>
+            <div class="h-12 border-r border-neutral-100 bg-neutral-50"></div>
+            <div class="h-12 border-r border-neutral-100"></div>
+            <div class="h-12 border-r border-neutral-100 relative">
+              <div class="absolute inset-x-1 top-1 bottom-1 bg-neutral-200 rounded text-xs px-2 py-1">
+                <div class="text-neutral-700">Client Call</div>
+              </div>
+            </div>
+            <div class="h-12"></div>
+          </div>
+        </div>
+
+        <!-- Current Time Indicator -->
+        <div class="absolute left-16 right-0 top-[72px] h-0.5 bg-neutral-500 z-10">
+          <div class="absolute -left-1 -top-1 w-2 h-2 bg-neutral-500 rounded-full"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Floating Action Button -->
+  <div id="fab-container" class="fixed bottom-20 right-4">
+    <button class="w-14 h-14 bg-neutral-800 text-white rounded-full shadow-lg flex items-center justify-center">
+      <i class="fa-solid fa-plus"></i>
+    </button>
+  </div>
+
+  <!-- Bottom Navigation -->
+  <nav id="bottom-nav" class="fixed bottom-0 left-0 right-0 bg-white border-t border-neutral-200">
+    <div class="grid grid-cols-4">
+      <button class="p-4 text-center">
+        <i class="fa-solid fa-home text-neutral-500 mb-1"></i>
+        <div class="text-xs text-neutral-500">Dashboard</div>
+      </button>
+      <button class="p-4 text-center">
+        <i class="fa-solid fa-link text-neutral-500 mb-1"></i>
+        <div class="text-xs text-neutral-500">Links</div>
+      </button>
+      <button class="p-4 text-center">
+        <i class="fa-solid fa-calendar text-neutral-800 mb-1"></i>
+        <div class="text-xs text-neutral-800">Calendar</div>
+      </button>
+      <button class="p-4 text-center">
+        <i class="fa-solid fa-clock text-neutral-500 mb-1"></i>
+        <div class="text-xs text-neutral-500">Requests</div>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Legend/Status Bar -->
+  <div id="status-legend" class="fixed bottom-16 left-4 right-4 bg-white rounded-lg shadow-lg border border-neutral-200 p-3">
+    <div class="flex items-center justify-between text-xs">
+      <div class="flex items-center space-x-2">
+        <div class="w-3 h-3 bg-neutral-200 rounded"></div>
+        <span class="text-neutral-600">Available</span>
+      </div>
+      <div class="flex items-center space-x-2">
+        <div class="w-3 h-3 bg-neutral-200 rounded"></div>
+        <span class="text-neutral-600">Negotiable</span>
+      </div>
+      <div class="flex items-center space-x-2">
+        <div class="w-3 h-3 bg-neutral-200 rounded"></div>
+        <span class="text-neutral-600">Protected</span>
+      </div>
+      <div class="flex items-center space-x-2">
+        <div class="w-3 h-3 bg-neutral-200 rounded"></div>
+        <span class="text-neutral-600">Busy</span>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,236 @@
+<div id="settings-container" class="bg-neutral-50">
+  <!-- Header -->
+  <header id="header" class="bg-white border-b border-neutral-200 px-4 py-3">
+    <div class="flex items-center justify-between">
+      <button class="p-2">
+        <i class="fa-solid fa-arrow-left text-neutral-600"></i>
+      </button>
+      <h1 class="text-lg text-neutral-800">Settings</h1>
+      <div class="w-8"></div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main id="settings-main" class="px-4 py-6">
+    <!-- Profile Section -->
+    <section id="profile-section" class="mb-8">
+      <div class="bg-white rounded-lg p-4 border border-neutral-200">
+        <div class="flex items-center space-x-4 mb-4">
+          <img src="https://api.dicebear.com/7.x/notionists/svg?scale=200&seed=847291" alt="Profile" class="w-16 h-16 rounded-full">
+          <div class="flex-1">
+            <h2 class="text-lg text-neutral-800">Sarah Johnson</h2>
+            <p class="text-sm text-neutral-600">sarah.johnson@email.com</p>
+          </div>
+          <button class="p-2">
+            <i class="fa-solid fa-chevron-right text-neutral-400"></i>
+          </button>
+        </div>
+        <button class="w-full bg-neutral-100 text-neutral-800 py-3 px-4 rounded-lg text-sm">
+          EDIT PROFILE
+        </button>
+      </div>
+    </section>
+
+    <!-- Settings Groups -->
+    <section id="settings-groups" class="space-y-6">
+      <!-- Account Settings -->
+      <div class="bg-white rounded-lg border border-neutral-200">
+        <div class="p-4 border-b border-neutral-100">
+          <h3 class="text-base text-neutral-800">Account</h3>
+        </div>
+        <div class="divide-y divide-neutral-100">
+          <button class="w-full flex items-center justify-between p-4 hover:bg-neutral-50">
+            <div class="flex items-center space-x-3">
+              <i class="fa-solid fa-bell text-neutral-600"></i>
+              <span class="text-neutral-800">Notifications</span>
+            </div>
+            <i class="fa-solid fa-chevron-right text-neutral-400"></i>
+          </button>
+          <button class="w-full flex items-center justify-between p-4 hover:bg-neutral-50">
+            <div class="flex items-center space-x-3">
+              <i class="fa-solid fa-shield text-neutral-600"></i>
+              <span class="text-neutral-800">Privacy</span>
+            </div>
+            <i class="fa-solid fa-chevron-right text-neutral-400"></i>
+          </button>
+          <button class="w-full flex items-center justify-between p-4 hover:bg-neutral-50">
+            <div class="flex items-center space-x-3">
+              <i class="fa-solid fa-lock text-neutral-600"></i>
+              <span class="text-neutral-800">Password & Security</span>
+            </div>
+            <i class="fa-solid fa-chevron-right text-neutral-400"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Calendar Settings -->
+      <div class="bg-white rounded-lg border border-neutral-200">
+        <div class="p-4 border-b border-neutral-100">
+          <h3 class="text-base text-neutral-800">Calendar & Sync</h3>
+        </div>
+        <div class="divide-y divide-neutral-100">
+          <button class="w-full flex items-center justify-between p-4 hover:bg-neutral-50">
+            <div class="flex items-center space-x-3">
+              <i class="fa-solid fa-calendar text-neutral-600"></i>
+              <span class="text-neutral-800">Connected Calendars</span>
+            </div>
+            <div class="flex items-center space-x-2">
+              <span class="text-xs bg-neutral-100 text-neutral-600 px-2 py-1 rounded">2</span>
+              <i class="fa-solid fa-chevron-right text-neutral-400"></i>
+            </div>
+          </button>
+          <button class="w-full flex items-center justify-between p-4 hover:bg-neutral-50">
+            <div class="flex items-center space-x-3">
+              <i class="fa-solid fa-clock text-neutral-600"></i>
+              <span class="text-neutral-800">Time Preferences</span>
+            </div>
+            <i class="fa-solid fa-chevron-right text-neutral-400"></i>
+          </button>
+          <button class="w-full flex items-center justify-between p-4 hover:bg-neutral-50">
+            <div class="flex items-center space-x-3">
+              <i class="fa-solid fa-sync text-neutral-600"></i>
+              <span class="text-neutral-800">Sync Settings</span>
+            </div>
+            <i class="fa-solid fa-chevron-right text-neutral-400"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- App Preferences -->
+      <div class="bg-white rounded-lg border border-neutral-200">
+        <div class="p-4 border-b border-neutral-100">
+          <h3 class="text-base text-neutral-800">App Preferences</h3>
+        </div>
+        <div class="divide-y divide-neutral-100">
+          <div class="flex items-center justify-between p-4">
+            <div class="flex items-center space-x-3">
+              <i class="fa-solid fa-palette text-neutral-600"></i>
+              <span class="text-neutral-800">Theme</span>
+            </div>
+            <div class="flex items-center space-x-2">
+              <span class="text-sm text-neutral-600">Light</span>
+              <i class="fa-solid fa-chevron-right text-neutral-400"></i>
+            </div>
+          </div>
+          <div class="flex items-center justify-between p-4">
+            <div class="flex items-center space-x-3">
+              <i class="fa-solid fa-globe text-neutral-600"></i>
+              <span class="text-neutral-800">Language</span>
+            </div>
+            <div class="flex items-center space-x-2">
+              <span class="text-sm text-neutral-600">English</span>
+              <i class="fa-solid fa-chevron-right text-neutral-400"></i>
+            </div>
+          </div>
+          <div class="flex items-center justify-between p-4">
+            <div class="flex items-center space-x-3">
+              <i class="fa-solid fa-moon text-neutral-600"></i>
+              <span class="text-neutral-800">Reduce Motion</span>
+            </div>
+            <label class="relative inline-flex items-center cursor-pointer">
+              <input type="checkbox" class="sr-only peer">
+              <div class="w-11 h-6 bg-neutral-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-neutral-800"></div>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Subscription -->
+      <div class="bg-white rounded-lg border border-neutral-200">
+        <div class="p-4 border-b border-neutral-100">
+          <h3 class="text-base text-neutral-800">Subscription</h3>
+        </div>
+        <div class="p-4">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-neutral-800">Current Plan</span>
+            <span class="text-sm bg-neutral-100 text-neutral-600 px-3 py-1 rounded-full">Free</span>
+          </div>
+          <button class="w-full bg-neutral-800 text-white py-3 px-4 rounded-lg text-sm">
+            UPGRADE TO PRO
+          </button>
+        </div>
+      </div>
+
+      <!-- Support -->
+      <div class="bg-white rounded-lg border border-neutral-200">
+        <div class="p-4 border-b border-neutral-100">
+          <h3 class="text-base text-neutral-800">Help & Support</h3>
+        </div>
+        <div class="divide-y divide-neutral-100">
+          <button class="w-full flex items-center justify-between p-4 hover:bg-neutral-50">
+            <div class="flex items-center space-x-3">
+              <i class="fa-solid fa-question-circle text-neutral-600"></i>
+              <span class="text-neutral-800">Help Center</span>
+            </div>
+            <i class="fa-solid fa-chevron-right text-neutral-400"></i>
+          </button>
+          <button class="w-full flex items-center justify-between p-4 hover:bg-neutral-50">
+            <div class="flex items-center space-x-3">
+              <i class="fa-solid fa-envelope text-neutral-600"></i>
+              <span class="text-neutral-800">Contact Support</span>
+            </div>
+            <i class="fa-solid fa-chevron-right text-neutral-400"></i>
+          </button>
+          <button class="w-full flex items-center justify-between p-4 hover:bg-neutral-50">
+            <div class="flex items-center space-x-3">
+              <i class="fa-solid fa-star text-neutral-600"></i>
+              <span class="text-neutral-800">Rate App</span>
+            </div>
+            <i class="fa-solid fa-chevron-right text-neutral-400"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Account Actions -->
+      <div class="bg-white rounded-lg border border-neutral-200">
+        <div class="divide-y divide-neutral-100">
+          <button class="w-full flex items-center justify-between p-4 hover:bg-neutral-50">
+            <div class="flex items-center space-x-3">
+              <i class="fa-solid fa-sign-out-alt text-neutral-600"></i>
+              <span class="text-neutral-800">Sign Out</span>
+            </div>
+            <i class="fa-solid fa-chevron-right text-neutral-400"></i>
+          </button>
+          <button class="w-full flex items-center justify-between p-4 hover:bg-neutral-50 text-neutral-600">
+            <div class="flex items-center space-x-3">
+              <i class="fa-solid fa-trash text-neutral-600"></i>
+              <span>Delete Account</span>
+            </div>
+            <i class="fa-solid fa-chevron-right text-neutral-400"></i>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- App Version -->
+    <div class="text-center mt-8 mb-20">
+      <p class="text-xs text-neutral-500">SpareTime v1.2.3</p>
+    </div>
+  </main>
+
+  <!-- Bottom Tab Navigation -->
+  <nav id="bottom-nav" class="fixed bottom-0 left-0 right-0 bg-white border-t border-neutral-200">
+    <div class="flex items-center justify-around py-2">
+      <button class="flex flex-col items-center py-2 px-4">
+        <i class="fa-solid fa-home text-neutral-400 text-lg mb-1"></i>
+        <span class="text-xs text-neutral-400">Dashboard</span>
+      </button>
+      <button class="flex flex-col items-center py-2 px-4">
+        <i class="fa-solid fa-link text-neutral-400 text-lg mb-1"></i>
+        <span class="text-xs text-neutral-400">Links</span>
+      </button>
+      <button class="flex flex-col items-center py-2 px-4">
+        <i class="fa-solid fa-calendar text-neutral-400 text-lg mb-1"></i>
+        <span class="text-xs text-neutral-400">Calendar</span>
+      </button>
+      <button class="flex flex-col items-center py-2 px-4">
+        <i class="fa-solid fa-clock text-neutral-400 text-lg mb-1"></i>
+        <span class="text-xs text-neutral-400">Requests</span>
+      </button>
+      <button class="flex flex-col items-center py-2 px-4">
+        <i class="fa-solid fa-user text-neutral-800 text-lg mb-1"></i>
+        <span class="text-xs text-neutral-800">Profile</span>
+      </button>
+    </div>
+  </nav>
+</div>

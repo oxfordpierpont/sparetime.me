@@ -1,0 +1,159 @@
+<div id="time-preferences-container" class="min-h-[800px] bg-neutral-50">
+  <!-- Header -->
+  <header id="header" class="bg-white border-b border-neutral-200 px-4 py-3">
+    <div class="flex items-center justify-between">
+      <button class="p-2">
+        <i class="fa-solid fa-arrow-left text-neutral-600"></i>
+      </button>
+      <div class="text-sm text-neutral-500">Step 3 of 3</div>
+    </div>
+  </header>
+
+  <!-- Time Preferences Screen -->
+  <main id="time-preferences-main" class="px-6 py-8">
+    <!-- Header Section -->
+    <div class="mb-8">
+      <h2 class="text-xl text-neutral-800 mb-2">Set Your Time Preferences</h2>
+      <p class="text-neutral-600 text-sm">Configure your work hours and protected time to better manage your availability</p>
+    </div>
+
+    <!-- Timezone Section -->
+    <div id="timezone-section" class="mb-8">
+      <h3 class="text-neutral-800 mb-3">Timezone</h3>
+      <button class="w-full border border-neutral-300 bg-white py-3 px-4 rounded-lg flex items-center justify-between">
+        <span class="text-neutral-800">Pacific Standard Time (PST)</span>
+        <i class="fa-solid fa-chevron-down text-neutral-400"></i>
+      </button>
+    </div>
+
+    <!-- Work Hours Section -->
+    <div id="work-hours-section" class="mb-8">
+      <h3 class="text-neutral-800 mb-3">Work Hours</h3>
+      <p class="text-neutral-600 text-sm mb-4">Set your typical working hours for availability sharing</p>
+      
+      <div class="space-y-4">
+        <div class="flex items-center space-x-4">
+          <span class="text-sm text-neutral-700 w-16">Start</span>
+          <button class="flex-1 border border-neutral-300 bg-white py-3 px-4 rounded-lg flex items-center justify-between">
+            <span class="text-neutral-800">9:00 AM</span>
+            <i class="fa-solid fa-chevron-down text-neutral-400"></i>
+          </button>
+        </div>
+        
+        <div class="flex items-center space-x-4">
+          <span class="text-sm text-neutral-700 w-16">End</span>
+          <button class="flex-1 border border-neutral-300 bg-white py-3 px-4 rounded-lg flex items-center justify-between">
+            <span class="text-neutral-800">5:00 PM</span>
+            <i class="fa-solid fa-chevron-down text-neutral-400"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Work Days Section -->
+    <div id="work-days-section" class="mb-8">
+      <h3 class="text-neutral-800 mb-3">Work Days</h3>
+      <p class="text-neutral-600 text-sm mb-4">Select the days you're typically available for work</p>
+      
+      <div class="grid grid-cols-7 gap-2">
+        <button class="aspect-square border-2 border-neutral-800 bg-neutral-800 text-white rounded-lg flex items-center justify-center text-sm">
+          M
+        </button>
+        <button class="aspect-square border-2 border-neutral-800 bg-neutral-800 text-white rounded-lg flex items-center justify-center text-sm">
+          T
+        </button>
+        <button class="aspect-square border-2 border-neutral-800 bg-neutral-800 text-white rounded-lg flex items-center justify-center text-sm">
+          W
+        </button>
+        <button class="aspect-square border-2 border-neutral-800 bg-neutral-800 text-white rounded-lg flex items-center justify-center text-sm">
+          T
+        </button>
+        <button class="aspect-square border-2 border-neutral-800 bg-neutral-800 text-white rounded-lg flex items-center justify-center text-sm">
+          F
+        </button>
+        <button class="aspect-square border-2 border-neutral-300 bg-white text-neutral-600 rounded-lg flex items-center justify-center text-sm">
+          S
+        </button>
+        <button class="aspect-square border-2 border-neutral-300 bg-white text-neutral-600 rounded-lg flex items-center justify-center text-sm">
+          S
+        </button>
+      </div>
+    </div>
+
+    <!-- Protected Time Section -->
+    <div id="protected-time-section" class="mb-8">
+      <div class="flex items-center justify-between mb-3">
+        <h3 class="text-neutral-800">Protected Time Blocks</h3>
+        <button class="p-2">
+          <i class="fa-solid fa-plus text-neutral-600"></i>
+        </button>
+      </div>
+      <p class="text-neutral-600 text-sm mb-4">Add recurring time blocks that should always appear busy</p>
+      
+      <!-- Protected Time Block -->
+      <div class="bg-white border border-neutral-200 rounded-lg p-4 mb-3">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-neutral-800">Lunch Break</span>
+          <button class="p-1">
+            <i class="fa-solid fa-trash text-neutral-400"></i>
+          </button>
+        </div>
+        <div class="text-sm text-neutral-600 mb-2">Daily • 12:00 PM - 1:00 PM</div>
+        <div class="flex items-center space-x-2">
+          <div class="w-3 h-3 bg-neutral-400 rounded-full"></div>
+          <span class="text-xs text-neutral-500">High Priority</span>
+        </div>
+      </div>
+
+      <!-- Add Protected Time Button -->
+      <button class="w-full border-2 border-dashed border-neutral-300 bg-white py-4 px-6 rounded-lg text-neutral-600 flex items-center justify-center space-x-2">
+        <i class="fa-solid fa-plus"></i>
+        <span>ADD PROTECTED TIME</span>
+      </button>
+    </div>
+
+    <!-- Buffer Time Section -->
+    <div id="buffer-time-section" class="mb-8">
+      <h3 class="text-neutral-800 mb-3">Buffer Time</h3>
+      <p class="text-neutral-600 text-sm mb-4">Add buffer time before and after meetings</p>
+      
+      <div class="space-y-4">
+        <div class="flex items-center justify-between">
+          <span class="text-neutral-700">Before meetings</span>
+          <button class="border border-neutral-300 bg-white py-2 px-4 rounded-lg flex items-center space-x-2">
+            <span class="text-neutral-800">15 min</span>
+            <i class="fa-solid fa-chevron-down text-neutral-400"></i>
+          </button>
+        </div>
+        
+        <div class="flex items-center justify-between">
+          <span class="text-neutral-700">After meetings</span>
+          <button class="border border-neutral-300 bg-white py-2 px-4 rounded-lg flex items-center space-x-2">
+            <span class="text-neutral-800">15 min</span>
+            <i class="fa-solid fa-chevron-down text-neutral-400"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Continue Button -->
+    <div class="pt-4">
+      <button class="w-full bg-neutral-800 text-white py-4 px-6 rounded-lg mb-4">
+        FINISH SETUP
+      </button>
+      
+      <div class="text-center">
+        <button class="text-neutral-600 text-sm underline">Skip for now</button>
+      </div>
+    </div>
+  </main>
+
+  <!-- Progress Indicator -->
+  <div id="progress-bar" class="fixed bottom-0 left-0 right-0 bg-white border-t border-neutral-200 p-4">
+    <div class="flex space-x-2">
+      <div class="flex-1 h-2 bg-neutral-800 rounded"></div>
+      <div class="flex-1 h-2 bg-neutral-800 rounded"></div>
+      <div class="flex-1 h-2 bg-neutral-800 rounded"></div>
+    </div>
+  </div>
+</div>

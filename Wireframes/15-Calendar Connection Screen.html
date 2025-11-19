@@ -1,0 +1,110 @@
+<div id="calendar-connection" class="h-[800px] bg-white">
+  <!-- Header -->
+  <header id="header" class="flex items-center justify-between p-4 bg-white border-b border-neutral-200">
+    <button class="text-neutral-500">
+      <i class="fa-solid fa-arrow-left text-xl"></i>
+    </button>
+    <div class="text-lg text-neutral-900">Connect Calendar</div>
+    <div class="w-6"></div>
+  </header>
+
+  <!-- Main Content -->
+  <div class="px-6 py-8">
+    <!-- Illustration -->
+    <div class="text-center mb-8">
+      <div class="w-24 h-24 mx-auto mb-6 bg-neutral-300 rounded-2xl flex items-center justify-center">
+        <i class="fa-solid fa-calendar-days text-white text-2xl"></i>
+      </div>
+      <h1 class="text-2xl text-neutral-900 mb-2">Connect your calendar</h1>
+      <p class="text-neutral-600 leading-relaxed">We'll sync your existing events to show accurate availability without accessing event details</p>
+    </div>
+
+    <!-- Calendar Options -->
+    <div class="space-y-4 mb-8">
+      <!-- Google Calendar -->
+      <button class="w-full border-2 border-neutral-200 rounded-lg p-4 flex items-center justify-between hover:border-neutral-500 transition-colors">
+        <div class="flex items-center">
+          <div class="w-12 h-12 bg-neutral-100 rounded-lg flex items-center justify-center mr-4">
+            <i class="fa-brands fa-google text-neutral-600 text-lg"></i>
+          </div>
+          <div class="text-left">
+            <div class="text-neutral-900">Google Calendar</div>
+            <div class="text-sm text-neutral-500">Sync with your Google account</div>
+          </div>
+        </div>
+        <i class="fa-solid fa-chevron-right text-neutral-400"></i>
+      </button>
+
+      <!-- Apple Calendar -->
+      <button class="w-full border-2 border-neutral-200 rounded-lg p-4 flex items-center justify-between hover:border-neutral-500 transition-colors">
+        <div class="flex items-center">
+          <div class="w-12 h-12 bg-neutral-100 rounded-lg flex items-center justify-center mr-4">
+            <i class="fa-brands fa-apple text-neutral-700 text-lg"></i>
+          </div>
+          <div class="text-left">
+            <div class="text-neutral-900">Apple Calendar</div>
+            <div class="text-sm text-neutral-500">Sync with iCloud Calendar</div>
+          </div>
+        </div>
+        <i class="fa-solid fa-chevron-right text-neutral-400"></i>
+      </button>
+
+      <!-- Outlook Calendar -->
+      <button class="w-full border-2 border-neutral-200 rounded-lg p-4 flex items-center justify-between hover:border-neutral-500 transition-colors">
+        <div class="flex items-center">
+          <div class="w-12 h-12 bg-neutral-100 rounded-lg flex items-center justify-center mr-4">
+            <i class="fa-solid fa-envelope text-neutral-600 text-lg"></i>
+          </div>
+          <div class="text-left">
+            <div class="text-neutral-900">Outlook Calendar</div>
+            <div class="text-sm text-neutral-500">Sync with Microsoft Outlook</div>
+          </div>
+        </div>
+        <i class="fa-solid fa-chevron-right text-neutral-400"></i>
+      </button>
+
+      <!-- Other Calendar -->
+      <button class="w-full border-2 border-neutral-200 rounded-lg p-4 flex items-center justify-between hover:border-neutral-500 transition-colors">
+        <div class="flex items-center">
+          <div class="w-12 h-12 bg-neutral-100 rounded-lg flex items-center justify-center mr-4">
+            <i class="fa-solid fa-calendar text-neutral-600 text-lg"></i>
+          </div>
+          <div class="text-left">
+            <div class="text-neutral-900">Other Calendar</div>
+            <div class="text-sm text-neutral-500">CalDAV or other calendar service</div>
+          </div>
+        </div>
+        <i class="fa-solid fa-chevron-right text-neutral-400"></i>
+      </button>
+    </div>
+
+    <!-- Skip Option -->
+    <div class="text-center mb-6">
+      <button class="text-neutral-600 py-2 underline">
+        Skip for now
+      </button>
+    </div>
+
+    <!-- Privacy Notice -->
+    <div class="bg-neutral-50 border border-neutral-200 rounded-lg p-4">
+      <div class="flex items-start">
+        <div class="w-8 h-8 bg-neutral-100 rounded-full flex items-center justify-center mr-3 mt-0.5">
+          <i class="fa-solid fa-shield-halved text-neutral-600 text-sm"></i>
+        </div>
+        <div>
+          <h3 class="text-sm text-neutral-800 mb-1">Privacy Protected</h3>
+          <p class="text-xs text-neutral-600 leading-relaxed">We only read your availability status, never event titles, descriptions, or attendee information. Your calendar details remain completely private.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Progress Indicator -->
+  <div class="px-6 pb-6">
+    <div class="flex justify-center space-x-2">
+      <div class="w-2 h-2 bg-neutral-300 rounded-full"></div>
+      <div class="w-2 h-2 bg-neutral-300 rounded-full"></div>
+      <div class="w-2 h-2 bg-neutral-600 rounded-full"></div>
+    </div>
+  </div>
+</div>

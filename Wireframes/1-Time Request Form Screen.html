@@ -1,0 +1,162 @@
+<div id="time-request-container" class="min-h-[800px] bg-neutral-50">
+  <!-- Header -->
+  <header id="header" class="bg-white border-b border-neutral-200 px-4 py-3">
+    <div class="flex items-center justify-between">
+      <button class="p-2">
+        <i class="fa-solid fa-arrow-left text-neutral-600"></i>
+      </button>
+      <h1 class="text-lg text-neutral-800">Request Time</h1>
+      <div class="w-8"></div>
+    </div>
+  </header>
+
+  <!-- Form Content -->
+  <main id="request-form-main" class="px-6 py-6">
+    <!-- Recipient Info -->
+    <div id="recipient-info" class="mb-6">
+      <div class="bg-white rounded-lg p-4 border border-neutral-200">
+        <div class="flex items-center space-x-3">
+          <img src="https://api.dicebear.com/7.x/notionists/svg?scale=200&seed=4829" alt="Profile" class="w-10 h-10 rounded-full">
+          <div>
+            <h3 class="text-neutral-800 text-base">Sarah Chen</h3>
+            <p class="text-neutral-600 text-sm">Team Lead</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Time Request Form -->
+    <form id="time-request-form" class="space-y-6">
+      <!-- Your Information -->
+      <div id="requester-info" class="space-y-4">
+        <h2 class="text-lg text-neutral-800">Your Information</h2>
+        
+        <div>
+          <label class="block text-sm text-neutral-700 mb-2">Your Name *</label>
+          <input type="text" class="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-neutral-400" placeholder="Enter your full name" required>
+        </div>
+
+        <div>
+          <label class="block text-sm text-neutral-700 mb-2">Email Address *</label>
+          <input type="email" class="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-neutral-400" placeholder="your.email@company.com" required>
+        </div>
+      </div>
+
+      <!-- Meeting Details -->
+      <div id="meeting-details" class="space-y-4">
+        <h2 class="text-lg text-neutral-800">Meeting Details</h2>
+        
+        <div>
+          <label class="block text-sm text-neutral-700 mb-2">Purpose of Meeting *</label>
+          <select class="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-neutral-400" required>
+            <option value="">Select purpose</option>
+            <option value="1:1 Meeting">1:1 Meeting</option>
+            <option value="Team Sync">Team Sync</option>
+            <option value="Project Review">Project Review</option>
+            <option value="Brainstorming">Brainstorming</option>
+            <option value="Client Call">Client Call</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-sm text-neutral-700 mb-2">Duration</label>
+          <select class="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-neutral-400">
+            <option value="15">15 minutes</option>
+            <option value="30" selected>30 minutes</option>
+            <option value="45">45 minutes</option>
+            <option value="60">1 hour</option>
+            <option value="90">1.5 hours</option>
+            <option value="120">2 hours</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-sm text-neutral-700 mb-2">Urgency Level</label>
+          <div class="flex space-x-3">
+            <button type="button" class="flex-1 py-3 px-4 border-2 border-neutral-300 rounded-lg text-neutral-700 bg-white">
+              Low
+            </button>
+            <button type="button" class="flex-1 py-3 px-4 border-2 border-neutral-800 rounded-lg text-white bg-neutral-800">
+              Normal
+            </button>
+            <button type="button" class="flex-1 py-3 px-4 border-2 border-neutral-300 rounded-lg text-neutral-700 bg-white">
+              High
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Preferred Times -->
+      <div id="preferred-times" class="space-y-4">
+        <h2 class="text-lg text-neutral-800">Preferred Times</h2>
+        <p class="text-sm text-neutral-600">Select up to 3 time slots that work best for you</p>
+        
+        <!-- Time Option 1 -->
+        <div class="bg-white border border-neutral-200 rounded-lg p-4">
+          <div class="flex items-center justify-between mb-3">
+            <h4 class="text-neutral-800">Option 1</h4>
+            <button type="button" class="text-neutral-400 hover:text-neutral-600">
+              <i class="fa-solid fa-times"></i>
+            </button>
+          </div>
+          
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block text-sm text-neutral-700 mb-2">Date</label>
+              <input type="date" class="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-neutral-400" value="2025-01-15">
+            </div>
+            <div>
+              <label class="block text-sm text-neutral-700 mb-2">Time</label>
+              <input type="time" class="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-neutral-400" value="14:00">
+            </div>
+          </div>
+        </div>
+
+        <!-- Time Option 2 -->
+        <div class="bg-white border border-neutral-200 rounded-lg p-4">
+          <div class="flex items-center justify-between mb-3">
+            <h4 class="text-neutral-800">Option 2</h4>
+            <button type="button" class="text-neutral-400 hover:text-neutral-600">
+              <i class="fa-solid fa-times"></i>
+            </button>
+          </div>
+          
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block text-sm text-neutral-700 mb-2">Date</label>
+              <input type="date" class="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-neutral-400" value="2025-01-16">
+            </div>
+            <div>
+              <label class="block text-sm text-neutral-700 mb-2">Time</label>
+              <input type="time" class="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-neutral-400" value="10:00">
+            </div>
+          </div>
+        </div>
+
+        <!-- Add Another Time -->
+        <button type="button" class="w-full py-3 border-2 border-dashed border-neutral-300 rounded-lg text-neutral-600 hover:border-neutral-400">
+          <i class="fa-solid fa-plus mr-2"></i>
+          Add Another Time Option
+        </button>
+      </div>
+
+      <!-- Additional Message -->
+      <div id="message-section">
+        <label class="block text-sm text-neutral-700 mb-2">Additional Message (Optional)</label>
+        <textarea class="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-neutral-400 h-24 resize-none" placeholder="Add any additional context or notes for this meeting..."></textarea>
+      </div>
+
+      <!-- Submit Button -->
+      <div id="submit-section" class="pt-4">
+        <button type="submit" class="w-full bg-neutral-800 text-white py-4 px-6 rounded-lg">
+          SUBMIT REQUEST
+        </button>
+        
+        <p class="text-center text-sm text-neutral-500 mt-4">
+          Sarah will receive your request and respond with their availability
+        </p>
+      </div>
+    </form>
+  </main>
+</div>
