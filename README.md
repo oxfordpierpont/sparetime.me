@@ -1,5 +1,6 @@
 <<<<<<< HEAD
 ![][image1]
+docs/spareTme-app-mockups.png
 
 ## **Project Overview**
 
