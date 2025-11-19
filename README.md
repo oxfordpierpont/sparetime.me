@@ -1,4 +1,4 @@
-<img src="[https://github.com/oxfordpierpont/sparetime.me/docs/spareTme-app-mockups.png](https://github.com/oxfordpierpont/sparetime.me/blob/main/docs/PNG%20image.png)" alt="SpareTime Calendar App Mockup">
+<img src="https://github.com/oxfordpierpont/sparetime.me/blob/main/docs/PNG%20image.png" alt="SpareTime Calendar App Mockup">
 
 ## **Project Overview**
 
