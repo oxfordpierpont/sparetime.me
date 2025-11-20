@@ -1,6 +1,18 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  /* config options here */
+  // Enable standalone output for Docker deployment
+  output: 'standalone',
+
+  // Image optimization configuration
+  images: {
+    unoptimized: false,
+    domains: [],
+  },
+
+  // Environment variables that should be available on the client
+  env: {
+    NEXT_PUBLIC_BASE_URL: process.env.NEXT_PUBLIC_BASE_URL,
+  },
 };
 
 export default nextConfig;
