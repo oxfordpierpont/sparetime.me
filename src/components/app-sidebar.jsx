@@ -9,11 +9,9 @@ import {
   Settings,
   Shield,
   BarChart3,
-  LogOut,
 } from "lucide-react"
 
 import { NavMain } from "@/components/nav-main"
-import { NavSecondary } from "@/components/nav-secondary"
 import { NavUser } from "@/components/nav-user"
 import {
   Sidebar,
@@ -25,13 +23,9 @@ import {
   SidebarMenuItem,
   SidebarTrigger,
 } from "@/components/ui/sidebar"
+import { useAuth } from "@/contexts/AuthContext"
 
-const data = {
-  user: {
-    name: "Alex Smith",
-    email: "alex@example.com",
-    avatar: "/avatars/default.jpg",
-  },
+const navData = {
   navMain: [
     {
       title: "Dashboard",
@@ -100,18 +94,18 @@ const data = {
       ],
     },
   ],
-  navSecondary: [
-    {
-      title: "Sign Out",
-      url: "/",
-      icon: LogOut,
-    },
-  ],
 }
 
 export function AppSidebar({
   ...props
 }) {
+  const { user } = useAuth()
+
+  // If no user, show loading or return null (ProtectedRoute should handle this)
+  if (!user) {
+    return null
+  }
+
   return (
     <Sidebar variant="inset" collapsible="icon" {...props}>
       <SidebarHeader className="pt-4 pb-6 px-4">
@@ -138,11 +132,10 @@ export function AppSidebar({
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
-        <NavSecondary items={data.navSecondary} className="mt-auto" />
+        <NavMain items={navData.navMain} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser user={user} />
       </SidebarFooter>
     </Sidebar>
   );

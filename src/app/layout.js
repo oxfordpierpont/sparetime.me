@@ -1,4 +1,5 @@
 import "./globals.css";
+import { AuthProvider } from "@/contexts/AuthContext";
 
 export const metadata = {
   title: "SpareTime - Your availability, your way",
@@ -18,7 +19,9 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body className="font-sans">
-        {children}
+        <AuthProvider>
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );

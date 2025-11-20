@@ -10,9 +10,11 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Calendar, ArrowLeft, User, Mail, Lock, Eye, EyeOff, AlertCircle } from 'lucide-react';
 import { useState } from 'react';
 import Image from 'next/image';
+import { useAuth } from '@/contexts/AuthContext';
 
 export default function SignUp() {
     const router = useRouter();
+    const { signup } = useAuth();
     const [showPassword, setShowPassword] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
@@ -80,27 +82,9 @@ export default function SignUp() {
             // Extract username from email (before @)
             const username = formData.email.split('@')[0];
 
-            const response = await fetch('/api/auth/signup', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    email: formData.email,
-                    password: formData.password,
-                    username: username,
-                    name: formData.name
-                }),
-            });
+            await signup(formData.email, formData.password, username, formData.name);
 
-            const data = await response.json();
-
-            if (!response.ok) {
-                throw new Error(data.message || 'Signup failed. Please try again.');
-            }
-
-            // Success! Token is automatically set in httpOnly cookie by the backend
-            // Redirect to connect calendar page
+            // Success! Redirect to connect calendar page
             router.push('/connect-calendar');
         } catch (err) {
             setError(err.message || 'An error occurred during signup. Please try again.');

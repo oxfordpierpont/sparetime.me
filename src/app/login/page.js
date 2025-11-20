@@ -10,9 +10,11 @@ import { Mail, Lock, Eye, EyeOff, AlertCircle } from 'lucide-react';
 import { useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import Image from 'next/image';
+import { useAuth } from '@/contexts/AuthContext';
 
 export default function Login() {
     const router = useRouter();
+    const { login } = useAuth();
     const [showPassword, setShowPassword] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
@@ -61,26 +63,16 @@ export default function Login() {
         setIsLoading(true);
 
         try {
-            const response = await fetch('/api/auth/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    email: formData.email,
-                    password: formData.password,
-                }),
-            });
+            await login(formData.email, formData.password);
 
-            const data = await response.json();
-
-            if (!response.ok) {
-                throw new Error(data.message || 'Login failed. Please check your credentials.');
+            // Check if there's a redirect path saved
+            const redirectPath = sessionStorage.getItem('redirectAfterLogin');
+            if (redirectPath) {
+                sessionStorage.removeItem('redirectAfterLogin');
+                router.push(redirectPath);
+            } else {
+                router.push('/dashboard');
             }
-
-            // Success! Token is automatically set in httpOnly cookie by the backend
-            // Redirect to dashboard
-            router.push('/dashboard');
         } catch (err) {
             setError(err.message || 'An error occurred during login. Please try again.');
         } finally {
