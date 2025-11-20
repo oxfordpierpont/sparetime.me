@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendar Connection</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script> window.FontAwesomeConfig = { autoReplaceSvg: 'nest'};</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        ::-webkit-scrollbar { display: none;}
+        body { font-family: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+        .gradient-bg { background: linear-gradient(135deg, #6e92a0 0%, #36454c 100%); }
+        .glass-effect { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); }
+        .calendar-icon { background: linear-gradient(135deg, #22b573, #6e92a0); }
+        .slide-up { animation: slideUp 0.5s ease-out; }
+        .pulse-glow { animation: pulseGlow 2s infinite; }
+        .connection-success { animation: connectionSuccess 0.8s ease-out; }
+        .provider-hover { transition: all 0.3s ease; }
+        .provider-hover:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15); }
+        .sync-animation { animation: syncSpin 2s linear infinite; }
+        .check-bounce { animation: checkBounce 0.6s ease-out; }
+        .permission-card { transition: all 0.3s ease; }
+        .permission-card:hover { background: rgba(59, 130, 246, 0.05); }
+        
+        @keyframes slideUp { 
+            from { transform: translateY(20px); opacity: 0; } 
+            to { transform: translateY(0); opacity: 1; } 
+        }
+        
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 20px rgba(34, 181, 115, 0.4); }
+            50% { box-shadow: 0 0 30px rgba(34, 181, 115, 0.7); }
+        }
+        
+        @keyframes connectionSuccess {
+            0% { transform: scale(0.8); opacity: 0; }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        @keyframes syncSpin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        @keyframes checkBounce {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+    <!-- Header Section -->
+    <div id="header" class="sticky top-0 z-50 bg-white shadow-sm border-b border-gray-200">
+        <div class="flex items-center justify-between px-6 py-4">
+            <button class="p-2 hover:bg-gray-100 rounded-lg transition-colors" onclick="history.back()">
+                <i class="fa-solid fa-arrow-left text-gray-600"></i>
+            </button>
+            <div class="text-center">
+                <h1 class="text-xl font-bold text-gray-800">Connect Calendars</h1>
+                <p class="text-sm text-gray-500">Step 3 of 4</p>
+            </div>
+            <button class="text-blue-600 font-semibold text-sm hover:text-blue-700 transition-colors">
+                Skip
+            </button>
+        </div>
+        <div class="px-6 pb-4">
+            <div class="flex space-x-1">
+                <div class="flex-1 h-2 bg-blue-600 rounded-full"></div>
+                <div class="flex-1 h-2 bg-blue-600 rounded-full"></div>
+                <div class="flex-1 h-2 bg-blue-600 rounded-full"></div>
+                <div class="flex-1 h-2 bg-gray-200 rounded-full"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Introduction Section -->
+    <div id="hero-intro" class="px-6 py-8 bg-gradient-to-br from-blue-50 to-purple-50">
+        <div class="text-center space-y-6">
+            <div class="w-24 h-24 bg-gradient-to-br from-purple-500 to-blue-600 rounded-3xl flex items-center justify-center mx-auto shadow-2xl pulse-glow">
+                <i class="fa-solid fa-calendar-plus text-white text-4xl"></i>
+            </div>
+            <div class="space-y-3">
+                <h2 class="text-3xl font-bold text-gray-800">Connect Your Calendars</h2>
+                <p class="text-gray-600 leading-relaxed max-w-sm mx-auto">Import your existing calendars to automatically sync your availability and never double-book again.</p>
+            </div>
+            <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+                <div class="flex items-center justify-center space-x-2 text-sm text-gray-600">
+                    <i class="fa-solid fa-shield-halved text-green-600"></i>
+                    <span>Your data is encrypted and secure</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Calendar Provider Selection Section -->
+    <div id="provider-selection" class="px-6 py-8 space-y-6">
+        <div class="text-center mb-8">
+            <h3 class="text-xl font-bold text-gray-800 mb-2">Choose Your Calendar Providers</h3>
+            <p class="text-gray-600">Select the calendars you'd like to connect</p>
+        </div>
+
+        <!-- Google Calendar -->
+        <div class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden provider-hover">
+            <div class="p-6">
+                <div class="flex items-center space-x-4">
+                    <div class="w-16 h-16 bg-gradient-to-br from-red-500 to-orange-500 rounded-2xl flex items-center justify-center shadow-lg">
+                        <i class="fa-brands fa-google text-white text-2xl"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h4 class="text-lg font-bold text-gray-800">Google Calendar</h4>
+                        <p class="text-gray-600 text-sm">Connect your Google Workspace or personal Gmail calendar</p>
+                        <div class="flex items-center space-x-2 mt-2">
+                            <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+                            <span class="text-xs text-green-600 font-medium">Most Popular</span>
+                        </div>
+                    </div>
+                    <button class="bg-red-500 text-white px-6 py-3 rounded-xl font-semibold hover:bg-red-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105">
+                        Connect
+                    </button>
+                </div>
+            </div>
+            <div class="bg-gray-50 px-6 py-4 border-t border-gray-100">
+                <div class="flex items-center space-x-4 text-sm text-gray-600">
+                    <div class="flex items-center space-x-1">
+                        <i class="fa-solid fa-check text-green-500"></i>
+                        <span>Real-time sync</span>
+                    </div>
+                    <div class="flex items-center space-x-1">
+                        <i class="fa-solid fa-check text-green-500"></i>
+                        <span>Multiple calendars</span>
+                    </div>
+                    <div class="flex items-center space-x-1">
+                        <i class="fa-solid fa-check text-green-500"></i>
+                        <span>Event details</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Microsoft Outlook -->
+        <div class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden provider-hover">
+            <div class="p-6">
+                <div class="flex items-center space-x-4">
+                    <div class="w-16 h-16 bg-gradient-to-br from-blue-600 to-blue-800 rounded-2xl flex items-center justify-center shadow-lg">
+                        <i class="fa-brands fa-microsoft text-white text-2xl"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h4 class="text-lg font-bold text-gray-800">Microsoft Outlook</h4>
+                        <p class="text-gray-600 text-sm">Connect your Outlook, Office 365, or Exchange calendar</p>
+                        <div class="flex items-center space-x-2 mt-2">
+                            <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
+                            <span class="text-xs text-blue-600 font-medium">Enterprise Ready</span>
+                        </div>
+                    </div>
+                    <button class="bg-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-blue-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105">
+                        Connect
+                    </button>
+                </div>
+            </div>
+            <div class="bg-gray-50 px-6 py-4 border-t border-gray-100">
+                <div class="flex items-center space-x-4 text-sm text-gray-600">
+                    <div class="flex items-center space-x-1">
+                        <i class="fa-solid fa-check text-green-500"></i>
+                        <span>Teams integration</span>
+                    </div>
+                    <div class="flex items-center space-x-1">
+                        <i class="fa-solid fa-check text-green-500"></i>
+                        <span>Exchange support</span>
+                    </div>
+                    <div class="flex items-center space-x-1">
+                        <i class="fa-solid fa-check text-green-500"></i>
+                        <span>Shared calendars</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Apple iCloud -->
+        <div class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden provider-hover">
+            <div class="p-6">
+                <div class="flex items-center space-x-4">
+                    <div class="w-16 h-16 bg-gradient-to-br from-gray-700 to-black rounded-2xl flex items-center justify-center shadow-lg">
+                        <i class="fa-brands fa-apple text-white text-2xl"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h4 class="text-lg font-bold text-gray-800">Apple iCloud</h4>
+                        <p class="text-gray-600 text-sm">Connect your iCloud calendar and Apple devices</p>
+                        <div class="flex items-center space-x-2 mt-2">
+                            <div class="w-2 h-2 bg-gray-500 rounded-full"></div>
+                            <span class="text-xs text-gray-600 font-medium">iOS/Mac Users</span>
+                        </div>
+                    </div>
+                    <button class="bg-gray-800 text-white px-6 py-3 rounded-xl font-semibold hover:bg-gray-900 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105">
+                        Connect
+                    </button>
+                </div>
+            </div>
+            <div class="bg-gray-50 px-6 py-4 border-t border-gray-100">
+                <div class="flex items-center space-x-4 text-sm text-gray-600">
+                    <div class="flex items-center space-x-1">
+                        <i class="fa-solid fa-check text-green-500"></i>
+                        <span>Device sync</span>
+                    </div>
+                    <div class="flex items-center space-x-1">
+                        <i class="fa-solid fa-check text-green-500"></i>
+                        <span>Family sharing</span>
+                    </div>
+                    <div class="flex items-center space-x-1">
+                        <i class="fa-solid fa-check text-green-500"></i>
+                        <span>Siri integration</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CalDAV/Generic -->
+        <div class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden provider-hover">
+            <div class="p-6">
+                <div class="flex items-center space-x-4">
+                    <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center shadow-lg">
+                        <i class="fa-solid fa-server text-white text-2xl"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h4 class="text-lg font-bold text-gray-800">Other CalDAV</h4>
+                        <p class="text-gray-600 text-sm">Connect any CalDAV-compatible calendar service</p>
+                        <div class="flex items-center space-x-2 mt-2">
+                            <div class="w-2 h-2 bg-purple-500 rounded-full"></div>
+                            <span class="text-xs text-purple-600 font-medium">Custom Setup</span>
+                        </div>
+                    </div>
+                    <button class="bg-purple-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-purple-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105">
+                        Setup
+                    </button>
+                </div>
+            </div>
+            <div class="bg-gray-50 px-6 py-4 border-t border-gray-100">
+                <div class="flex items-center space-x-4 text-sm text-gray-600">
+                    <div class="flex items-center space-x-1">
+                        <i class="fa-solid fa-check text-green-500"></i>
+                        <span>Custom servers</span>
+                    </div>
+                    <div class="flex items-center space-x-1">
+                        <i class="fa-solid fa-check text-green-500"></i>
+                        <span>Self-hosted</span>
+                    </div>
+                    <div class="flex items-center space-x-1">
+                        <i class="fa-solid fa-check text-green-500"></i>
+                        <span>Open standards</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Connection Status Section -->
+    <div id="connection-status" class="px-6 py-8 bg-white">
+        <div class="space-y-6">
+            <h3 class="text-xl font-bold text-gray-800">Connected Calendars</h3>
+            
+            <!-- Connected Google Calendar -->
+            <div class="bg-green-50 border-2 border-green-200 rounded-2xl p-6 connection-success">
+                <div class="flex items-center space-x-4">
+                    <div class="w-14 h-14 bg-gradient-to-br from-red-500 to-orange-500 rounded-xl flex items-center justify-center shadow-lg">
+                        <i class="fa-brands fa-google text-white text-xl"></i>
+                    </div>
+                    <div class="flex-1">
+                        <div class="flex items-center space-x-2 mb-1">
+                            <h4 class="font-bold text-gray-800">Google Calendar</h4>
+                            <div class="bg-green-600 text-white px-2 py-1 rounded-full text-xs font-medium check-bounce">
+                                <i class="fa-solid fa-check mr-1"></i>Connected
+                            </div>
+                        </div>
+                        <p class="text-gray-600 text-sm">john.doe@gmail.com</p>
+                        <div class="flex items-center space-x-2 mt-2">
+                            <i class="fa-solid fa-sync-alt text-green-600 text-xs sync-animation"></i>
+                            <span class="text-xs text-green-600 font-medium">Syncing...</span>
+                        </div>
+                    </div>
+                    <button class="text-gray-400 hover:text-gray-600 transition-colors">
+                        <i class="fa-solid fa-ellipsis-v"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Calendar Selection Section -->
+    <div id="calendar-selection" class="px-6 py-8 bg-gray-50">
+        <div class="space-y-6">
+            <div class="text-center">
+                <h3 class="text-xl font-bold text-gray-800 mb-2">Select Calendars to Import</h3>
+                <p class="text-gray-600">Choose which calendars should sync with spareTime</p>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-lg p-6 space-y-4">
+                <div class="flex items-center justify-between p-4 bg-blue-50 rounded-xl border border-blue-200">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-4 h-4 bg-blue-500 rounded-full"></div>
+                        <div>
+                            <h5 class="font-semibold text-gray-800">Work Calendar</h5>
+                            <p class="text-sm text-gray-600">125 events • Last sync: 2 min ago</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <div class="text-right">
+                            <span class="text-xs text-blue-600 font-medium">Primary</span>
+                        </div>
+                        <input type="checkbox" checked class="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between p-4 bg-green-50 rounded-xl border border-green-200">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-4 h-4 bg-green-500 rounded-full"></div>
+                        <div>
+                            <h5 class="font-semibold text-gray-800">Personal Calendar</h5>
+                            <p class="text-sm text-gray-600">47 events • Last sync: 5 min ago</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <div class="text-right">
+                            <span class="text-xs text-green-600 font-medium">Personal</span>
+                        </div>
+                        <input type="checkbox" checked class="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between p-4 bg-purple-50 rounded-xl border border-purple-200">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-4 h-4 bg-purple-500 rounded-full"></div>
+                        <div>
+                            <h5 class="font-semibold text-gray-800">Family Calendar</h5>
+                            <p class="text-sm text-gray-600">18 events • Last sync: 1 hour ago</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <div class="text-right">
+                            <span class="text-xs text-purple-600 font-medium">Shared</span>
+                        </div>
+                        <input type="checkbox" class="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between p-4 bg-yellow-50 rounded-xl border border-yellow-200">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-4 h-4 bg-yellow-500 rounded-full"></div>
+                        <div>
+                            <h5 class="font-semibold text-gray-800">Project Calendar</h5>
+                            <p class="text-sm text-gray-600">32 events • Last sync: 10 min ago</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <div class="text-right">
+                            <span class="text-xs text-yellow-600 font-medium">Team</span>
+                        </div>
+                        <input type="checkbox" checked class="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between p-4 bg-gray-50 rounded-xl border border-gray-200">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-4 h-4 bg-gray-400 rounded-full"></div>
+                        <div>
+                            <h5 class="font-semibold text-gray-800">Archive Calendar</h5>
+                            <p class="text-sm text-gray-600">8 events • Last sync: 2 hours ago</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <div class="text-right">
+                            <span class="text-xs text-gray-600 font-medium">Archive</span>
+                        </div>
+                        <input type="checkbox" class="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sync Settings Section -->
+    <div id="sync-settings" class="px-6 py-8 bg-white">
+        <div class="space-y-6">
+            <h3 class="text-xl font-bold text-gray-800">Sync Settings</h3>
+            
+            <div class="bg-gray-50 rounded-2xl p-6 space-y-5">
+                <div class="flex items-center justify-between permission-card p-4 rounded-xl">
+                    <div class="flex items-start space-x-4">
+                        <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                            <i class="fa-solid fa-sync-alt text-blue-600"></i>
+                        </div>
+                        <div>
+                            <h5 class="font-semibold text-gray-800">Real-time Sync</h5>
+                            <p class="text-sm text-gray-600">Update availability instantly when events change</p>
+                        </div>
+                    </div>
+                    <input type="checkbox" checked class="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                </div>
+
+                <div class="flex items-center justify-between permission-card p-4 rounded-xl">
+                    <div class="flex items-start space-x-4">
+                        <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                            <i class="fa-solid fa-eye text-green-600"></i>
+                        </div>
+                        <div>
+                            <h5 class="font-semibold text-gray-800">Event Visibility</h5>
+                            <p class="text-sm text-gray-600">Show event titles in availability views</p>
+                        </div>
+                    </div>
+                    <input type="checkbox" class="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                </div>
+
+                <div class="flex items-center justify-between permission-card p-4 rounded-xl">
+                    <div class="flex items-start space-x-4">
+                        <div class="w-10 h-10 bg-yellow-100 rounded-lg flex items-center justify-center">
+                            <i class="fa-solid fa-clock text-yellow-600"></i>
+                        </div>
+                        <div>
+                            <h5 class="font-semibold text-gray-800">Travel Time</h5>
+                            <p class="text-sm text-gray-600">Add buffer time for travel between events</p>
+                        </div>
+                    </div>
+                    <input type="checkbox" checked class="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                </div>
+
+                <div class="flex items-center justify-between permission-card p-4 rounded-xl">
+                    <div class="flex items-start space-x-4">
+                        <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
+                            <i class="fa-solid fa-bell text-purple-600"></i>
+                        </div>
+                        <div>
+                            <h5 class="font-semibold text-gray-800">Sync Notifications</h5>
+                            <p class="text-sm text-gray-600">Get notified when calendars sync or have issues</p>
+                        </div>
+                    </div>
+                    <input type="checkbox" checked class="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Privacy & Permissions Section -->
+    <div id="privacy-permissions" class="px-6 py-8 bg-gray-50">
+        <div class="space-y-6">
+            <div class="text-center">
+                <h3 class="text-xl font-bold text-gray-800 mb-2">Privacy & Permissions</h3>
+                <p class="text-gray-600">Control how your calendar data is used</p>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-lg p-6 space-y-6">
+                <div class="bg-blue-50 border border-blue-200 rounded-xl p-4">
+                    <div class="flex items-start space-x-3">
+                        <i class="fa-solid fa-shield-halved text-blue-600 text-lg mt-1"></i>
+                        <div>
+                            <h5 class="font-semibold text-blue-800 mb-2">Your Privacy is Protected</h5>
+                            <p class="text-sm text-blue-700">We only read your calendar events to determine availability. Event details are never shared without your permission.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <div class="flex items-start justify-between">
+                        <div class="flex items-start space-x-3">
+                            <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center mt-1">
+                                <i class="fa-solid fa-calendar-check text-green-600 text-sm"></i>
+                            </div>
+                            <div>
+                                <h6 class="font-medium text-gray-800">Read calendar events</h6>
+                                <p class="text-sm text-gray-600">Required to determine your availability</p>
+                            </div>
+                        </div>
+                        <div class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-medium">
+                            Required
+                        </div>
+                    </div>
+
+                    <div class="flex items-start justify-between">
+                        <div class="flex items-start space-x-3">
+                            <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center mt-1">
+                                <i class="fa-solid fa-plus text-blue-600 text-sm"></i>
+                            </div>
+                            <div>
+                                <h6 class="font-medium text-gray-800">Create calendar events</h6>
+                                <p class="text-sm text-gray-600">Add confirmed meetings to your calendar</p>
+                            </div>
+                        </div>
+                        <input type="checkbox" checked class="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 mt-1">
+                    </div>
+
+                    <div class="flex items-start justify-between">
+                        <div class="flex items-start space-x-3">
+                            <div class="w-8 h-8 bg-yellow-100 rounded-lg flex items-center justify-center mt-1">
+                                <i class="fa-solid fa-edit text-yellow-600 text-sm"></i>
+                            </div>
+                            <div>
+                                <h6 class="font-medium text-gray-800">Modify calendar events</h6>
+                                <p class="text-sm text-gray-600">Update meetings when requests change</p>
+                            </div>
+                        </div>
+                        <input type="checkbox" class="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 mt-1">
+                    </div>
+
+                    <div class="flex items-start justify-between">
+                        <div class="flex items-start space-x-3">
+                            <div class="w-8 h-8 bg-red-100 rounded-lg flex items-center justify-center mt-1">
+                                <i class="fa-solid fa-trash text-red-600 text-sm"></i>
+                            </div>
+                            <div>
+                                <h6 class="font-medium text-gray-800">Delete calendar events</h6>
+                                <p class="text-sm text-gray-600">Remove cancelled meetings</p>
+                            </div>
+                        </div>
+                        <input type="checkbox" class="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 mt-1">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Advanced Settings Section -->
+    <div id="advanced-settings" class="px-6 py-8 bg-white">
+        <div class="space-y-6">
+            <h3 class="text-xl font-bold text-gray-800">Advanced Settings</h3>
+            
+            <div class="space-y-4">
+                <div class="bg-gray-50 rounded-xl p-4">
+                    <div class="flex items-center justify-between mb-3">
+                        <h5 class="font-semibold text-gray-800">Sync Frequency</h5>
+                        <span class="text-sm text-gray-600">Every 5 minutes</span>
+                    </div>
+                    <div class="space-y-2">
+                        <div class="flex items-center space-x-3">
+                            <input type="radio" name="sync-freq" value="realtime" checked class="text-blue-600 focus:ring-blue-500">
+                            <span class="text-sm text-gray-700">Real-time (recommended)</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <input type="radio" name="sync-freq" value="5min" class="text-blue-600 focus:ring-blue-500">
+                            <span class="text-sm text-gray-700">Every 5 minutes</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <input type="radio" name="sync-freq" value="15min" class="text-blue-600 focus:ring-blue-500">
+                            <span class="text-sm text-gray-700">Every 15 minutes</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <input type="radio" name="sync-freq" value="manual" class="text-blue-600 focus:ring-blue-500">
+                            <span class="text-sm text-gray-700">Manual sync only</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-gray-50 rounded-xl p-4">
+                    <div class="flex items-center justify-between mb-3">
+                        <h5 class="font-semibold text-gray-800">Time Range</h5>
+                        <span class="text-sm text-gray-600">Next 3 months</span>
+                    </div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-xs text-gray-600 mb-1">Look ahead</label>
+                            <select class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                <option>1 month</option>
+                                <option selected>3 months</option>
+                                <option>6 months</option>
+                                <option>1 year</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs text-gray-600 mb-1">Look back</label>
+                            <select class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                <option>1 week</option>
+                                <option selected>1 month</option>
+                                <option>3 months</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-gray-50 rounded-xl p-4">
+                    <h5 class="font-semibold text-gray-800 mb-3">Conflict Resolution</h5>
+                    <div class="space-y-2">
+                        <div class="flex items-center space-x-3">
+                            <input type="radio" name="conflict" value="calendar" checked class="text-blue-600 focus:ring-blue-500">
+                            <span class="text-sm text-gray-700">Calendar events take priority</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <input type="radio" name="conflict" value="sparetime" class="text-blue-600 focus:ring-blue-500">
+                            <span class="text-sm text-gray-700">spareTime events take priority</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <input type="radio" name="conflict" value="manual" class="text-blue-600 focus:ring-blue-500">
+                            <span class="text-sm text-gray-700">Ask me each time</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Connection Summary Section -->
+    <div id="connection-summary" class="px-6 py-8 bg-gradient-to-br from-green-50 to-blue-50">
+        <div class="bg-white rounded-2xl shadow-lg p-6 space-y-6">
+            <div class="text-center">
+                <div class="w-16 h-16 bg-gradient-to-br from-green-500 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                    <i class="fa-solid fa-check text-white text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-800 mb-2">Connection Summary</h3>
+                <p class="text-gray-600">Review your calendar integration settings</p>
+            </div>
+
+            <div class="space-y-4">
+                <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                    <span class="text-gray-700 font-medium">Connected Providers</span>
+                    <span class="text-blue-600 font-semibold">1 of 4</span>
+                </div>
+                <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                    <span class="text-gray-700 font-medium">Selected Calendars</span>
+                    <span class="text-blue-600 font-semibold">3 of 5</span>
+                </div>
+                <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                    <span class="text-gray-700 font-medium">Sync Frequency</span>
+                    <span class="text-green-600 font-semibold">Real-time</span>
+                </div>
+                <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                    <span class="text-gray-700 font-medium">Privacy Level</span>
+                    <span class="text-blue-600 font-semibold">Standard</span>
+                </div>
+            </div>
+
+            <div class="bg-blue-50 border border-blue-200 rounded-xl p-4">
+                <div class="flex items-start space-x-3">
+                    <i class="fa-solid fa-info-circle text-blue-600 mt-1"></i>
+                    <div>
+                        <h5 class="font-semibold text-blue-800 mb-1">What happens next?</h5>
+                        <p class="text-sm text-blue-700">Your calendars will sync in the background. You can add more providers or modify settings anytime in your dashboard.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Troubleshooting Section -->
+    <div id="troubleshooting" class="px-6 py-8 bg-white">
+        <div class="space-y-6">
+            <h3 class="text-xl font-bold text-gray-800">Need Help?</h3>
+            
+            <div class="space-y-4">
+                <div class="bg-yellow-50 border border-yellow-200 rounded-xl p-4">
+                    <div class="flex items-start space-x-3">
+                        <i class="fa-solid fa-exclamation-triangle text-yellow-600 mt-1"></i>
+                        <div>
+                            <h5 class="font-semibold text-yellow-800 mb-2">Common Issues</h5>
+                            <div class="space-y-2 text-sm text-yellow-700">
+                                <p>• Make sure you have admin access to your calendar</p>
+                                <p>• Check that third-party apps are allowed in your account</p>
+                                <p>• Some corporate accounts may require IT approval</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 gap-4">
+                    <button class="flex items-center justify-between p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors">
+                        <div class="flex items-center space-x-3">
+                            <i class="fa-solid fa-question-circle text-blue-600"></i>
+                            <span class="font-medium text-gray-800">Connection troubleshooting</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-gray-400"></i>
+                    </button>
+                    
+                    <button class="flex items-center justify-between p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors">
+                        <div class="flex items-center space-x-3">
+                            <i class="fa-solid fa-shield-alt text-green-600"></i>
+                            <span class="font-medium text-gray-800">Privacy & security guide</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-gray-400"></i>
+                    </button>
+                    
+                    <button class="flex items-center justify-between p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors">
+                        <div class="flex items-center space-x-3">
+                            <i class="fa-solid fa-life-ring text-purple-600"></i>
+                            <span class="font-medium text-gray-800">Contact support</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-gray-400"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Action Buttons Section -->
+    <div id="action-buttons" class="px-6 py-8 bg-gray-50">
+        <div class="space-y-4">
+            <button class="w-full bg-blue-600 text-white py-4 px-6 rounded-xl font-semibold text-lg hover:bg-blue-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105">
+                <i class="fa-solid fa-arrow-right mr-2"></i>
+                Continue Setup
+            </button>
+            
+            <div class="grid grid-cols-2 gap-4">
+                <button class="flex-1 bg-white border-2 border-gray-200 text-gray-700 py-3 px-4 rounded-xl font-semibold hover:border-gray-300 hover:bg-gray-50 transition-all duration-300">
+                    <i class="fa-solid fa-plus mr-2"></i>
+                    Add More
+                </button>
+                <button class="flex-1 bg-white border-2 border-gray-200 text-gray-700 py-3 px-4 rounded-xl font-semibold hover:border-gray-300 hover:bg-gray-50 transition-all duration-300">
+                    <i class="fa-solid fa-eye mr-2"></i>
+                    Preview
+                </button>
+            </div>
+            
+            <button class="w-full text-gray-600 py-3 font-medium hover:text-gray-800 transition-colors">
+                I'll connect calendars later
+            </button>
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <div id="footer" class="px-6 py-8 bg-white border-t border-gray-200">
+        <div class="text-center space-y-4">
+            <div class="flex items-center justify-center space-x-6 text-sm text-gray-500">
+                <a href="#" class="hover:text-blue-600 transition-colors">Help Center</a>
+                <a href="#" class="hover:text-blue-600 transition-colors">Privacy Policy</a>
+                <a href="#" class="hover:text-blue-600 transition-colors">Terms</a>
+            </div>
+            <p class="text-xs text-gray-400">© 2025 spareTime. Your availability, your way.</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Connection button animations
+            const connectButtons = document.querySelectorAll('button[class*="bg-red-"], button[class*="bg-blue-"], button[class*="bg-gray-"], button[class*="bg-purple-"]');
+            connectButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    if (this.textContent.includes('Connect') || this.textContent.includes('Setup')) {
+                        // Simulate connection process
+                        const originalText = this.textContent;
+                        this.innerHTML = '<i class="fa-solid fa-spinner animate-spin mr-2"></i>Connecting...';
+                        this.disabled = true;
+                        
+                        setTimeout(() => {
+                            this.innerHTML = '<i class="fa-solid fa-check mr-2"></i>Connected';
+                            this.classList.remove('hover:bg-red-600', 'hover:bg-blue-700', 'hover:bg-gray-900', 'hover:bg-purple-700');
+                            this.classList.add('bg-green-600', 'hover:bg-green-700');
+                            
+                            // Add to connected calendars section
+                            setTimeout(() => {
+                                this.innerHTML = originalText;
+                                this.disabled = false;
+                            }, 2000);
+                        }, 3000);
+                    }
+                });
+            });
+
+            // Calendar selection checkboxes
+            const calendarCheckboxes = document.querySelectorAll('input[type="checkbox"]');
+            calendarCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    const parent = this.closest('.bg-blue-50, .bg-green-50, .bg-purple-50, .bg-yellow-50, .bg-gray-50');
+                    if (parent) {
+                        if (this.checked) {
+                            parent.classList.add('ring-2', 'ring-blue-500', 'ring-opacity-50');
+                        } else {
+                            parent.classList.remove('ring-2', 'ring-blue-500', 'ring-opacity-50');
+                        }
+                    }
+                });
+            });
+
+            // Sync settings toggles
+            const syncToggles = document.querySelectorAll('.permission-card input[type="checkbox"]');
+            syncToggles.forEach(toggle => {
+                toggle.addEventListener('change', function() {
+                    const card = this.closest('.permission-card');
+                    if (this.checked) {
+                        card.classList.add('bg-blue-50', 'border', 'border-blue-200');
+                    } else {
+                        card.classList.remove('bg-blue-50', 'border', 'border-blue-200');
+                    }
+                });
+            });
+
+            // Progress indicator animation
+            const progressBars = document.querySelectorAll('.h-2');
+            progressBars.forEach((bar, index) => {
+                if (index < 3) {
+                    setTimeout(() => {
+                        bar.classList.add('transition-all', 'duration-500');
+                    }, index * 200);
+                }
+            });
+
+            // Smooth scroll for better UX
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+
+            // Auto-save settings
+            let saveTimeout;
+            const settingsInputs = document.querySelectorAll('input[type="checkbox"], input[type="radio"], select');
+            settingsInputs.forEach(input => {
+                input.addEventListener('change', function() {
+                    clearTimeout(saveTimeout);
+                    
+                    // Show saving indicator
+                    const indicator = document.createElement('div');
+                    indicator.className = 'fixed top-20 right-4 bg-blue-600 text-white px-4 py-2 rounded-lg text-sm z-50 transition-all duration-300';
+                    indicator.innerHTML = '<i class="fa-solid fa-spinner animate-spin mr-2"></i>Saving...';
+                    document.body.appendChild(indicator);
+                    
+                    saveTimeout = setTimeout(() => {
+                        indicator.innerHTML = '<i class="fa-solid fa-check mr-2"></i>Saved';
+                        indicator.classList.remove('bg-blue-600');
+                        indicator.classList.add('bg-green-600');
+                        
+                        setTimeout(() => {
+                            indicator.remove();
+                        }, 2000);
+                    }, 1000);
+                });
+            });
+
+            // Connection status updates
+            const connectionCards = document.querySelectorAll('.connection-success');
+            connectionCards.forEach(card => {
+                const syncIcon = card.querySelector('.sync-animation');
+                if (syncIcon) {
+                    setTimeout(() => {
+                        syncIcon.classList.remove('sync-animation');
+                        syncIcon.classList.add('text-green-600');
+                        syncIcon.parentElement.innerHTML = '<i class="fa-solid fa-check text-green-600 text-xs"></i><span class="text-xs text-green-600 font-medium">Synced</span>';
+                    }, 5000);
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

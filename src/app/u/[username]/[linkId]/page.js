@@ -1,113 +1,121 @@
 'use client';
 
+import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { ChevronLeft, ChevronRight, Clock, Check } from 'lucide-react';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { Calendar, Clock, User, ArrowLeft } from 'lucide-react';
+import { useState } from 'react';
 
-export default function PublicLinkView() {
+export default function GuestAvailability({ params }) {
+    const [selectedDate, setSelectedDate] = useState(null);
+
+    const availableDates = {
+        '2025-10-25': ['10:00 AM', '2:00 PM', '4:00 PM'],
+        '2025-10-26': ['9:00 AM', '11:00 AM', '3:00 PM'],
+        '2025-10-27': ['10:00 AM', '1:00 PM', '5:00 PM'],
+    };
+
     return (
-        <div className="min-h-screen bg-background flex flex-col items-center p-4 sm:p-8">
-            <header className="w-full max-w-3xl flex items-center justify-between mb-8">
-                <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-full bg-secondary flex items-center justify-center text-primary font-bold text-lg">
-                        M
+        <div className="min-h-screen bg-gray-50">
+            {/* Header */}
+            <div className="bg-gradient-to-r from-[#6e92a0] to-[#36454c] text-white py-12 px-6">
+                <div className="max-w-2xl mx-auto text-center">
+                    <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span className="text-[#36454c] text-2xl font-bold">M</span>
                     </div>
-                    <div>
-                        <h1 className="font-bold text-xl text-foreground">Maya Smith</h1>
-                        <p className="text-sm text-muted-foreground">Work Schedule</p>
+                    <h1 className="text-3xl font-bold mb-2">Maya Smith</h1>
+                    <p className="text-gray-100 mb-4">Product Designer & Coffee Enthusiast</p>
+                    <div className="flex items-center justify-center gap-2 text-sm">
+                        <Clock size={16} />
+                        <span>30 min meeting</span>
                     </div>
                 </div>
-                <Button variant="outline" size="sm">
-                    Powered by SpareTime
-                </Button>
-            </header>
+            </div>
 
-            <main className="w-full max-w-3xl space-y-6">
+            {/* Availability */}
+            <div className="max-w-2xl mx-auto px-6 py-8">
                 <Card>
-                    <div className="p-4 border-b flex items-center justify-between">
-                        <div className="flex items-center gap-4">
-                            <Button variant="ghost" size="icon">
-                                <ChevronLeft size={20} />
-                            </Button>
-                            <h2 className="font-bold text-lg">October 24, 2025</h2>
-                            <Button variant="ghost" size="icon">
-                                <ChevronRight size={20} />
-                            </Button>
-                        </div>
-                        <div className="flex gap-4 text-sm">
-                            <div className="flex items-center gap-2">
-                                <span className="w-3 h-3 rounded-full bg-red-500"></span>
-                                <span>Busy</span>
-                            </div>
-                            <div className="flex items-center gap-2">
-                                <span className="w-3 h-3 rounded-full bg-yellow-400"></span>
-                                <span>Negotiable</span>
-                            </div>
-                            <div className="flex items-center gap-2">
-                                <span className="w-3 h-3 rounded-full bg-green-500"></span>
-                                <span>Available</span>
-                            </div>
-                        </div>
-                    </div>
+                    <CardHeader>
+                        <CardTitle>Select a Time</CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-6">
+                        {/* Calendar Mini View */}
+                        <div>
+                            <h3 className="font-semibold mb-3">Available Dates</h3>
+                            <div className="grid grid-cols-3 gap-3">
+                                {Object.keys(availableDates).map(date => {
+                                    const dateObj = new Date(date);
+                                    const dayName = dateObj.toLocaleDateString('en-US', { weekday: 'short' });
+                                    const monthDay = dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                                    const isSelected = selectedDate === date;
 
-                    <div className="p-6 space-y-8">
-                        {/* Timeline */}
-                        <div className="relative pl-8 border-l-2 border-border space-y-8">
-                            {/* 9:00 AM - Busy */}
-                            <div className="relative">
-                                <div className="absolute -left-[41px] top-0 text-sm text-muted-foreground w-12 text-right">9:00 AM</div>
-                                <div className="p-3 rounded-lg bg-red-50 border border-red-100 text-red-800 text-sm font-medium">
-                                    Busy
-                                </div>
-                            </div>
-
-                            {/* 10:00 AM - Negotiable */}
-                            <div className="relative">
-                                <div className="absolute -left-[41px] top-0 text-sm text-muted-foreground w-12 text-right">10:00 AM</div>
-                                <div className="p-3 rounded-lg bg-yellow-50 border border-yellow-100 text-yellow-800 text-sm font-medium flex justify-between items-center">
-                                    <span>Busy (Negotiable)</span>
-                                    <span className="text-xs bg-yellow-200 px-2 py-0.5 rounded text-yellow-900">High Priority Only</span>
-                                </div>
-                            </div>
-
-                            {/* 11:00 AM - Available */}
-                            <div className="relative">
-                                <div className="absolute -left-[41px] top-0 text-sm text-muted-foreground w-12 text-right">11:00 AM</div>
-                                <div className="h-12 border-2 border-dashed border-green-200 rounded-lg bg-green-50/50 flex items-center justify-center text-green-600 text-sm font-medium hover:bg-green-50 transition-colors cursor-pointer">
-                                    Available
-                                </div>
-                            </div>
-
-                            {/* 12:00 PM - Busy */}
-                            <div className="relative">
-                                <div className="absolute -left-[41px] top-0 text-sm text-muted-foreground w-12 text-right">12:00 PM</div>
-                                <div className="p-3 rounded-lg bg-red-50 border border-red-100 text-red-800 text-sm font-medium">
-                                    Busy
-                                </div>
+                                    return (
+                                        <button
+                                            key={date}
+                                            onClick={() => setSelectedDate(date)}
+                                            className={`p-4 rounded-lg border-2 text-center transition-all ${isSelected
+                                                    ? 'border-[#6e92a0] bg-[#6e92a0]/10'
+                                                    : 'border-gray-200 hover:border-[#6e92a0]/50'
+                                                }`}
+                                        >
+                                            <div className="font-medium">{dayName}</div>
+                                            <div className="text-sm text-muted-foreground">{monthDay}</div>
+                                        </button>
+                                    );
+                                })}
                             </div>
                         </div>
-                    </div>
-                </Card>
 
-                <Card className="bg-secondary/10 border-primary/20">
-                    <CardContent className="p-6 flex flex-col sm:flex-row gap-4 items-center">
-                        <div className="flex-1 w-full">
-                            <h3 className="font-bold text-lg mb-1">Request a time</h3>
-                            <p className="text-sm text-muted-foreground mb-4">Propose a meeting time with Maya</p>
-                            <div className="flex gap-2 flex-wrap mb-4">
-                                <span className="px-3 py-1 rounded-full bg-background border text-sm cursor-pointer hover:border-primary hover:text-primary transition-colors">11:00 AM</span>
-                                <span className="px-3 py-1 rounded-full bg-background border text-sm cursor-pointer hover:border-primary hover:text-primary transition-colors">2:00 PM</span>
-                                <span className="px-3 py-1 rounded-full bg-background border text-sm cursor-pointer hover:border-primary hover:text-primary transition-colors">4:30 PM</span>
+                        {/* Time Slots */}
+                        {selectedDate && (
+                            <div>
+                                <h3 className="font-semibold mb-3">Available Times - {new Date(selectedDate).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}</h3>
+                                <div className="grid grid-cols-2 gap-3">
+                                    {availableDates[selectedDate].map(time => (
+                                        <Link
+                                            key={time}
+                                            href={`/u/${params?.username}/${params?.linkId}/request`}
+                                        >
+                                            <Button
+                                                variant="outline"
+                                                className="w-full h-12 hover:bg-[#6e92a0] hover:text-white hover:border-[#6e92a0]"
+                                            >
+                                                <Clock className="mr-2" size={16} />
+                                                {time}
+                                            </Button>
+                                        </Link>
+                                    ))}
+                                </div>
                             </div>
-                            <div className="flex gap-2">
-                                <Input placeholder="Or type a message..." className="bg-background" />
-                                <Button>Send</Button>
+                        )}
+
+                        {!selectedDate && (
+                            <div className="text-center py-8 text-muted-foreground">
+                                <Calendar className="mx-auto mb-2" size={48} />
+                                <p>Select a date to view available times</p>
                             </div>
-                        </div>
+                        )}
                     </CardContent>
                 </Card>
-            </main>
+
+                {/* Info Card */}
+                <Card className="mt-6 bg-blue-50 border-blue-100">
+                    <CardContent className="p-6">
+                        <h3 className="font-semibold mb-2">About this meeting</h3>
+                        <ul className="space-y-2 text-sm text-muted-foreground">
+                            <li className="flex items-center gap-2">
+                                <Clock size={16} />
+                                30 minute duration
+                            </li>
+                            <li className="flex items-center gap-2">
+                                <User size={16} />
+                                One-on-one meeting
+                            </li>
+                            <li>All times shown in your local timezone</li>
+                        </ul>
+                    </CardContent>
+                </Card>
+            </div>
         </div>
     );
 }

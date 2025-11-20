@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time Preferences</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script> window.FontAwesomeConfig = { autoReplaceSvg: 'nest'};</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        ::-webkit-scrollbar { display: none;}
+        body { font-family: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+        .gradient-bg { background: linear-gradient(135deg, #6e92a0 0%, #36454c 100%); }
+        .glass-effect { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); }
+        .calendar-icon { background: linear-gradient(135deg, #22b573, #6e92a0); }
+        .slide-up { animation: slideUp 0.5s ease-out; }
+        .fade-in { animation: fadeIn 0.3s ease-out; }
+        .scale-in { animation: scaleIn 0.2s ease-out; }
+        .pulse-subtle { animation: pulseSubtle 2s infinite; }
+        .time-slot-hover { transition: all 0.2s ease; }
+        .time-slot-hover:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); }
+        .protected-time-gradient { background: linear-gradient(135deg, #ed5a5a, #ff8a80); }
+        .work-hours-gradient { background: linear-gradient(135deg, #22b573, #66bb6a); }
+        .break-time-gradient { background: linear-gradient(135deg, #ffd56b, #ffeb3b); }
+        .focus-time-gradient { background: linear-gradient(135deg, #6e92a0, #81c784); }
+        
+        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes scaleIn { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        @keyframes pulseSubtle { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
+        
+        .time-picker-input:focus { box-shadow: 0 0 0 3px rgba(110, 146, 160, 0.2); }
+        .custom-toggle { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .custom-toggle.active { background: linear-gradient(135deg, #22b573, #66bb6a); }
+        .ripple-effect { position: relative; overflow: hidden; }
+        .ripple-effect::before { content: ''; position: absolute; top: 50%; left: 50%; width: 0; height: 0; border-radius: 50%; background: rgba(255, 255, 255, 0.3); transition: width 0.6s, height 0.6s, top 0.6s, left 0.6s; transform: translate(-50%, -50%); }
+        .ripple-effect:active::before { width: 300px; height: 300px; }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+    <!-- Header Section -->
+    <div id="header" class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="px-6 py-4">
+            <div class="flex items-center justify-between">
+                <button class="p-2 hover:bg-gray-100 rounded-lg transition-colors ripple-effect">
+                    <i class="fa-solid fa-arrow-left text-gray-600 text-lg"></i>
+                </button>
+                <div class="text-center">
+                    <h1 class="text-xl font-bold text-gray-800">Time Preferences</h1>
+                    <p class="text-xs text-gray-500 mt-1">Customize your availability</p>
+                </div>
+                <button class="text-blue-600 font-semibold px-3 py-1 rounded-lg hover:bg-blue-50 transition-colors">
+                    Save
+                </button>
+            </div>
+        </div>
+        <div class="h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-green-500"></div>
+    </div>
+
+    <!-- Progress Indicator -->
+    <div id="progress-section" class="px-6 py-4 bg-white border-b border-gray-100">
+        <div class="flex items-center justify-between text-sm">
+            <span class="text-gray-500">Step 3 of 4</span>
+            <span class="text-blue-600 font-medium">75% Complete</span>
+        </div>
+        <div class="mt-2 bg-gray-200 rounded-full h-2">
+            <div class="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full transition-all duration-500" style="width: 75%"></div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="px-6 py-6 space-y-8">
+
+        <!-- Timezone Section -->
+        <div id="timezone-section" class="bg-white rounded-2xl shadow-lg p-6 slide-up">
+            <div class="flex items-center space-x-3 mb-4">
+                <div class="w-10 h-10 bg-gradient-to-br from-blue-400 to-blue-600 rounded-xl flex items-center justify-center">
+                    <i class="fa-solid fa-globe text-white"></i>
+                </div>
+                <div>
+                    <h2 class="text-lg font-bold text-gray-800">Your Timezone</h2>
+                    <p class="text-sm text-gray-500">Set your local timezone</p>
+                </div>
+            </div>
+            <div class="relative">
+                <select class="w-full px-4 py-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 appearance-none bg-white text-gray-800 font-medium">
+                    <option value="us-eastern">🇺🇸 US Eastern (GMT-5) - New York</option>
+                    <option value="us-central">🇺🇸 US Central (GMT-6) - Chicago</option>
+                    <option value="us-mountain">🇺🇸 US Mountain (GMT-7) - Denver</option>
+                    <option value="us-pacific">🇺🇸 US Pacific (GMT-8) - Los Angeles</option>
+                    <option value="utc">🌍 UTC (GMT+0) - London</option>
+                    <option value="europe-paris">🇫🇷 Europe/Paris (GMT+1)</option>
+                    <option value="asia-tokyo">🇯🇵 Asia/Tokyo (GMT+9)</option>
+                </select>
+                <i class="fa-solid fa-chevron-down absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none"></i>
+            </div>
+        </div>
+
+        <!-- Work Hours Section -->
+        <div id="work-hours-section" class="bg-white rounded-2xl shadow-lg p-6 slide-up">
+            <div class="flex items-center space-x-3 mb-6">
+                <div class="w-10 h-10 work-hours-gradient rounded-xl flex items-center justify-center">
+                    <i class="fa-solid fa-briefcase text-white"></i>
+                </div>
+                <div>
+                    <h2 class="text-lg font-bold text-gray-800">Work Hours</h2>
+                    <p class="text-sm text-gray-500">Define your default working schedule</p>
+                </div>
+            </div>
+            
+            <div class="space-y-6">
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-3">Default work hours:</label>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="relative">
+                            <label class="block text-xs text-gray-500 mb-2">Start Time</label>
+                            <select class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 appearance-none bg-white time-picker-input">
+                                <option>6:00 AM</option>
+                                <option>7:00 AM</option>
+                                <option>8:00 AM</option>
+                                <option selected>9:00 AM</option>
+                                <option>10:00 AM</option>
+                                <option>11:00 AM</option>
+                            </select>
+                            <i class="fa-solid fa-chevron-down absolute right-3 top-8 text-gray-400 pointer-events-none"></i>
+                        </div>
+                        <div class="relative">
+                            <label class="block text-xs text-gray-500 mb-2">End Time</label>
+                            <select class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 appearance-none bg-white time-picker-input">
+                                <option>3:00 PM</option>
+                                <option>4:00 PM</option>
+                                <option selected>5:00 PM</option>
+                                <option>6:00 PM</option>
+                                <option>7:00 PM</option>
+                                <option>8:00 PM</option>
+                            </select>
+                            <i class="fa-solid fa-chevron-down absolute right-3 top-8 text-gray-400 pointer-events-none"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-3">Work days:</label>
+                    <div class="flex justify-between space-x-2">
+                        <button class="w-12 h-12 bg-green-600 text-white rounded-xl font-semibold text-sm custom-toggle active ripple-effect" data-day="monday">M</button>
+                        <button class="w-12 h-12 bg-green-600 text-white rounded-xl font-semibold text-sm custom-toggle active ripple-effect" data-day="tuesday">T</button>
+                        <button class="w-12 h-12 bg-green-600 text-white rounded-xl font-semibold text-sm custom-toggle active ripple-effect" data-day="wednesday">W</button>
+                        <button class="w-12 h-12 bg-green-600 text-white rounded-xl font-semibold text-sm custom-toggle active ripple-effect" data-day="thursday">Th</button>
+                        <button class="w-12 h-12 bg-green-600 text-white rounded-xl font-semibold text-sm custom-toggle active ripple-effect" data-day="friday">F</button>
+                        <button class="w-12 h-12 bg-gray-200 text-gray-600 rounded-xl font-semibold text-sm custom-toggle ripple-effect" data-day="saturday">Sa</button>
+                        <button class="w-12 h-12 bg-gray-200 text-gray-600 rounded-xl font-semibold text-sm custom-toggle ripple-effect" data-day="sunday">Su</button>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-2 text-center">Tap to toggle work days</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Break Preferences Section -->
+        <div id="break-preferences-section" class="bg-white rounded-2xl shadow-lg p-6 slide-up">
+            <div class="flex items-center space-x-3 mb-6">
+                <div class="w-10 h-10 break-time-gradient rounded-xl flex items-center justify-center">
+                    <i class="fa-solid fa-coffee text-white"></i>
+                </div>
+                <div>
+                    <h2 class="text-lg font-bold text-gray-800">Break Preferences</h2>
+                    <p class="text-sm text-gray-500">Customize your break and buffer times</p>
+                </div>
+            </div>
+            
+            <div class="space-y-4">
+                <div class="flex items-center justify-between p-4 bg-yellow-50 rounded-xl border border-yellow-200">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 bg-yellow-500 rounded-lg flex items-center justify-center">
+                            <i class="fa-solid fa-utensils text-white text-sm"></i>
+                        </div>
+                        <div>
+                            <span class="text-gray-800 font-medium">Lunch break (12:00 - 1:00 PM)</span>
+                            <p class="text-xs text-gray-600">Daily lunch break protection</p>
+                        </div>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" checked class="sr-only peer">
+                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-yellow-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-yellow-500"></div>
+                    </label>
+                </div>
+                
+                <div class="flex items-center justify-between p-4 bg-blue-50 rounded-xl border border-blue-200">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
+                            <i class="fa-solid fa-clock text-white text-sm"></i>
+                        </div>
+                        <div>
+                            <span class="text-gray-800 font-medium">15-min buffer between meetings</span>
+                            <p class="text-xs text-gray-600">Automatic buffer time</p>
+                        </div>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" checked class="sr-only peer">
+                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-500"></div>
+                    </label>
+                </div>
+                
+                <div class="flex items-center justify-between p-4 bg-purple-50 rounded-xl border border-purple-200">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 bg-purple-500 rounded-lg flex items-center justify-center">
+                            <i class="fa-solid fa-pause text-white text-sm"></i>
+                        </div>
+                        <div>
+                            <span class="text-gray-800 font-medium">5-min prep time before meetings</span>
+                            <p class="text-xs text-gray-600">Preparation buffer</p>
+                        </div>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" class="sr-only peer">
+                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-purple-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-500"></div>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Protected Time Section -->
+        <div id="protected-time-section" class="bg-white rounded-2xl shadow-lg p-6 slide-up">
+            <div class="flex items-center space-x-3 mb-6">
+                <div class="w-10 h-10 protected-time-gradient rounded-xl flex items-center justify-center">
+                    <i class="fa-solid fa-shield text-white"></i>
+                </div>
+                <div>
+                    <h2 class="text-lg font-bold text-gray-800">Protected Time Blocks</h2>
+                    <p class="text-sm text-gray-500">Set recurring protected time periods</p>
+                </div>
+            </div>
+            
+            <div class="space-y-4">
+                <div class="p-4 bg-red-50 rounded-xl border-2 border-red-200 time-slot-hover">
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-8 h-8 bg-red-500 rounded-lg flex items-center justify-center">
+                                <i class="fa-solid fa-brain text-white text-sm"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-800">Deep Work Focus</h3>
+                                <p class="text-xs text-gray-600">Daily 9:00 AM - 11:00 AM</p>
+                            </div>
+                        </div>
+                        <button class="p-2 hover:bg-red-100 rounded-lg transition-colors">
+                            <i class="fa-solid fa-ellipsis text-gray-600"></i>
+                        </button>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-2 py-1 bg-red-200 text-red-800 text-xs rounded-full">Weekdays</span>
+                        <span class="px-2 py-1 bg-red-200 text-red-800 text-xs rounded-full">High Priority</span>
+                        <span class="px-2 py-1 bg-red-200 text-red-800 text-xs rounded-full">Non-movable</span>
+                    </div>
+                </div>
+                
+                <div class="p-4 bg-green-50 rounded-xl border-2 border-green-200 time-slot-hover">
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-8 h-8 bg-green-500 rounded-lg flex items-center justify-center">
+                                <i class="fa-solid fa-dumbbell text-white text-sm"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-800">Workout Time</h3>
+                                <p class="text-xs text-gray-600">Mon, Wed, Fri 6:00 PM - 7:30 PM</p>
+                            </div>
+                        </div>
+                        <button class="p-2 hover:bg-green-100 rounded-lg transition-colors">
+                            <i class="fa-solid fa-ellipsis text-gray-600"></i>
+                        </button>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-2 py-1 bg-green-200 text-green-800 text-xs rounded-full">3x per week</span>
+                        <span class="px-2 py-1 bg-green-200 text-green-800 text-xs rounded-full">Medium Priority</span>
+                        <span class="px-2 py-1 bg-green-200 text-green-800 text-xs rounded-full">Negotiable</span>
+                    </div>
+                </div>
+                
+                <button class="w-full p-4 border-2 border-dashed border-gray-300 rounded-xl text-gray-500 hover:border-gray-400 hover:text-gray-600 hover:bg-gray-50 transition-all duration-200 ripple-effect">
+                    <i class="fa-solid fa-plus text-lg mb-2"></i>
+                    <div class="font-medium">Add Protected Time Block</div>
+                    <p class="text-xs text-gray-400 mt-1">Create recurring time that appears busy to others</p>
+                </button>
+            </div>
+        </div>
+
+        <!-- Meeting Preferences Section -->
+        <div id="meeting-preferences-section" class="bg-white rounded-2xl shadow-lg p-6 slide-up">
+            <div class="flex items-center space-x-3 mb-6">
+                <div class="w-10 h-10 focus-time-gradient rounded-xl flex items-center justify-center">
+                    <i class="fa-solid fa-handshake text-white"></i>
+                </div>
+                <div>
+                    <h2 class="text-lg font-bold text-gray-800">Meeting Preferences</h2>
+                    <p class="text-sm text-gray-500">Set your meeting availability preferences</p>
+                </div>
+            </div>
+            
+            <div class="space-y-6">
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-3">Minimum meeting duration:</label>
+                    <div class="grid grid-cols-3 gap-3">
+                        <button class="p-3 border-2 border-gray-200 rounded-xl text-center hover:border-blue-500 hover:bg-blue-50 transition-all duration-200 ripple-effect">
+                            <div class="font-semibold text-gray-800">15 min</div>
+                        </button>
+                        <button class="p-3 border-2 border-blue-500 bg-blue-50 rounded-xl text-center transition-all duration-200 ripple-effect">
+                            <div class="font-semibold text-blue-600">30 min</div>
+                        </button>
+                        <button class="p-3 border-2 border-gray-200 rounded-xl text-center hover:border-blue-500 hover:bg-blue-50 transition-all duration-200 ripple-effect">
+                            <div class="font-semibold text-gray-800">60 min</div>
+                        </button>
+                    </div>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-3">Maximum meeting duration:</label>
+                    <div class="grid grid-cols-3 gap-3">
+                        <button class="p-3 border-2 border-gray-200 rounded-xl text-center hover:border-blue-500 hover:bg-blue-50 transition-all duration-200 ripple-effect">
+                            <div class="font-semibold text-gray-800">1 hour</div>
+                        </button>
+                        <button class="p-3 border-2 border-blue-500 bg-blue-50 rounded-xl text-center transition-all duration-200 ripple-effect">
+                            <div class="font-semibold text-blue-600">2 hours</div>
+                        </button>
+                        <button class="p-3 border-2 border-gray-200 rounded-xl text-center hover:border-blue-500 hover:bg-blue-50 transition-all duration-200 ripple-effect">
+                            <div class="font-semibold text-gray-800">4 hours</div>
+                        </button>
+                    </div>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-3">Advance notice required:</label>
+                    <div class="relative">
+                        <select class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 appearance-none bg-white">
+                            <option>No advance notice needed</option>
+                            <option>At least 1 hour</option>
+                            <option>At least 4 hours</option>
+                            <option selected>At least 24 hours</option>
+                            <option>At least 48 hours</option>
+                            <option>At least 1 week</option>
+                        </select>
+                        <i class="fa-solid fa-chevron-down absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Availability Window Section -->
+        <div id="availability-window-section" class="bg-white rounded-2xl shadow-lg p-6 slide-up">
+            <div class="flex items-center space-x-3 mb-6">
+                <div class="w-10 h-10 bg-gradient-to-br from-indigo-400 to-indigo-600 rounded-xl flex items-center justify-center">
+                    <i class="fa-solid fa-calendar-week text-white"></i>
+                </div>
+                <div>
+                    <h2 class="text-lg font-bold text-gray-800">Availability Window</h2>
+                    <p class="text-sm text-gray-500">How far ahead to show availability</p>
+                </div>
+            </div>
+            
+            <div class="space-y-4">
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs text-gray-500 mb-2">Show availability for:</label>
+                        <div class="relative">
+                            <select class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 appearance-none bg-white">
+                                <option>1 week ahead</option>
+                                <option>2 weeks ahead</option>
+                                <option selected>1 month ahead</option>
+                                <option>2 months ahead</option>
+                                <option>3 months ahead</option>
+                            </select>
+                            <i class="fa-solid fa-chevron-down absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none"></i>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-xs text-gray-500 mb-2">Booking cutoff:</label>
+                        <div class="relative">
+                            <select class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 appearance-none bg-white">
+                                <option>Same day</option>
+                                <option selected>24 hours</option>
+                                <option>48 hours</option>
+                                <option>1 week</option>
+                            </select>
+                            <i class="fa-solid fa-chevron-down absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="p-4 bg-indigo-50 rounded-xl border border-indigo-200">
+                    <div class="flex items-start space-x-3">
+                        <i class="fa-solid fa-lightbulb text-indigo-600 mt-1"></i>
+                        <div>
+                            <p class="text-sm text-indigo-800 font-medium">Pro Tip</p>
+                            <p class="text-xs text-indigo-600 mt-1">Longer availability windows help people plan better, but shorter windows give you more flexibility.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Smart Scheduling Section -->
+        <div id="smart-scheduling-section" class="bg-white rounded-2xl shadow-lg p-6 slide-up">
+            <div class="flex items-center space-x-3 mb-6">
+                <div class="w-10 h-10 bg-gradient-to-br from-purple-400 to-purple-600 rounded-xl flex items-center justify-center">
+                    <i class="fa-solid fa-magic-wand-sparkles text-white"></i>
+                </div>
+                <div>
+                    <h2 class="text-lg font-bold text-gray-800">Smart Scheduling</h2>
+                    <p class="text-sm text-gray-500">AI-powered scheduling preferences</p>
+                </div>
+            </div>
+            
+            <div class="space-y-4">
+                <div class="flex items-center justify-between p-4 bg-purple-50 rounded-xl border border-purple-200">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 bg-purple-500 rounded-lg flex items-center justify-center">
+                            <i class="fa-solid fa-robot text-white text-sm"></i>
+                        </div>
+                        <div>
+                            <span class="text-gray-800 font-medium">Auto-suggest optimal times</span>
+                            <p class="text-xs text-gray-600">AI suggests best meeting times</p>
+                        </div>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" checked class="sr-only peer">
+                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-purple-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-500"></div>
+                    </label>
+                </div>
+                
+                <div class="flex items-center justify-between p-4 bg-teal-50 rounded-xl border border-teal-200">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 bg-teal-500 rounded-lg flex items-center justify-center">
+                            <i class="fa-solid fa-compress text-white text-sm"></i>
+                        </div>
+                        <div>
+                            <span class="text-gray-800 font-medium">Group similar meetings</span>
+                            <p class="text-xs text-gray-600">Batch similar meeting types</p>
+                        </div>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" class="sr-only peer">
+                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-teal-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-teal-500"></div>
+                    </label>
+                </div>
+                
+                <div class="flex items-center justify-between p-4 bg-orange-50 rounded-xl border border-orange-200">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 bg-orange-500 rounded-lg flex items-center justify-center">
+                            <i class="fa-solid fa-chart-line text-white text-sm"></i>
+                        </div>
+                        <div>
+                            <span class="text-gray-800 font-medium">Learn from patterns</span>
+                            <p class="text-xs text-gray-600">Adapt to your scheduling habits</p>
+                        </div>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" checked class="sr-only peer">
+                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-orange-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-orange-500"></div>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notification Preferences Section -->
+        <div id="notification-preferences-section" class="bg-white rounded-2xl shadow-lg p-6 slide-up">
+            <div class="flex items-center space-x-3 mb-6">
+                <div class="w-10 h-10 bg-gradient-to-br from-red-400 to-pink-500 rounded-xl flex items-center justify-center">
+                    <i class="fa-solid fa-bell text-white"></i>
+                </div>
+                <div>
+                    <h2 class="text-lg font-bold text-gray-800">Notification Preferences</h2>
+                    <p class="text-sm text-gray-500">Choose when and how to be notified</p>
+                </div>
+            </div>
+            
+            <div class="space-y-4">
+                <div class="p-4 bg-gray-50 rounded-xl">
+                    <h3 class="font-semibold text-gray-800 mb-3">Time Request Notifications</h3>
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="text-gray-700">Instant notifications</span>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" checked class="sr-only peer">
+                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-500"></div>
+                            </label>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-gray-700">Daily digest (8:00 AM)</span>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" class="sr-only peer">
+                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-500"></div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="p-4 bg-gray-50 rounded-xl">
+                    <h3 class="font-semibold text-gray-800 mb-3">Schedule Change Notifications</h3>
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="text-gray-700">Calendar sync updates</span>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" checked class="sr-only peer">
+                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-500"></div>
+                            </label>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-gray-700">Conflict alerts</span>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" checked class="sr-only peer">
+                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-500"></div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Preview Section -->
+        <div id="preview-section" class="bg-gradient-to-br from-blue-50 to-purple-50 rounded-2xl shadow-lg p-6 slide-up">
+            <div class="text-center mb-6">
+                <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                    <i class="fa-solid fa-eye text-white text-2xl"></i>
+                </div>
+                <h2 class="text-xl font-bold text-gray-800 mb-2">Preview Your Settings</h2>
+                <p class="text-sm text-gray-600">See how your preferences will look to others</p>
+            </div>
+            
+            <div class="bg-white rounded-xl p-4 mb-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="font-semibold text-gray-800">Sample Availability View</h3>
+                    <span class="text-xs text-gray-500">Your Link Preview</span>
+                </div>
+                
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between p-3 bg-green-50 rounded-lg border border-green-200">
+                        <div>
+                            <span class="text-sm font-medium text-gray-800">Monday, Oct 28</span>
+                            <p class="text-xs text-gray-600">9:00 AM - 12:00 PM Available</p>
+                        </div>
+                        <span class="px-2 py-1 bg-green-200 text-green-800 text-xs rounded-full">Open</span>
+                    </div>
+                    
+                    <div class="flex items-center justify-between p-3 bg-red-50 rounded-lg border border-red-200">
+                        <div>
+                            <span class="text-sm font-medium text-gray-800">Monday, Oct 28</span>
+                            <p class="text-xs text-gray-600">12:00 PM - 1:00 PM Lunch</p>
+                        </div>
+                        <span class="px-2 py-1 bg-red-200 text-red-800 text-xs rounded-full">Busy</span>
+                    </div>
+                    
+                    <div class="flex items-center justify-between p-3 bg-yellow-50 rounded-lg border border-yellow-200">
+                        <div>
+                            <span class="text-sm font-medium text-gray-800">Monday, Oct 28</span>
+                            <p class="text-xs text-gray-600">2:00 PM - 5:00 PM Available</p>
+                        </div>
+                        <span class="px-2 py-1 bg-yellow-200 text-yellow-800 text-xs rounded-full">Flexible</span>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-4 px-6 rounded-xl font-semibold text-lg hover:from-blue-600 hover:to-purple-700 transition-all duration-200 ripple-effect">
+                <i class="fa-solid fa-external-link mr-2"></i>
+                View Full Preview
+            </button>
+        </div>
+
+    </div>
+
+    <!-- Bottom Action Section -->
+    <div id="bottom-actions" class="sticky bottom-0 bg-white border-t border-gray-200 px-6 py-4">
+        <div class="flex space-x-4">
+            <button class="flex-1 border-2 border-gray-300 text-gray-700 py-4 px-6 rounded-xl font-semibold text-lg hover:bg-gray-50 hover:border-gray-400 transition-all duration-200 ripple-effect">
+                <i class="fa-solid fa-arrow-left mr-2"></i>
+                Back
+            </button>
+            <button class="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white py-4 px-6 rounded-xl font-semibold text-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-200 ripple-effect">
+                Save & Continue
+                <i class="fa-solid fa-arrow-right ml-2"></i>
+            </button>
+        </div>
+        
+        <div class="flex items-center justify-center mt-4 space-x-4 text-sm">
+            <button class="text-blue-600 hover:text-blue-700 font-medium">
+                <i class="fa-solid fa-floppy-disk mr-1"></i>
+                Save Draft
+            </button>
+            <span class="text-gray-300">•</span>
+            <button class="text-gray-600 hover:text-gray-700 font-medium">
+                <i class="fa-solid fa-rotate-left mr-1"></i>
+                Reset to Defaults
+            </button>
+        </div>
+    </div>
+
+    <!-- Quick Access Floating Button -->
+    <div id="floating-actions" class="fixed bottom-24 right-6 z-40">
+        <div class="relative">
+            <button class="w-14 h-14 bg-gradient-to-br from-purple-500 to-blue-600 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 pulse-subtle ripple-effect">
+                <i class="fa-solid fa-question text-xl"></i>
+            </button>
+            <div class="absolute bottom-16 right-0 bg-white rounded-lg shadow-xl p-4 w-48 hidden" id="help-tooltip">
+                <h4 class="font-semibold text-gray-800 mb-2">Need Help?</h4>
+                <p class="text-xs text-gray-600 mb-3">Get assistance with setting up your time preferences</p>
+                <button class="w-full bg-blue-600 text-white py-2 px-4 rounded-lg text-xs font-medium">
+                    Get Support
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Day selector toggle functionality
+            const dayButtons = document.querySelectorAll('[data-day]');
+            dayButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                    if (this.classList.contains('active')) {
+                        this.classList.remove('bg-gray-200', 'text-gray-600');
+                        this.classList.add('bg-green-600', 'text-white');
+                    } else {
+                        this.classList.remove('bg-green-600', 'text-white');
+                        this.classList.add('bg-gray-200', 'text-gray-600');
+                    }
+                });
+            });
+
+            // Meeting duration selector
+            const durationButtons = document.querySelectorAll('[class*="border-2 border-"]');
+            durationButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active state from siblings
+                    this.parentElement.querySelectorAll('button').forEach(btn => {
+                        btn.classList.remove('border-blue-500', 'bg-blue-50');
+                        btn.classList.add('border-gray-200');
+                        btn.querySelector('div').classList.remove('text-blue-600');
+                        btn.querySelector('div').classList.add('text-gray-800');
+                    });
+                    
+                    // Add active state to clicked button
+                    this.classList.remove('border-gray-200');
+                    this.classList.add('border-blue-500', 'bg-blue-50');
+                    this.querySelector('div').classList.remove('text-gray-800');
+                    this.querySelector('div').classList.add('text-blue-600');
+                });
+            });
+
+            // Floating help button
+            const helpButton = document.querySelector('#floating-actions button');
+            const helpTooltip = document.getElementById('help-tooltip');
+            
+            helpButton.addEventListener('click', function() {
+                helpTooltip.classList.toggle('hidden');
+            });
+
+            // Close tooltip when clicking outside
+            document.addEventListener('click', function(event) {
+                if (!helpButton.contains(event.target) && !helpTooltip.contains(event.target)) {
+                    helpTooltip.classList.add('hidden');
+                }
+            });
+
+            // Animate elements on scroll
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('slide-up');
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all sections
+            document.querySelectorAll('[id$="-section"]').forEach(section => {
+                observer.observe(section);
+            });
+
+            // Progress bar animation
+            setTimeout(() => {
+                const progressBar = document.querySelector('.bg-gradient-to-r');
+                progressBar.style.width = '75%';
+            }, 500);
+
+            // Ripple effect for buttons
+            document.querySelectorAll('.ripple-effect').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    const rect = this.getBoundingClientRect();
+                    const size = Math.max(rect.width, rect.height);
+                    const x = e.clientX - rect.left - size / 2;
+                    const y = e.clientY - rect.top - size / 2;
+                    
+                    const ripple = document.createElement('div');
+                    ripple.style.cssText = `
+                        position: absolute;
+                        width: ${size}px;
+                        height: ${size}px;
+                        left: ${x}px;
+                        top: ${y}px;
+                        background: rgba(255, 255, 255, 0.3);
+                        border-radius: 50%;
+                        transform: scale(0);
+                        animation: ripple 0.6s linear;
+                        pointer-events: none;
+                    `;
+                    
+                    this.appendChild(ripple);
+                    
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 600);
+                });
+            });
+
+            // Add ripple animation keyframes
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes ripple {
+                    to {
+                        transform: scale(4);
+                        opacity: 0;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+
+            // Form validation and save functionality
+            const saveButton = document.querySelector('button[class*="Save"]');
+            saveButton.addEventListener('click', function() {
+                // Collect form data
+                const preferences = {
+                    timezone: document.querySelector('select').value,
+                    workHours: {
+                        start: document.querySelectorAll('select')[1].value,
+                        end: document.querySelectorAll('select')[2].value
+                    },
+                    workDays: Array.from(document.querySelectorAll('[data-day].active')).map(btn => btn.dataset.day),
+                    breaks: {
+                        lunch: document.querySelector('input[type="checkbox"]').checked,
+                        buffer: document.querySelectorAll('input[type="checkbox"]')[1].checked
+                    }
+                };
+                
+                // Show success message
+                const toast = document.createElement('div');
+                toast.className = 'fixed top-4 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 slide-up';
+                toast.innerHTML = '<i class="fa-solid fa-check mr-2"></i>Preferences saved successfully!';
+                document.body.appendChild(toast);
+                
+                setTimeout(() => {
+                    toast.remove();
+                }, 3000);
+            });
+        });
+    </script>
+
+</body>
+</html>

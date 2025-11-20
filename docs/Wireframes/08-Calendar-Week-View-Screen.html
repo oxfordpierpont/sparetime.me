@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendar</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script> window.FontAwesomeConfig = { autoReplaceSvg: 'nest'};</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        ::-webkit-scrollbar { display: none;}
+        body { font-family: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+        .gradient-bg { background: linear-gradient(135deg, #6e92a0 0%, #36454c 100%); }
+        .glass-effect { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); }
+        .calendar-icon { background: linear-gradient(135deg, #22b573, #6e92a0); }
+        .slide-up { animation: slideUp 0.5s ease-out; }
+        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .event-busy { background: linear-gradient(135deg, #ed5a5a, #ff7979); }
+        .event-negotiable { background: linear-gradient(135deg, #ffd56b, #fdcb6e); }
+        .event-protected { background: linear-gradient(135deg, #6e92a0, #74b9ff); }
+        .event-available { background: linear-gradient(135deg, #22b573, #00b894); }
+        .time-slot:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .calendar-day { transition: all 0.3s ease; }
+        .calendar-day:hover { background: rgba(110, 146, 160, 0.1); }
+        .calendar-day.selected { background: linear-gradient(135deg, #6e92a0, #36454c); color: white; }
+        .floating-action { position: fixed; bottom: 100px; right: 20px; z-index: 50; }
+        .availability-indicator { width: 4px; height: 100%; border-radius: 2px; }
+        .pulse { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .5; } }
+        .mini-calendar { font-size: 0.7rem; }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+    <!-- Header Section -->
+    <div id="header" class="bg-white shadow-sm border-b border-gray-100 sticky top-0 z-40">
+        <div class="px-4 py-3">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <button class="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                        <i class="fa-solid fa-arrow-left text-gray-600 text-lg"></i>
+                    </button>
+                    <div>
+                        <h1 class="text-xl font-bold text-gray-800">My Calendar</h1>
+                        <p class="text-xs text-gray-500">Manage your availability</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <button class="p-2 hover:bg-gray-100 rounded-lg transition-colors relative">
+                        <i class="fa-solid fa-bell text-gray-600"></i>
+                        <span class="absolute -top-1 -right-1 w-4 h-4 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">3</span>
+                    </button>
+                    <button class="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                        <i class="fa-solid fa-cog text-gray-600"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Stats Banner -->
+    <div id="stats-banner" class="bg-gradient-to-r from-blue-50 to-purple-50 mx-4 mt-4 rounded-2xl p-4">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-4">
+                <div class="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center">
+                    <i class="fa-solid fa-calendar-check text-white text-lg"></i>
+                </div>
+                <div>
+                    <p class="text-sm font-medium text-gray-600">Today's Availability</p>
+                    <p class="text-lg font-bold text-gray-800">4 hours free</p>
+                </div>
+            </div>
+            <div class="text-right">
+                <p class="text-xs text-gray-500">Next available</p>
+                <p class="text-sm font-semibold text-blue-600">2:30 PM</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- View Toggle Section -->
+    <div id="view-toggle" class="px-4 py-4">
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-1">
+            <div class="flex">
+                <button class="flex-1 py-3 px-4 text-sm font-medium text-gray-500 hover:text-gray-700 transition-colors rounded-lg">
+                    Day
+                </button>
+                <button class="flex-1 py-3 px-4 text-sm font-medium bg-blue-600 text-white rounded-lg shadow-sm">
+                    Week
+                </button>
+                <button class="flex-1 py-3 px-4 text-sm font-medium text-gray-500 hover:text-gray-700 transition-colors rounded-lg">
+                    Month
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Date Navigation -->
+    <div id="date-navigation" class="px-4 pb-4">
+        <div class="flex items-center justify-between bg-white rounded-xl shadow-sm border border-gray-100 p-4">
+            <button class="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                <i class="fa-solid fa-chevron-left text-gray-600"></i>
+            </button>
+            <div class="text-center">
+                <h2 class="text-lg font-bold text-gray-800">October 24, 2025</h2>
+                <p class="text-sm text-gray-500">Friday</p>
+            </div>
+            <button class="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                <i class="fa-solid fa-chevron-right text-gray-600"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Mini Week Calendar -->
+    <div id="mini-week-calendar" class="px-4 pb-4">
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-4">
+            <div class="flex justify-between items-center mb-3">
+                <h3 class="font-semibold text-gray-700 text-sm">This Week</h3>
+                <button class="text-blue-600 text-xs font-medium">Today</button>
+            </div>
+            <div class="grid grid-cols-7 gap-1">
+                <div class="text-center">
+                    <p class="text-xs text-gray-500 mb-2">Mon</p>
+                    <div class="calendar-day w-8 h-8 rounded-lg flex items-center justify-center text-xs font-medium cursor-pointer">21</div>
+                </div>
+                <div class="text-center">
+                    <p class="text-xs text-gray-500 mb-2">Tue</p>
+                    <div class="calendar-day w-8 h-8 rounded-lg flex items-center justify-center text-xs font-medium cursor-pointer">22</div>
+                </div>
+                <div class="text-center">
+                    <p class="text-xs text-gray-500 mb-2">Wed</p>
+                    <div class="calendar-day w-8 h-8 rounded-lg flex items-center justify-center text-xs font-medium cursor-pointer">23</div>
+                </div>
+                <div class="text-center">
+                    <p class="text-xs text-gray-500 mb-2">Thu</p>
+                    <div class="calendar-day w-8 h-8 rounded-lg flex items-center justify-center text-xs font-medium cursor-pointer">24</div>
+                </div>
+                <div class="text-center">
+                    <p class="text-xs text-gray-500 mb-2">Fri</p>
+                    <div class="calendar-day selected w-8 h-8 rounded-lg flex items-center justify-center text-xs font-medium cursor-pointer">25</div>
+                </div>
+                <div class="text-center">
+                    <p class="text-xs text-gray-500 mb-2">Sat</p>
+                    <div class="calendar-day w-8 h-8 rounded-lg flex items-center justify-center text-xs font-medium cursor-pointer text-gray-400">26</div>
+                </div>
+                <div class="text-center">
+                    <p class="text-xs text-gray-500 mb-2">Sun</p>
+                    <div class="calendar-day w-8 h-8 rounded-lg flex items-center justify-center text-xs font-medium cursor-pointer text-gray-400">27</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Time Slots Section -->
+    <div id="time-slots" class="px-4 pb-6">
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100">
+            <div class="p-4 border-b border-gray-100">
+                <div class="flex items-center justify-between">
+                    <h3 class="font-semibold text-gray-800">Today's Schedule</h3>
+                    <div class="flex space-x-2">
+                        <div class="flex items-center space-x-1">
+                            <div class="w-3 h-3 rounded-full bg-red-400"></div>
+                            <span class="text-xs text-gray-500">Busy</span>
+                        </div>
+                        <div class="flex items-center space-x-1">
+                            <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
+                            <span class="text-xs text-gray-500">Flexible</span>
+                        </div>
+                        <div class="flex items-center space-x-1">
+                            <div class="w-3 h-3 rounded-full bg-green-400"></div>
+                            <span class="text-xs text-gray-500">Free</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Morning Section -->
+            <div class="p-4 border-b border-gray-50">
+                <div class="flex items-center space-x-2 mb-4">
+                    <i class="fa-solid fa-sun text-yellow-500 text-sm"></i>
+                    <h4 class="font-medium text-gray-700 text-sm">Morning</h4>
+                </div>
+                
+                <div class="space-y-3">
+                    <div class="time-slot bg-red-50 border border-red-200 rounded-xl p-4 cursor-pointer transition-all duration-300">
+                        <div class="flex items-center space-x-3">
+                            <div class="availability-indicator bg-red-400"></div>
+                            <div class="flex-1">
+                                <div class="flex items-center justify-between mb-1">
+                                    <span class="text-sm font-semibold text-gray-800">9:00 - 10:30 AM</span>
+                                    <span class="text-xs bg-red-100 text-red-700 px-2 py-1 rounded-full">Busy</span>
+                                </div>
+                                <p class="text-xs text-gray-600">Team Standup Meeting</p>
+                                <p class="text-xs text-gray-500 mt-1">Conference Room A</p>
+                            </div>
+                            <button class="p-2 hover:bg-red-100 rounded-lg transition-colors">
+                                <i class="fa-solid fa-ellipsis-vertical text-gray-400"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="time-slot bg-yellow-50 border border-yellow-200 rounded-xl p-4 cursor-pointer transition-all duration-300">
+                        <div class="flex items-center space-x-3">
+                            <div class="availability-indicator bg-yellow-400"></div>
+                            <div class="flex-1">
+                                <div class="flex items-center justify-between mb-1">
+                                    <span class="text-sm font-semibold text-gray-800">11:00 AM - 12:00 PM</span>
+                                    <span class="text-xs bg-yellow-100 text-yellow-700 px-2 py-1 rounded-full">Negotiable</span>
+                                </div>
+                                <p class="text-xs text-gray-600">Protected Focus Time</p>
+                                <p class="text-xs text-gray-500 mt-1">Can be moved if urgent</p>
+                            </div>
+                            <button class="p-2 hover:bg-yellow-100 rounded-lg transition-colors">
+                                <i class="fa-solid fa-ellipsis-vertical text-gray-400"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Afternoon Section -->
+            <div class="p-4 border-b border-gray-50">
+                <div class="flex items-center space-x-2 mb-4">
+                    <i class="fa-solid fa-sun text-orange-500 text-sm"></i>
+                    <h4 class="font-medium text-gray-700 text-sm">Afternoon</h4>
+                </div>
+                
+                <div class="space-y-3">
+                    <div class="time-slot bg-green-50 border border-green-200 rounded-xl p-4 cursor-pointer transition-all duration-300">
+                        <div class="flex items-center space-x-3">
+                            <div class="availability-indicator bg-green-400"></div>
+                            <div class="flex-1">
+                                <div class="flex items-center justify-between mb-1">
+                                    <span class="text-sm font-semibold text-gray-800">1:00 - 2:00 PM</span>
+                                    <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full">Available</span>
+                                </div>
+                                <p class="text-xs text-gray-600">Open for meetings</p>
+                                <button class="text-xs text-blue-600 hover:underline mt-1">+ Schedule something</button>
+                            </div>
+                            <button class="p-2 hover:bg-green-100 rounded-lg transition-colors">
+                                <i class="fa-solid fa-plus text-green-600"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="time-slot bg-red-50 border border-red-200 rounded-xl p-4 cursor-pointer transition-all duration-300">
+                        <div class="flex items-center space-x-3">
+                            <div class="availability-indicator bg-red-400"></div>
+                            <div class="flex-1">
+                                <div class="flex items-center justify-between mb-1">
+                                    <span class="text-sm font-semibold text-gray-800">2:30 - 3:30 PM</span>
+                                    <span class="text-xs bg-red-100 text-red-700 px-2 py-1 rounded-full">Busy</span>
+                                </div>
+                                <p class="text-xs text-gray-600">Client Presentation</p>
+                                <p class="text-xs text-gray-500 mt-1">Zoom Meeting • High Priority</p>
+                            </div>
+                            <button class="p-2 hover:bg-red-100 rounded-lg transition-colors">
+                                <i class="fa-solid fa-ellipsis-vertical text-gray-400"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="time-slot bg-blue-50 border border-blue-200 rounded-xl p-4 cursor-pointer transition-all duration-300">
+                        <div class="flex items-center space-x-3">
+                            <div class="availability-indicator bg-blue-400"></div>
+                            <div class="flex-1">
+                                <div class="flex items-center justify-between mb-1">
+                                    <span class="text-sm font-semibold text-gray-800">4:00 - 5:00 PM</span>
+                                    <span class="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded-full">Protected</span>
+                                </div>
+                                <p class="text-xs text-gray-600">Deep Work Block</p>
+                                <p class="text-xs text-gray-500 mt-1">Appears as busy to others</p>
+                            </div>
+                            <button class="p-2 hover:bg-blue-100 rounded-lg transition-colors">
+                                <i class="fa-solid fa-ellipsis-vertical text-gray-400"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Evening Section -->
+            <div class="p-4">
+                <div class="flex items-center space-x-2 mb-4">
+                    <i class="fa-solid fa-moon text-indigo-500 text-sm"></i>
+                    <h4 class="font-medium text-gray-700 text-sm">Evening</h4>
+                </div>
+                
+                <div class="space-y-3">
+                    <div class="time-slot bg-green-50 border border-green-200 rounded-xl p-4 cursor-pointer transition-all duration-300">
+                        <div class="flex items-center space-x-3">
+                            <div class="availability-indicator bg-green-400"></div>
+                            <div class="flex-1">
+                                <div class="flex items-center justify-between mb-1">
+                                    <span class="text-sm font-semibold text-gray-800">6:00 - 7:00 PM</span>
+                                    <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full">Available</span>
+                                </div>
+                                <p class="text-xs text-gray-600">Free for dinner plans</p>
+                                <button class="text-xs text-blue-600 hover:underline mt-1">+ Add event</button>
+                            </div>
+                            <button class="p-2 hover:bg-green-100 rounded-lg transition-colors">
+                                <i class="fa-solid fa-plus text-green-600"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="time-slot bg-yellow-50 border border-yellow-200 rounded-xl p-4 cursor-pointer transition-all duration-300">
+                        <div class="flex items-center space-x-3">
+                            <div class="availability-indicator bg-yellow-400"></div>
+                            <div class="flex-1">
+                                <div class="flex items-center justify-between mb-1">
+                                    <span class="text-sm font-semibold text-gray-800">8:00 - 9:00 PM</span>
+                                    <span class="text-xs bg-yellow-100 text-yellow-700 px-2 py-1 rounded-full">Maybe</span>
+                                </div>
+                                <p class="text-xs text-gray-600">Gym session (flexible)</p>
+                                <p class="text-xs text-gray-500 mt-1">Can skip if needed</p>
+                            </div>
+                            <button class="p-2 hover:bg-yellow-100 rounded-lg transition-colors">
+                                <i class="fa-solid fa-ellipsis-vertical text-gray-400"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions Section -->
+    <div id="quick-actions" class="px-4 pb-6">
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-4">
+            <h3 class="font-semibold text-gray-800 mb-4">Quick Actions</h3>
+            <div class="grid grid-cols-2 gap-3">
+                <button class="bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded-xl p-4 transition-colors">
+                    <div class="text-center">
+                        <i class="fa-solid fa-plus text-blue-600 text-xl mb-2"></i>
+                        <p class="text-sm font-medium text-blue-700">Add Event</p>
+                    </div>
+                </button>
+                <button class="bg-purple-50 hover:bg-purple-100 border border-purple-200 rounded-xl p-4 transition-colors">
+                    <div class="text-center">
+                        <i class="fa-solid fa-shield text-purple-600 text-xl mb-2"></i>
+                        <p class="text-sm font-medium text-purple-700">Protected Time</p>
+                    </div>
+                </button>
+                <button class="bg-yellow-50 hover:bg-yellow-100 border border-yellow-200 rounded-xl p-4 transition-colors">
+                    <div class="text-center">
+                        <i class="fa-solid fa-clock text-yellow-600 text-xl mb-2"></i>
+                        <p class="text-sm font-medium text-yellow-700">Artificial Busy</p>
+                    </div>
+                </button>
+                <button class="bg-green-50 hover:bg-green-100 border border-green-200 rounded-xl p-4 transition-colors">
+                    <div class="text-center">
+                        <i class="fa-solid fa-link text-green-600 text-xl mb-2"></i>
+                        <p class="text-sm font-medium text-green-700">Share Link</p>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Upcoming Requests Section -->
+    <div id="upcoming-requests" class="px-4 pb-6">
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-4">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="font-semibold text-gray-800">Pending Requests</h3>
+                <span class="text-xs bg-red-100 text-red-700 px-2 py-1 rounded-full">2 new</span>
+            </div>
+            
+            <div class="space-y-3">
+                <div class="bg-orange-50 border border-orange-200 rounded-xl p-4">
+                    <div class="flex items-start justify-between mb-2">
+                        <div class="flex-1">
+                            <h4 class="font-medium text-gray-800 text-sm">Coffee Chat with Alex</h4>
+                            <p class="text-xs text-gray-600 mt-1">Tomorrow at 3:00 PM • 30 minutes</p>
+                            <p class="text-xs text-gray-500 mt-1">"Would love to catch up and discuss the project"</p>
+                        </div>
+                        <span class="text-xs bg-orange-100 text-orange-700 px-2 py-1 rounded-full">Urgent</span>
+                    </div>
+                    <div class="flex space-x-2 mt-3">
+                        <button class="flex-1 bg-green-600 hover:bg-green-700 text-white py-2 px-3 rounded-lg text-xs font-medium transition-colors">
+                            Accept
+                        </button>
+                        <button class="flex-1 bg-yellow-600 hover:bg-yellow-700 text-white py-2 px-3 rounded-lg text-xs font-medium transition-colors">
+                            Propose
+                        </button>
+                        <button class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-700 py-2 px-3 rounded-lg text-xs font-medium transition-colors">
+                            Decline
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bg-blue-50 border border-blue-200 rounded-xl p-4">
+                    <div class="flex items-start justify-between mb-2">
+                        <div class="flex-1">
+                            <h4 class="font-medium text-gray-800 text-sm">Team Sync</h4>
+                            <p class="text-xs text-gray-600 mt-1">Monday at 10:00 AM • 1 hour</p>
+                            <p class="text-xs text-gray-500 mt-1">"Weekly team alignment meeting"</p>
+                        </div>
+                        <span class="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded-full">Regular</span>
+                    </div>
+                    <div class="flex space-x-2 mt-3">
+                        <button class="flex-1 bg-green-600 hover:bg-green-700 text-white py-2 px-3 rounded-lg text-xs font-medium transition-colors">
+                            Accept
+                        </button>
+                        <button class="flex-1 bg-yellow-600 hover:bg-yellow-700 text-white py-2 px-3 rounded-lg text-xs font-medium transition-colors">
+                            Propose
+                        </button>
+                        <button class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-700 py-2 px-3 rounded-lg text-xs font-medium transition-colors">
+                            Decline
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="w-full mt-4 text-blue-600 hover:text-blue-700 text-sm font-medium py-2 transition-colors">
+                View all requests →
+            </button>
+        </div>
+    </div>
+
+    <!-- Calendar Sources Section -->
+    <div id="calendar-sources" class="px-4 pb-6">
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-4">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="font-semibold text-gray-800">Calendar Sources</h3>
+                <button class="text-blue-600 hover:text-blue-700 text-xs font-medium">Manage</button>
+            </div>
+            
+            <div class="space-y-3">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-4 h-4 bg-blue-500 rounded-full"></div>
+                        <div>
+                            <p class="text-sm font-medium text-gray-800">Work Calendar</p>
+                            <p class="text-xs text-gray-500">Google Calendar • Synced 2m ago</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <span class="text-xs text-green-600">●</span>
+                        <input type="checkbox" checked class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-4 h-4 bg-green-500 rounded-full"></div>
+                        <div>
+                            <p class="text-sm font-medium text-gray-800">Personal Calendar</p>
+                            <p class="text-xs text-gray-500">Google Calendar • Synced 5m ago</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <span class="text-xs text-green-600">●</span>
+                        <input type="checkbox" checked class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-4 h-4 bg-purple-500 rounded-full"></div>
+                        <div>
+                            <p class="text-sm font-medium text-gray-800">Protected Time</p>
+                            <p class="text-xs text-gray-500">spareTime • Always visible</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <span class="text-xs text-blue-600">●</span>
+                        <input type="checkbox" checked class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-4 h-4 bg-yellow-500 rounded-full"></div>
+                        <div>
+                            <p class="text-sm font-medium text-gray-800">Artificial Busy</p>
+                            <p class="text-xs text-gray-500">spareTime • Manual blocks</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <span class="text-xs text-yellow-600">●</span>
+                        <input type="checkbox" checked class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Availability Summary -->
+    <div id="availability-summary" class="px-4 pb-6">
+        <div class="bg-gradient-to-r from-green-50 to-blue-50 rounded-xl border border-green-200 p-4">
+            <div class="flex items-center space-x-3 mb-3">
+                <div class="w-10 h-10 bg-green-600 rounded-xl flex items-center justify-center">
+                    <i class="fa-solid fa-chart-pie text-white text-lg"></i>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-gray-800">Today's Summary</h3>
+                    <p class="text-xs text-gray-600">Your availability breakdown</p>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-3 gap-4 mt-4">
+                <div class="text-center">
+                    <div class="w-8 h-8 bg-red-400 rounded-lg mx-auto mb-2 flex items-center justify-center">
+                        <span class="text-white text-xs font-bold">4h</span>
+                    </div>
+                    <p class="text-xs text-gray-600">Busy</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-8 h-8 bg-yellow-400 rounded-lg mx-auto mb-2 flex items-center justify-center">
+                        <span class="text-white text-xs font-bold">2h</span>
+                    </div>
+                    <p class="text-xs text-gray-600">Flexible</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-8 h-8 bg-green-400 rounded-lg mx-auto mb-2 flex items-center justify-center">
+                        <span class="text-white text-xs font-bold">3h</span>
+                    </div>
+                    <p class="text-xs text-gray-600">Free</p>
+                </div>
+            </div>
+            
+            <div class="mt-4 bg-white bg-opacity-50 rounded-lg p-3">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-xs text-gray-600">Availability Score</span>
+                    <span class="text-sm font-bold text-green-600">75%</span>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-2">
+                    <div class="bg-green-500 h-2 rounded-full" style="width: 75%"></div>
+                </div>
+                <p class="text-xs text-gray-500 mt-1">Good availability for meetings</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Weekly Insights -->
+    <div id="weekly-insights" class="px-4 pb-6">
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-4">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="font-semibold text-gray-800">This Week's Insights</h3>
+                <i class="fa-solid fa-chart-line text-blue-600"></i>
+            </div>
+            
+            <div class="space-y-4">
+                <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-trending-up text-blue-600 text-sm"></i>
+                    </div>
+                    <div class="flex-1">
+                        <p class="text-sm font-medium text-gray-800">Meeting Load</p>
+                        <p class="text-xs text-gray-500">15% lighter than last week</p>
+                    </div>
+                    <span class="text-xs text-green-600 font-medium">↓ 15%</span>
+                </div>
+
+                <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-clock text-purple-600 text-sm"></i>
+                    </div>
+                    <div class="flex-1">
+                        <p class="text-sm font-medium text-gray-800">Focus Time</p>
+                        <p class="text-xs text-gray-500">12 hours protected this week</p>
+                    </div>
+                    <span class="text-xs text-blue-600 font-medium">+3h</span>
+                </div>
+
+                <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 bg-yellow-100 rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-handshake text-yellow-600 text-sm"></i>
+                    </div>
+                    <div class="flex-1">
+                        <p class="text-sm font-medium text-gray-800">Requests</p>
+                        <p class="text-xs text-gray-500">8 requests received</p>
+                    </div>
+                    <span class="text-xs text-green-600 font-medium">87% accepted</span>
+                </div>
+            </div>
+            
+            <button class="w-full mt-4 text-blue-600 hover:text-blue-700 text-sm font-medium py-2 border border-blue-200 rounded-lg hover:bg-blue-50 transition-colors">
+                View detailed analytics
+            </button>
+        </div>
+    </div>
+
+    <!-- Floating Action Button -->
+    <div class="floating-action">
+        <button class="w-14 h-14 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center">
+            <i class="fa-solid fa-plus text-xl"></i>
+        </button>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <div id="bottom-navigation" class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-2 z-30">
+        <div class="flex justify-around items-center">
+            <button class="flex flex-col items-center space-y-1 py-2 px-3 text-gray-400 hover:text-gray-600 transition-colors">
+                <i class="fa-solid fa-link text-lg"></i>
+                <span class="text-xs">Links</span>
+            </button>
+            <button class="flex flex-col items-center space-y-1 py-2 px-3 text-blue-600 transition-colors">
+                <i class="fa-solid fa-calendar-days text-lg"></i>
+                <span class="text-xs font-medium">Calendar</span>
+                <div class="w-1 h-1 bg-blue-600 rounded-full"></div>
+            </button>
+            <button class="flex flex-col items-center space-y-1 py-2 px-3 text-gray-400 hover:text-gray-600 transition-colors relative">
+                <i class="fa-solid fa-inbox text-lg"></i>
+                <span class="text-xs">Requests</span>
+                <span class="absolute -top-1 -right-1 w-4 h-4 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">2</span>
+            </button>
+            <button class="flex flex-col items-center space-y-1 py-2 px-3 text-gray-400 hover:text-gray-600 transition-colors">
+                <i class="fa-solid fa-user text-lg"></i>
+                <span class="text-xs">Profile</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Footer Spacing -->
+    <div class="h-20"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Calendar day selection
+            const calendarDays = document.querySelectorAll('.calendar-day');
+            calendarDays.forEach(day => {
+                day.addEventListener('click', function() {
+                    calendarDays.forEach(d => d.classList.remove('selected'));
+                    this.classList.add('selected');
+                });
+            });
+
+            // Time slot interactions
+            const timeSlots = document.querySelectorAll('.time-slot');
+            timeSlots.forEach(slot => {
+                slot.addEventListener('click', function() {
+                    // Add selection animation
+                    this.style.transform = 'scale(0.98)';
+                    setTimeout(() => {
+                        this.style.transform = 'scale(1)';
+                    }, 150);
+                });
+            });
+
+            // View toggle functionality
+            const viewButtons = document.querySelectorAll('#view-toggle button');
+            viewButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    viewButtons.forEach(btn => {
+                        btn.classList.remove('bg-blue-600', 'text-white', 'shadow-sm');
+                        btn.classList.add('text-gray-500');
+                    });
+                    this.classList.add('bg-blue-600', 'text-white', 'shadow-sm');
+                    this.classList.remove('text-gray-500');
+                });
+            });
+
+            // Quick action buttons
+            const quickActionButtons = document.querySelectorAll('#quick-actions button');
+            quickActionButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const icon = this.querySelector('i');
+                    icon.style.transform = 'scale(1.2)';
+                    setTimeout(() => {
+                        icon.style.transform = 'scale(1)';
+                    }, 200);
+                });
+            });
+
+            // Request action buttons
+            const requestButtons = document.querySelectorAll('#upcoming-requests button');
+            requestButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = 'scale(1)';
+                    }, 150);
+                });
+            });
+
+            // Calendar source toggles
+            const sourceToggles = document.querySelectorAll('#calendar-sources input[type="checkbox"]');
+            sourceToggles.forEach(toggle => {
+                toggle.addEventListener('change', function() {
+                    const indicator = this.parentElement.querySelector('span');
+                    if (this.checked) {
+                        indicator.classList.remove('text-gray-400');
+                        indicator.classList.add('text-green-600');
+                    } else {
+                        indicator.classList.remove('text-green-600');
+                        indicator.classList.add('text-gray-400');
+                    }
+                });
+            });
+
+            // Floating action button
+            const fab = document.querySelector('.floating-action button');
+            fab.addEventListener('click', function() {
+                this.style.transform = 'scale(0.9) rotate(45deg)';
+                setTimeout(() => {
+                    this.style.transform = 'scale(1) rotate(0deg)';
+                }, 200);
+            });
+
+            // Bottom navigation
+            const navButtons = document.querySelectorAll('#bottom-navigation button');
+            navButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    navButtons.forEach(btn => {
+                        btn.classList.remove('text-blue-600');
+                        btn.classList.add('text-gray-400');
+                        const dot = btn.querySelector('.bg-blue-600');
+                        if (dot) dot.remove();
+                        const span = btn.querySelector('span');
+                        if (span) span.classList.remove('font-medium');
+                    });
+                    
+                    this.classList.remove('text-gray-400');
+                    this.classList.add('text-blue-600');
+                    const span = this.querySelector('span');
+                    if (span) {
+                        span.classList.add('font-medium');
+                        const dot = document.createElement('div');
+                        dot.className = 'w-1 h-1 bg-blue-600 rounded-full';
+                        this.appendChild(dot);
+                    }
+                });
+            });
+
+            // Auto-refresh availability score animation
+            setInterval(() => {
+                const progressBar = document.querySelector('.bg-green-500');
+                if (progressBar) {
+                    progressBar.style.transition = 'width 1s ease-in-out';
+                    const currentWidth = Math.random() * 30 + 60; // Random between 60-90%
+                    progressBar.style.width = currentWidth + '%';
+                }
+            }, 10000);
+
+            // Notification pulse animation
+            const notificationBell = document.querySelector('.fa-bell');
+            if (notificationBell) {
+                setInterval(() => {
+                    notificationBell.classList.add('pulse');
+                    setTimeout(() => {
+                        notificationBell.classList.remove('pulse');
+                    }, 2000);
+                }, 15000);
+            }
+
+            // Time-based greeting updates
+            const updateGreeting = () => {
+                const hour = new Date().getHours();
+                const statsTitle = document.querySelector('#stats-banner p');
+                if (hour < 12) {
+                    statsTitle.textContent = "Morning Availability";
+                } else if (hour < 17) {
+                    statsTitle.textContent = "Afternoon Availability";
+                } else {
+                    statsTitle.textContent = "Evening Availability";
+                }
+            };
+            updateGreeting();
+
+            // Smooth scroll for sections
+            const sections = document.querySelectorAll('[id]');
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => {
+                section.style.opacity = '0';
+                section.style.transform = 'translateY(20px)';
+                section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(section);
+            });
+
+            // Real-time clock update
+            const updateClock = () => {
+                const now = new Date();
+                const timeString = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+                const nextAvailable = document.querySelector('#stats-banner .text-blue-600');
+                if (nextAvailable && Math.random() > 0.8) { // Occasionally update next available time
+                    const futureTime = new Date(now.getTime() + Math.random() * 3600000);
+                    nextAvailable.textContent = futureTime.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+                }
+            };
+            setInterval(updateClock, 60000);
+        });
+    </script>
+
+</body>
+</html>

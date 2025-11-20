@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Privacy & Security</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+        <script> window.FontAwesomeConfig = { autoReplaceSvg: 'nest'};</script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script>
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        colors: {
+                            'primary-dark-blue-gray': '#36454c',
+                            'primary-blue': '#6e92a0',
+                            'light-blue': '#c5e0ea',
+                            'gray-text': '#8a9499',
+                            'light-gray': '#bdccd4',
+                            'background-gray': '#f2f7f9',
+                            'status-green': '#22b573',
+                            'status-red': '#ed5a5a',
+                            'available-light': '#b3e2cc',
+                            'negotiable-light': '#ffefcc',
+                            'busy-light': '#fff3f3',
+                        },
+                        fontFamily: {
+                            sans: ['Poppins', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'],
+                        },
+                        fontWeight: {
+                            'light': 300,
+                            'normal': 400,
+                            'semibold': 600,
+                            'extrabold': 800,
+                        },
+                        spacing: {
+                            '1.5': '6px',
+                            '3.5': '14px',
+                            '4.5': '18px',
+                            '5.5': '22px',
+                        },
+                         boxShadow: {
+                            'level-2': '0px 2px 4px rgba(0, 0, 0, 0.1)',
+                            'level-3': '0px 4px 8px rgba(0, 0, 0, 0.1)',
+                            'level-4': '0px 8px 16px rgba(0, 0, 0, 0.1)',
+                        },
+                        borderRadius: {
+                            'small': '4px',
+                            'medium': '8px',
+                            'large': '12px',
+                            'pill': '24px',
+                        }
+                    }
+                }
+            }
+        </script>
+        <style>::-webkit-scrollbar { display: none;}</style>
+    </head>
+    <body class="bg-background-gray font-sans">
+        <div id="privacy-security-screen" class="w-full max-w-md mx-auto h-[850px] bg-white flex flex-col">
+
+            <header id="header" class="flex items-center p-4 border-b border-light-gray bg-white sticky top-0 z-10">
+                <button class="text-primary-dark-blue-gray text-xl">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </button>
+                <h1 class="text-2xl font-extrabold text-primary-dark-blue-gray text-center flex-grow -ml-6">Privacy & Security</h1>
+            </header>
+
+            <main class="flex-grow overflow-y-auto p-6 bg-background-gray">
+                
+                <section id="login-credentials-section" class="mb-8">
+                    <h2 class="text-xl font-semibold text-primary-dark-blue-gray mb-4">Login Credentials</h2>
+                    
+                    <div id="email-update-card" class="bg-white rounded-lg shadow-level-2 p-5 mb-6">
+                        <label for="current-email" class="block text-sm font-normal text-gray-text mb-1">Login Email</label>
+                        <div class="flex items-center justify-between">
+                            <p id="current-email" class="text-base text-primary-dark-blue-gray font-light">maya.g@example.com</p>
+                            <button class="text-primary-blue font-semibold text-sm hover:underline">Change</button>
+                        </div>
+                    </div>
+
+                    <div id="password-update-card" class="bg-white rounded-lg shadow-level-2 p-5">
+                        <label for="password" class="block text-sm font-normal text-gray-text mb-1">Password</label>
+                         <div class="flex items-center justify-between">
+                            <p id="password" class="text-base text-primary-dark-blue-gray font-light tracking-widest">••••••••••</p>
+                            <button class="text-primary-blue font-semibold text-sm hover:underline">Change</button>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="security-features-section" class="mb-8">
+                    <h2 class="text-xl font-semibold text-primary-dark-blue-gray mb-4">Security Features</h2>
+                    
+                    <div id="2fa-card" class="bg-white rounded-lg shadow-level-2 p-5 mb-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h3 class="text-base text-primary-dark-blue-gray font-semibold">Two-Factor Authentication</h3>
+                                <p class="text-sm text-gray-text font-light mt-1">Add an extra layer of security.</p>
+                            </div>
+                            <label for="two-factor-toggle" class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" value="" id="two-factor-toggle" class="sr-only peer">
+                                <div class="w-11 h-6 bg-light-gray rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-blue"></div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div id="session-management-card" class="bg-white rounded-lg shadow-level-2 p-5 mb-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <div>
+                                <h3 class="text-base text-primary-dark-blue-gray font-semibold">Active Sessions</h3>
+                                <p class="text-sm text-gray-text font-light mt-1">Manage your logged-in devices.</p>
+                            </div>
+                            <button class="text-primary-blue font-semibold text-sm hover:underline">View All</button>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between py-2">
+                                <div class="flex items-center space-x-3">
+                                    <i class="fa-solid fa-mobile-alt text-lg text-gray-text"></i>
+                                    <div>
+                                        <p class="text-sm text-primary-dark-blue-gray font-light">iPhone 14 Pro</p>
+                                        <p class="text-xs text-gray-text">Current session</p>
+                                    </div>
+                                </div>
+                                <span class="text-xs text-status-green font-semibold">Active</span>
+                            </div>
+                            <div class="flex items-center justify-between py-2">
+                                <div class="flex items-center space-x-3">
+                                    <i class="fa-solid fa-laptop text-lg text-gray-text"></i>
+                                    <div>
+                                        <p class="text-sm text-primary-dark-blue-gray font-light">MacBook Pro</p>
+                                        <p class="text-xs text-gray-text">Last active: 2 hours ago</p>
+                                    </div>
+                                </div>
+                                <button class="text-xs text-status-red font-semibold hover:underline">Sign out</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="login-alerts-card" class="bg-white rounded-lg shadow-level-2 p-5">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h3 class="text-base text-primary-dark-blue-gray font-semibold">Login Alerts</h3>
+                                <p class="text-sm text-gray-text font-light mt-1">Get notified of new sign-ins.</p>
+                            </div>
+                            <label for="login-alerts-toggle" class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" value="" id="login-alerts-toggle" class="sr-only peer" checked>
+                                <div class="w-11 h-6 bg-light-gray rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-blue"></div>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+                
+                <section id="connected-apps-section" class="mb-8">
+                    <h2 class="text-xl font-semibold text-primary-dark-blue-gray mb-4">Connected Apps</h2>
+                    <div id="connected-apps-list" class="bg-white rounded-lg shadow-level-2 divide-y divide-light-gray">
+                        <div class="p-5 flex items-center justify-between">
+                            <div class="flex items-center space-x-4">
+                               <i class="fa-brands fa-google text-2xl text-red-500"></i>
+                                <div>
+                                    <h3 class="text-base text-primary-dark-blue-gray font-semibold">Google Calendar</h3>
+                                    <p class="text-sm text-gray-text font-light">Connected on Oct 12, 2025</p>
+                                </div>
+                            </div>
+                            <button class="text-status-red font-semibold text-sm hover:underline">Revoke</button>
+                        </div>
+                        <div class="p-5 flex items-center justify-between">
+                             <div class="flex items-center space-x-4">
+                               <i class="fa-brands fa-apple text-2xl text-primary-dark-blue-gray"></i>
+                                <div>
+                                    <h3 class="text-base text-primary-dark-blue-gray font-semibold">Apple Calendar</h3>
+                                    <p class="text-sm text-gray-text font-light">Connected on Oct 15, 2025</p>
+                                </div>
+                            </div>
+                            <button class="text-status-red font-semibold text-sm hover:underline">Revoke</button>
+                        </div>
+                        <div class="p-5 flex items-center justify-between">
+                             <div class="flex items-center space-x-4">
+                               <i class="fa-brands fa-microsoft text-2xl text-blue-600"></i>
+                                <div>
+                                    <h3 class="text-base text-primary-dark-blue-gray font-semibold">Outlook Calendar</h3>
+                                    <p class="text-sm text-gray-text font-light">Connected on Oct 8, 2025</p>
+                                </div>
+                            </div>
+                            <button class="text-status-red font-semibold text-sm hover:underline">Revoke</button>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="data-privacy-section" class="mb-8">
+                    <h2 class="text-xl font-semibold text-primary-dark-blue-gray mb-4">Data & Privacy</h2>
+                    
+                    <div id="data-export-card" class="bg-white rounded-lg shadow-level-2 p-5 mb-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h3 class="text-base text-primary-dark-blue-gray font-semibold">Export Your Data</h3>
+                                <p class="text-sm text-gray-text font-light mt-1">Download a copy of your information.</p>
+                            </div>
+                            <button class="text-primary-blue font-semibold text-sm hover:underline">Request</button>
+                        </div>
+                    </div>
+
+                    <div id="privacy-settings-card" class="bg-white rounded-lg shadow-level-2 p-5 mb-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <div>
+                                <h3 class="text-base text-primary-dark-blue-gray font-semibold">Profile Visibility</h3>
+                                <p class="text-sm text-gray-text font-light mt-1">Control who can see your profile.</p>
+                            </div>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-primary-dark-blue-gray font-light">Show to Friends</span>
+                                <label for="friends-visibility" class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" value="" id="friends-visibility" class="sr-only peer" checked>
+                                    <div class="w-11 h-6 bg-light-gray rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-blue"></div>
+                                </label>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-primary-dark-blue-gray font-light">Show to Work Contacts</span>
+                                <label for="work-visibility" class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" value="" id="work-visibility" class="sr-only peer">
+                                    <div class="w-11 h-6 bg-light-gray rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-blue"></div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="analytics-card" class="bg-white rounded-lg shadow-level-2 p-5">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h3 class="text-base text-primary-dark-blue-gray font-semibold">Analytics & Usage Data</h3>
+                                <p class="text-sm text-gray-text font-light mt-1">Help us improve SpareTime.</p>
+                            </div>
+                            <label for="analytics-toggle" class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" value="" id="analytics-toggle" class="sr-only peer" checked>
+                                <div class="w-11 h-6 bg-light-gray rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-blue"></div>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="account-actions-section">
+                    <h2 class="text-xl font-semibold text-primary-dark-blue-gray mb-4">Account Actions</h2>
+                    <div id="account-actions-card" class="bg-white rounded-lg shadow-level-2 p-5 space-y-3">
+                        <button class="w-full text-left text-primary-dark-blue-gray font-semibold text-base py-2 border-b border-light-gray">
+                            <i class="fa-solid fa-pause-circle mr-3 text-gray-text"></i>
+                            Deactivate Account
+                        </button>
+                        <button class="w-full text-left text-status-red font-semibold text-base py-2">
+                            <i class="fa-solid fa-trash-alt mr-3"></i>
+                            Delete Account
+                        </button>
+                    </div>
+                    <p class="text-xs text-gray-text text-center mt-4 font-light px-4">
+                        Deleting your account is permanent and cannot be undone. All your data will be removed.
+                    </p>
+                </section>
+                
+            </main>
+        </div>
+    </body>
+</html>

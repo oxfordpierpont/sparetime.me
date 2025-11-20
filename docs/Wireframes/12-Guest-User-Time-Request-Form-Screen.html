@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time Request</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script> window.FontAwesomeConfig = { autoReplaceSvg: 'nest'};</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        ::-webkit-scrollbar { display: none;}
+        body { font-family: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+        .gradient-bg { background: linear-gradient(135deg, #6e92a0 0%, #36454c 100%); }
+        .glass-effect { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); }
+        .calendar-icon { background: linear-gradient(135deg, #22b573, #6e92a0); }
+        .slide-up { animation: slideUp 0.5s ease-out; }
+        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .pulse-animation { animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
+        .floating-element { animation: float 3s ease-in-out infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+
+    <!-- Header Section -->
+    <div id="header" class="bg-white shadow-sm border-b border-gray-200">
+        <div class="px-4 py-3">
+            <div class="flex items-center justify-between">
+                <button class="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                    <i class="fa-solid fa-arrow-left text-gray-600 text-xl"></i>
+                </button>
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 calendar-icon rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-calendar-days text-white text-sm"></i>
+                    </div>
+                    <span class="text-lg font-semibold text-gray-800">spareTime</span>
+                </div>
+                <div class="w-10"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Owner Information Section -->
+    <div id="owner-info" class="bg-gradient-to-r from-blue-50 to-purple-50 px-4 py-6">
+        <div class="text-center space-y-4">
+            <div class="w-16 h-16 bg-gradient-to-br from-blue-400 to-purple-500 rounded-full flex items-center justify-center mx-auto">
+                <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-5.jpg" alt="Maya" class="w-16 h-16 rounded-full object-cover">
+            </div>
+            <div>
+                <h1 class="text-2xl font-bold text-gray-800">Request Time with Maya</h1>
+                <p class="text-gray-600">Coffee & Networking</p>
+            </div>
+            <div class="bg-white rounded-xl p-3 shadow-sm">
+                <div class="flex items-center justify-center space-x-2">
+                    <i class="fa-solid fa-calendar text-blue-600"></i>
+                    <span class="font-semibold text-gray-800">Friday, October 25, 2024</span>
+                </div>
+                <div class="flex items-center justify-center space-x-2 mt-1">
+                    <i class="fa-solid fa-clock text-green-600"></i>
+                    <span class="text-gray-700">4:00 PM - 4:30 PM (30 minutes)</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Request Form Section -->
+    <div id="request-form" class="px-4 py-6 space-y-6">
+        <div class="bg-white rounded-2xl shadow-lg p-6 space-y-6">
+            <div class="text-center">
+                <h2 class="text-xl font-bold text-gray-800 mb-2">Tell Maya About Yourself</h2>
+                <p class="text-gray-600">Help her prepare for your meeting</p>
+            </div>
+
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Your Name *</label>
+                    <input type="text" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Enter your full name">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Email Address *</label>
+                    <input type="email" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="your@email.com">
+                    <p class="text-xs text-gray-500 mt-1">Maya will use this to confirm the meeting</p>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Phone Number (optional)</label>
+                    <input type="tel" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="+1 (555) 123-4567">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Company/Organization (optional)</label>
+                    <input type="text" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Your company or organization">
+                </div>
+            </div>
+        </div>
+
+        <!-- Meeting Purpose Section -->
+        <div class="bg-white rounded-2xl shadow-lg p-6 space-y-4">
+            <h3 class="text-lg font-bold text-gray-800">Meeting Purpose</h3>
+            
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">What's this meeting about? *</label>
+                <div class="relative">
+                    <select class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none">
+                        <option value="">Select meeting type</option>
+                        <option value="coffee-chat">Coffee Chat</option>
+                        <option value="networking">Networking</option>
+                        <option value="business-discussion">Business Discussion</option>
+                        <option value="collaboration">Collaboration Opportunity</option>
+                        <option value="mentorship">Mentorship</option>
+                        <option value="interview">Interview</option>
+                        <option value="consultation">Consultation</option>
+                        <option value="other">Other</option>
+                    </select>
+                    <i class="fa-solid fa-chevron-down absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">Additional Details</label>
+                <textarea class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent" rows="4" placeholder="Tell Maya more about what you'd like to discuss, any specific topics, or how you found her..."></textarea>
+                <p class="text-xs text-gray-500 mt-1">This helps Maya prepare and makes for a better conversation</p>
+            </div>
+        </div>
+
+        <!-- Meeting Preferences Section -->
+        <div class="bg-white rounded-2xl shadow-lg p-6 space-y-4">
+            <h3 class="text-lg font-bold text-gray-800">Meeting Preferences</h3>
+            
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">Preferred Meeting Type</label>
+                <div class="space-y-3">
+                    <label class="flex items-center space-x-3 p-3 border border-gray-200 rounded-xl hover:border-blue-300 cursor-pointer">
+                        <input type="radio" name="meeting-type" value="in-person" class="text-blue-600 focus:ring-blue-500">
+                        <div class="flex items-center space-x-2">
+                            <i class="fa-solid fa-handshake text-green-600"></i>
+                            <span class="text-gray-700 font-medium">In Person</span>
+                        </div>
+                    </label>
+                    <label class="flex items-center space-x-3 p-3 border border-gray-200 rounded-xl hover:border-blue-300 cursor-pointer">
+                        <input type="radio" name="meeting-type" value="video-call" class="text-blue-600 focus:ring-blue-500" checked>
+                        <div class="flex items-center space-x-2">
+                            <i class="fa-solid fa-video text-blue-600"></i>
+                            <span class="text-gray-700 font-medium">Video Call</span>
+                        </div>
+                    </label>
+                    <label class="flex items-center space-x-3 p-3 border border-gray-200 rounded-xl hover:border-blue-300 cursor-pointer">
+                        <input type="radio" name="meeting-type" value="phone-call" class="text-blue-600 focus:ring-blue-500">
+                        <div class="flex items-center space-x-2">
+                            <i class="fa-solid fa-phone text-purple-600"></i>
+                            <span class="text-gray-700 font-medium">Phone Call</span>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">Location/Platform (if applicable)</label>
+                <input type="text" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="e.g., Zoom, Google Meet, Starbucks downtown">
+            </div>
+        </div>
+
+        <!-- Priority and Urgency Section -->
+        <div class="bg-white rounded-2xl shadow-lg p-6 space-y-4">
+            <h3 class="text-lg font-bold text-gray-800">Request Priority</h3>
+            
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-3">How urgent is this meeting?</label>
+                <div class="space-y-3">
+                    <label class="flex items-center space-x-3 p-3 border border-gray-200 rounded-xl hover:border-blue-300 cursor-pointer">
+                        <input type="radio" name="urgency" value="low" class="text-blue-600 focus:ring-blue-500" checked>
+                        <div class="flex items-center space-x-3">
+                            <div class="w-3 h-3 bg-green-400 rounded-full"></div>
+                            <div>
+                                <span class="text-gray-700 font-medium">Low Priority</span>
+                                <p class="text-sm text-gray-500">Flexible timing, no rush</p>
+                            </div>
+                        </div>
+                    </label>
+                    <label class="flex items-center space-x-3 p-3 border border-gray-200 rounded-xl hover:border-blue-300 cursor-pointer">
+                        <input type="radio" name="urgency" value="medium" class="text-blue-600 focus:ring-blue-500">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-3 h-3 bg-yellow-400 rounded-full"></div>
+                            <div>
+                                <span class="text-gray-700 font-medium">Medium Priority</span>
+                                <p class="text-sm text-gray-500">Would like to meet soon</p>
+                            </div>
+                        </div>
+                    </label>
+                    <label class="flex items-center space-x-3 p-3 border border-gray-200 rounded-xl hover:border-blue-300 cursor-pointer">
+                        <input type="radio" name="urgency" value="high" class="text-blue-600 focus:ring-blue-500">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-3 h-3 bg-red-400 rounded-full"></div>
+                            <div>
+                                <span class="text-gray-700 font-medium">High Priority</span>
+                                <p class="text-sm text-gray-500">Time-sensitive, urgent</p>
+                            </div>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">Flexibility</label>
+                <div class="space-y-2">
+                    <label class="flex items-center space-x-3">
+                        <input type="checkbox" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                        <span class="text-gray-700">I'm open to alternative times if this doesn't work</span>
+                    </label>
+                    <label class="flex items-center space-x-3">
+                        <input type="checkbox" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                        <span class="text-gray-700">I can adjust the meeting duration if needed</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Alternative Times Section -->
+        <div class="bg-white rounded-2xl shadow-lg p-6 space-y-4">
+            <div class="flex items-center justify-between">
+                <h3 class="text-lg font-bold text-gray-800">Alternative Times</h3>
+                <button class="text-blue-600 font-medium text-sm hover:text-blue-700">
+                    <i class="fa-solid fa-plus mr-1"></i>
+                    Add Alternative
+                </button>
+            </div>
+            <p class="text-sm text-gray-600">Suggest other times that work for you (optional)</p>
+            
+            <div class="space-y-3">
+                <div class="p-4 border border-dashed border-gray-300 rounded-xl text-center">
+                    <button class="text-gray-500 hover:text-gray-700 transition-colors">
+                        <i class="fa-solid fa-plus text-2xl mb-2"></i>
+                        <p class="text-sm">Add alternative time slots</p>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Preferences Section -->
+        <div class="bg-white rounded-2xl shadow-lg p-6 space-y-4">
+            <h3 class="text-lg font-bold text-gray-800">Communication Preferences</h3>
+            
+            <div class="space-y-3">
+                <label class="flex items-center justify-between">
+                    <span class="text-gray-700">Email notifications about this request</span>
+                    <input type="checkbox" checked class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                </label>
+                <label class="flex items-center justify-between">
+                    <span class="text-gray-700">SMS reminders (if phone provided)</span>
+                    <input type="checkbox" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                </label>
+                <label class="flex items-center justify-between">
+                    <span class="text-gray-700">Add to my calendar when confirmed</span>
+                    <input type="checkbox" checked class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                </label>
+            </div>
+        </div>
+
+        <!-- Social Links Section -->
+        <div class="bg-white rounded-2xl shadow-lg p-6 space-y-4">
+            <h3 class="text-lg font-bold text-gray-800">Help Maya Know You Better (Optional)</h3>
+            <p class="text-sm text-gray-600">Share your professional profiles so Maya can learn about your background</p>
+            
+            <div class="space-y-3">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">LinkedIn Profile</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fa-brands fa-linkedin text-blue-600"></i>
+                        </div>
+                        <input type="url" class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="https://linkedin.com/in/yourprofile">
+                    </div>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Twitter/X Profile</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fa-brands fa-twitter text-blue-400"></i>
+                        </div>
+                        <input type="url" class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="https://twitter.com/yourusername">
+                    </div>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Website/Portfolio</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fa-solid fa-globe text-gray-500"></i>
+                        </div>
+                        <input type="url" class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="https://yourwebsite.com">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Meeting Agenda Section -->
+        <div class="bg-white rounded-2xl shadow-lg p-6 space-y-4">
+            <h3 class="text-lg font-bold text-gray-800">Meeting Agenda (Optional)</h3>
+            <p class="text-sm text-gray-600">Help structure the conversation</p>
+            
+            <div class="space-y-3">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Key Topics to Discuss</label>
+                    <div class="space-y-2">
+                        <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Topic 1">
+                        <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Topic 2">
+                        <button class="text-blue-600 text-sm hover:text-blue-700">
+                            <i class="fa-solid fa-plus mr-1"></i>
+                            Add another topic
+                        </button>
+                    </div>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Questions for Maya</label>
+                    <textarea class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent" rows="3" placeholder="Any specific questions you'd like to ask Maya..."></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- Request Summary Section -->
+        <div class="bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl p-6 space-y-4">
+            <h3 class="text-lg font-bold text-gray-800">Request Summary</h3>
+            <div class="space-y-3">
+                <div class="flex justify-between">
+                    <span class="text-gray-600">Meeting with:</span>
+                    <span class="font-medium text-gray-800">Maya</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-gray-600">Date & Time:</span>
+                    <span class="font-medium text-gray-800">Friday, Oct 25 at 4:00 PM</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-gray-600">Duration:</span>
+                    <span class="font-medium text-gray-800">30 minutes</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-gray-600">Meeting Type:</span>
+                    <span class="font-medium text-gray-800">Video Call</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-gray-600">Priority:</span>
+                    <span class="font-medium text-gray-800 flex items-center">
+                        <div class="w-2 h-2 bg-green-400 rounded-full mr-2"></div>
+                        Low Priority
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Terms and Privacy Section -->
+        <div class="bg-white rounded-2xl shadow-lg p-6 space-y-4">
+            <h3 class="text-lg font-bold text-gray-800">Privacy & Terms</h3>
+            <div class="space-y-3">
+                <label class="flex items-start space-x-3">
+                    <input type="checkbox" class="mt-1 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                    <span class="text-sm text-gray-700">I agree to spareTime's <a href="#" class="text-blue-600 hover:underline">Terms of Service</a> and <a href="#" class="text-blue-600 hover:underline">Privacy Policy</a></span>
+                </label>
+                <label class="flex items-start space-x-3">
+                    <input type="checkbox" class="mt-1 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                    <span class="text-sm text-gray-700">Maya may share my contact information with relevant parties for this meeting</span>
+                </label>
+                <label class="flex items-start space-x-3">
+                    <input type="checkbox" checked class="mt-1 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                    <span class="text-sm text-gray-700">Send me updates about spareTime features (optional)</span>
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <!-- Action Buttons Section -->
+    <div id="action-buttons" class="px-4 py-6 bg-white border-t border-gray-200 space-y-4">
+        <button class="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-4 px-6 rounded-xl font-semibold text-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-lg">
+            <i class="fa-solid fa-paper-plane mr-2"></i>
+            Submit Time Request
+        </button>
+        
+        <div class="flex space-x-3">
+            <button class="flex-1 border border-gray-300 text-gray-700 py-3 px-6 rounded-xl font-medium hover:bg-gray-50 transition-colors">
+                <i class="fa-solid fa-eye mr-2"></i>
+                Preview Request
+            </button>
+            <button class="flex-1 border border-gray-300 text-gray-700 py-3 px-6 rounded-xl font-medium hover:bg-gray-50 transition-colors">
+                <i class="fa-solid fa-save mr-2"></i>
+                Save Draft
+            </button>
+        </div>
+        
+        <button class="w-full text-gray-600 py-2 font-medium hover:text-gray-800 transition-colors">
+            <i class="fa-solid fa-arrow-left mr-2"></i>
+            Back to Availability
+        </button>
+    </div>
+
+    <!-- Success Confirmation Modal (Hidden by default) -->
+    <div id="success-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 hidden">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-sm w-full p-8 text-center space-y-6">
+            <div class="w-20 h-20 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center mx-auto">
+                <i class="fa-solid fa-check text-white text-3xl"></i>
+            </div>
+            
+            <div>
+                <h3 class="text-2xl font-bold text-gray-800 mb-2">Request Sent!</h3>
+                <p class="text-gray-600">Maya will receive your request and respond within 24 hours.</p>
+            </div>
+            
+            <div class="bg-gray-50 rounded-xl p-4">
+                <h4 class="font-medium text-gray-800 mb-2">What happens next:</h4>
+                <div class="space-y-2 text-left">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
+                        <span class="text-sm text-gray-700">Maya reviews your request</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+                        <span class="text-sm text-gray-700">You'll get an email confirmation</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <div class="w-2 h-2 bg-purple-500 rounded-full"></div>
+                        <span class="text-sm text-gray-700">Meeting details will be shared</span>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="w-full bg-blue-600 text-white py-3 px-6 rounded-xl font-semibold hover:bg-blue-700 transition-colors">
+                Got it!
+            </button>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="fixed inset-0 bg-white bg-opacity-90 flex items-center justify-center z-40 hidden">
+        <div class="text-center space-y-4">
+            <div class="w-16 h-16 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin mx-auto"></div>
+            <p class="text-gray-700 font-medium">Sending your request...</p>
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <div id="footer" class="bg-gray-100 px-4 py-8 text-center space-y-4">
+        <div class="flex items-center justify-center space-x-2 mb-4">
+            <div class="w-6 h-6 calendar-icon rounded flex items-center justify-center">
+                <i class="fa-solid fa-calendar-days text-white text-xs"></i>
+            </div>
+            <span class="text-sm font-medium text-gray-600">Powered by spareTime</span>
+        </div>
+        
+        <div class="flex justify-center space-x-6 text-xs text-gray-500">
+            <a href="#" class="hover:text-gray-700">Privacy Policy</a>
+            <a href="#" class="hover:text-gray-700">Terms of Service</a>
+            <a href="#" class="hover:text-gray-700">Help</a>
+        </div>
+        
+        <p class="text-xs text-gray-400">© 2024 spareTime. Your Availability, Your Way.</p>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Form validation and submission
+            const submitButton = document.querySelector('button[class*="bg-gradient-to-r"]');
+            const loadingOverlay = document.getElementById('loading-overlay');
+            const successModal = document.getElementById('success-modal');
+            
+            submitButton.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Show loading
+                loadingOverlay.classList.remove('hidden');
+                
+                // Simulate API call
+                setTimeout(() => {
+                    loadingOverlay.classList.add('hidden');
+                    successModal.classList.remove('hidden');
+                }, 2000);
+            });
+            
+            // Close success modal
+            successModal.addEventListener('click', function(e) {
+                if (e.target === successModal || e.target.textContent === 'Got it!') {
+                    successModal.classList.add('hidden');
+                }
+            });
+            
+            // Dynamic form interactions
+            const purposeSelect = document.querySelector('select');
+            purposeSelect.addEventListener('change', function() {
+                if (this.value === 'other') {
+                    // Show additional input for custom purpose
+                    const customInput = document.createElement('input');
+                    customInput.type = 'text';
+                    customInput.className = 'w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent mt-2';
+                    customInput.placeholder = 'Please specify...';
+                    this.parentNode.appendChild(customInput);
+                }
+            });
+            
+            // Add alternative time functionality
+            const addAlternativeButtons = document.querySelectorAll('button[class*="text-blue-600"]');
+            addAlternativeButtons.forEach(button => {
+                if (button.textContent.includes('Add Alternative') || button.textContent.includes('Add alternative')) {
+                    button.addEventListener('click', function() {
+                        const container = this.closest('.space-y-4').querySelector('.space-y-3');
+                        const newTimeSlot = document.createElement('div');
+                        newTimeSlot.className = 'p-4 border border-gray-200 rounded-xl space-y-3';
+                        newTimeSlot.innerHTML = `
+                            <div class="flex space-x-3">
+                                <input type="date" class="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                <input type="time" class="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            </div>
+                            <button class="text-red-500 text-sm hover:text-red-700">
+                                <i class="fa-solid fa-trash mr-1"></i>Remove
+                            </button>
+                        `;
+                        container.insertBefore(newTimeSlot, container.lastElementChild);
+                        
+                        // Add remove functionality
+                        newTimeSlot.querySelector('button').addEventListener('click', function() {
+                            newTimeSlot.remove();
+                        });
+                    });
+                }
+            });
+            
+            // Add topic functionality
+            const addTopicButton = document.querySelector('button[class*="text-blue-600"]:not([class*="Add Alternative"])');
+            if (addTopicButton && addTopicButton.textContent.includes('Add another topic')) {
+                addTopicButton.addEventListener('click', function() {
+                    const topicContainer = this.parentNode;
+                    const newTopic = document.createElement('input');
+                    newTopic.type = 'text';
+                    newTopic.className = 'w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent';
+                    newTopic.placeholder = `Topic ${topicContainer.querySelectorAll('input').length + 1}`;
+                    topicContainer.insertBefore(newTopic, this);
+                });
+            }
+            
+            // Auto-save draft functionality
+            const formInputs = document.querySelectorAll('input, textarea, select');
+            formInputs.forEach(input => {
+                input.addEventListener('input', function() {
+                    // Debounce auto-save
+                    clearTimeout(this.saveTimeout);
+                    this.saveTimeout = setTimeout(() => {
+                        console.log('Auto-saving draft...');
+                        // Implement auto-save logic here
+                    }, 2000);
+                });
+            });
+            
+            // Form progress tracking
+            let completedSections = 0;
+            const totalSections = 8;
+            
+            function updateProgress() {
+                const progressBar = document.createElement('div');
+                progressBar.className = 'fixed top-0 left-0 right-0 h-1 bg-gray-200 z-50';
+                progressBar.innerHTML = `<div class="h-full bg-blue-600 transition-all duration-300" style="width: ${(completedSections / totalSections) * 100}%"></div>`;
+                
+                if (!document.querySelector('.fixed.top-0.h-1')) {
+                    document.body.appendChild(progressBar);
+                } else {
+                    document.querySelector('.fixed.top-0.h-1 > div').style.width = `${(completedSections / totalSections) * 100}%`;
+                }
+            }
+            
+            // Check section completion
+            function checkSectionCompletion() {
+                const sections = document.querySelectorAll('.bg-white.rounded-2xl');
+                completedSections = 0;
+                
+                sections.forEach(section => {
+                    const requiredInputs = section.querySelectorAll('input[required], input[type="text"]:not([placeholder*="optional"]), input[type="email"], select');
+                    const filledInputs = Array.from(requiredInputs).filter(input => input.value.trim() !== '');
+                    
+                    if (filledInputs.length > 0) {
+                        completedSections++;
+                    }
+                });
+                
+                updateProgress();
+            }
+            
+            formInputs.forEach(input => {
+                input.addEventListener('input', checkSectionCompletion);
+                input.addEventListener('change', checkSectionCompletion);
+            });
+            
+            // Initialize progress
+            updateProgress();
+            
+            // Button hover effects
+            const buttons = document.querySelectorAll('button');
+            buttons.forEach(button => {
+                button.addEventListener('mouseenter', function() {
+                    if (this.classList.contains('bg-gradient-to-r')) {
+                        this.style.transform = 'translateY(-2px)';
+                        this.style.boxShadow = '0 8px 25px rgba(0,0,0,0.15)';
+                    }
+                });
+                
+                button.addEventListener('mouseleave', function() {
+                    this.style.transform = '';
+                    this.style.boxShadow = '';
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>

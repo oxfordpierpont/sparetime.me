@@ -1,0 +1,989 @@
+<html>
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Initial Setup</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      window.FontAwesomeConfig = {
+        autoReplaceSvg: 'nest'
+      };
+    </script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"
+      crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&amp;display=swap"
+      rel="stylesheet">
+    <style>
+      ::-webkit-scrollbar
+      {
+        display: none;
+      }
+
+      body
+      {
+        font-family: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      }
+
+      /* Material Design Flat Colors */
+      .bg-primary
+      {
+        background-color: #36454c;
+      }
+
+      .bg-primary-light
+      {
+        background-color: #6e92a0;
+      }
+
+      .bg-primary-lighter
+      {
+        background-color: #c5e0ea;
+      }
+
+      .bg-surface
+      {
+        background-color: #f2f7f9;
+      }
+
+      .bg-card
+      {
+        background-color: #ffffff;
+      }
+
+      .text-primary
+      {
+        color: #36454c;
+      }
+
+      .text-secondary
+      {
+        color: #8a9499;
+      }
+
+      .text-on-primary
+      {
+        color: #ffffff;
+      }
+
+      /* Material Design Elevations */
+      .elevation-1
+      {
+        box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
+      }
+
+      .elevation-2
+      {
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .elevation-3
+      {
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      /* Flat Material Design - No gradients */
+      .btn-primary
+      {
+        background-color: #6e92a0;
+        border: none;
+      }
+
+      .btn-primary:hover
+      {
+        background-color: #5a7a85;
+      }
+
+      .btn-surface
+      {
+        background-color: #ffffff;
+        border: 1px solid #bdccd4;
+      }
+
+      .btn-surface:hover
+      {
+        background-color: #f8f9fa;
+      }
+
+      /* Remove all gradients and rounded corners for flat design */
+      .material-card
+      {
+        background: #ffffff;
+        border-radius: 8px;
+        border: none;
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .status-available
+      {
+        background-color: #22b573;
+      }
+
+      .status-negotiable
+      {
+        background-color: #ffd56b;
+      }
+
+      .status-busy
+      {
+        background-color: #ed5a5a;
+      }
+    </style>
+    <style data-grapesjs-styles="true">
+      *
+      {
+        box-sizing: border-box;
+      }
+
+      body
+      {
+        margin: 0;
+      }
+
+      ::-webkit-scrollbar
+      {
+        display: none;
+      }
+
+      body
+      {
+        font-family: Poppins, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      }
+
+      .bg-primary-light
+      {
+        background-color: rgb(110, 146, 160);
+      }
+
+      .bg-surface
+      {
+        background-color: rgb(242, 247, 249);
+      }
+
+      .bg-card
+      {
+        background-color: rgb(255, 255, 255);
+      }
+
+      .text-primary
+      {
+        color: rgb(54, 69, 76);
+      }
+
+      .text-secondary
+      {
+        color: rgb(138, 148, 153);
+      }
+
+      .elevation-2
+      {
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 4px;
+      }
+
+      .btn-primary
+      {
+        background-color: rgb(110, 146, 160);
+        border-top-width: initial;
+        border-right-width: initial;
+        border-bottom-width: initial;
+        border-left-width: initial;
+        border-top-style: none;
+        border-right-style: none;
+        border-bottom-style: none;
+        border-left-style: none;
+        border-top-color: initial;
+        border-right-color: initial;
+        border-bottom-color: initial;
+        border-left-color: initial;
+        border-image-source: initial;
+        border-image-slice: initial;
+        border-image-width: initial;
+        border-image-outset: initial;
+        border-image-repeat: initial;
+      }
+
+      .btn-primary:hover
+      {
+        background-color: rgb(90, 122, 133);
+      }
+
+      .btn-surface
+      {
+        background-color: rgb(255, 255, 255);
+        border-top-width: 1px;
+        border-right-width: 1px;
+        border-bottom-width: 1px;
+        border-left-width: 1px;
+        border-top-style: solid;
+        border-right-style: solid;
+        border-bottom-style: solid;
+        border-left-style: solid;
+        border-top-color: rgb(189, 204, 212);
+        border-right-color: rgb(189, 204, 212);
+        border-bottom-color: rgb(189, 204, 212);
+        border-left-color: rgb(189, 204, 212);
+        border-image-source: initial;
+        border-image-slice: initial;
+        border-image-width: initial;
+        border-image-outset: initial;
+        border-image-repeat: initial;
+      }
+
+      .btn-surface:hover
+      {
+        background-color: rgb(248, 249, 250);
+      }
+
+      .material-card
+      {
+        background-image: initial;
+        background-position-x: initial;
+        background-position-y: initial;
+        background-size: initial;
+        background-repeat: initial;
+        background-attachment: initial;
+        background-origin: initial;
+        background-clip: initial;
+        background-color: rgb(255, 255, 255);
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+        border-bottom-right-radius: 8px;
+        border-bottom-left-radius: 8px;
+        border-top-width: initial;
+        border-right-width: initial;
+        border-bottom-width: initial;
+        border-left-width: initial;
+        border-top-style: none;
+        border-right-style: none;
+        border-bottom-style: none;
+        border-left-style: none;
+        border-top-color: initial;
+        border-right-color: initial;
+        border-bottom-color: initial;
+        border-left-color: initial;
+        border-image-source: initial;
+        border-image-slice: initial;
+        border-image-width: initial;
+        border-image-outset: initial;
+        border-image-repeat: initial;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 4px;
+      }
+
+      .status-available
+      {
+        background-color: rgb(34, 181, 115);
+      }
+
+      .status-negotiable
+      {
+        background-color: rgb(255, 213, 107);
+      }
+    </style>
+  </head>
+
+  <body class="bg-surface">
+    <!-- Welcome Screen Section -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Initial Setup</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&amp;display=swap"
+      rel="stylesheet">
+    <div id="welcome-screen"
+      class="relative h-[800px] bg-[#ffd56b] overflow-hidden">
+      <div
+        class="relative z-10 flex flex-col items-center justify-center h-full px-6 text-center">
+        <div class="mb-12">
+          <h1 class="text-5xl font-extrabold text-[#36454c] mb-4">Welcome</h1>
+          <p class="text-xl text-[#36454c] font-light max-w-xs mx-auto">It's
+            Time To Start Protecting Your Time.</p>
+        </div>
+        <div class="w-full max-w-sm space-y-4"><button
+            class="w-full bg-[#6e92a0] text-white py-4 px-6 rounded-lg font-semibold text-base elevation-2 hover:bg-[#5a7a85] transition-all duration-200">
+            Get Started
+          </button><button
+            class="w-full bg-transparent text-[#36454c] py-4 px-6 rounded-lg font-medium text-base border border-[#36454c] border-opacity-30">
+            Already have an account? Sign In
+          </button></div>
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2">
+          <div class="flex space-x-2">
+            <div class="w-2 h-2 bg-[#36454c] rounded-full"></div>
+            <div class="w-2 h-2 bg-[#36454c] bg-opacity-50 rounded-full"></div>
+            <div class="w-2 h-2 bg-[#36454c] bg-opacity-30 rounded-full"></div>
+          </div>
+        </div>
+      </div>
+    </div><!-- Feature Carousel Section -->
+    <div id="feature-carousel" class="py-16 bg-card">
+      <div class="px-6 space-y-12">
+        <div class="text-center space-y-6">
+          <div
+            class="status-available w-12 h-12 rounded-lg flex items-center justify-center mx-auto">
+            <i class="fa-solid fa-shield-halved text-white text-xl"></i></div>
+          <div>
+            <h3 class="text-xl font-bold text-primary mb-3">Protect Your
+              Boundaries</h3>
+            <p class="text-secondary leading-relaxed">Share your availability
+              without revealing personal details. Keep your private time private
+              while staying connected.</p>
+          </div>
+        </div>
+        <div class="text-center space-y-6">
+          <div
+            class="bg-primary-light w-12 h-12 rounded-lg flex items-center justify-center mx-auto">
+            <i class="fa-solid fa-users text-white text-xl"></i></div>
+          <div>
+            <h3 class="text-xl font-bold text-primary mb-3">Different Views for
+              Different People</h3>
+            <p class="text-secondary leading-relaxed">Create custom availability
+              views for work, friends, family. Show what's relevant to each
+              audience.</p>
+          </div>
+        </div>
+        <div class="text-center space-y-6">
+          <div
+            class="status-negotiable w-12 h-12 rounded-lg flex items-center justify-center mx-auto">
+            <i class="fa-solid fa-clock text-white text-xl"></i></div>
+          <div>
+            <h3 class="text-xl font-bold text-primary mb-3">Smart Scheduling
+            </h3>
+            <p class="text-secondary leading-relaxed">Let others request time
+              directly from your availability. No more back-and-forth messages.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div><!-- Sign Up Form Section -->
+    <div id="signup-form" class="py-12 bg-surface">
+      <div class="px-6">
+        <div class="material-card p-8 max-w-md mx-auto">
+          <div class="flex items-center justify-between mb-8"><button
+              class="p-2 hover:bg-gray-100 rounded-lg transition-colors"><i
+                class="fa-solid fa-arrow-left text-secondary"></i></button>
+            <h2 class="text-xl font-bold text-primary">Create Account</h2>
+            <div class="w-8"></div>
+          </div>
+          <div class="space-y-6">
+            <div>
+              <p class="text-secondary text-base mb-6">Let's get started</p>
+            </div>
+            <div><label class="block text-sm font-medium text-primary mb-2">Full
+                Name</label><input type="text"
+                placeholder="Enter your full name"
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-light focus:border-transparent">
+            </div>
+            <div><label
+                class="block text-sm font-medium text-primary mb-2">Email
+                Address</label><input type="email"
+                placeholder="Enter your email"
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-light focus:border-transparent">
+            </div>
+            <div><label
+                class="block text-sm font-medium text-primary mb-2">Password</label>
+              <div class="relative"><input type="password"
+                  placeholder="Create a password"
+                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-light focus:border-transparent pr-12"><button
+                  class="absolute right-4 top-1/2 transform -translate-y-1/2 text-secondary"><i
+                    class="fa-solid fa-eye"></i></button></div>
+              <p class="text-xs text-secondary mt-2">Password must be at least 8
+                characters with 1 uppercase letter and 1 number</p>
+            </div>
+            <div class="flex items-start space-x-3"><input type="checkbox"
+                class="mt-1 rounded border-gray-300 text-primary-light focus:ring-primary-light">
+              <p class="text-sm text-secondary">I agree to the <a href="#"
+                  class="text-primary-light hover:underline">Terms of
+                  Service</a> and <a href="#"
+                  class="text-primary-light hover:underline">Privacy Policy</a>
+              </p>
+            </div><button
+              class="w-full btn-primary text-white py-4 px-6 rounded-lg font-semibold text-base hover:bg-opacity-90 transition-colors">
+              Create Account
+            </button>
+            <div class="relative my-6">
+              <div class="absolute inset-0 flex items-center">
+                <div class="w-full border-t border-gray-300"></div>
+              </div>
+              <div class="relative flex justify-center text-sm"><span
+                  class="px-2 bg-white text-secondary">Or continue with</span>
+              </div>
+            </div>
+            <div class="grid grid-cols-2 gap-4"><button
+                class="btn-surface flex items-center justify-center py-3 px-4 rounded-lg transition-colors"><i
+                  class="fa-brands fa-google text-red-500 mr-2"></i><span
+                  class="text-primary font-medium">Google</span></button><button
+                class="btn-surface flex items-center justify-center py-3 px-4 rounded-lg transition-colors"><i
+                  class="fa-brands fa-apple text-primary mr-2"></i><span
+                  class="text-primary font-medium">Apple</span></button></div>
+            <p class="text-center text-secondary">
+              Already have an account? <a href="#"
+                class="text-primary-light font-medium hover:underline">Sign
+                In</a></p>
+          </div>
+        </div>
+      </div>
+    </div><!-- Calendar Connection Section -->
+    <div id="calendar-connection" class="py-12 bg-card">
+      <div class="px-6">
+        <div class="max-w-md mx-auto">
+          <div class="flex items-center justify-between mb-8"><button
+              class="p-2 hover:bg-gray-100 rounded-lg transition-colors"><i
+                class="fa-solid fa-arrow-left text-secondary"></i></button>
+            <h2 class="text-xl font-bold text-primary">Connect Calendar</h2>
+            <button class="text-primary-light font-medium">Next</button>
+          </div>
+          <div class="space-y-6">
+            <div class="text-center mb-8">
+              <div
+                class="w-16 h-16 bg-primary-light rounded-lg flex items-center justify-center mx-auto mb-4">
+                <i class="fa-solid fa-calendar-plus text-white text-2xl"></i>
+              </div>
+              <h3 class="text-lg font-bold text-primary mb-2">Connect your
+                calendars</h3>
+              <p class="text-secondary">Choose calendars to import and sync your
+                availability</p>
+            </div>
+            <div class="space-y-4">
+              <div class="p-4 border-2 border-green-200 bg-green-50 rounded-xl">
+                <div class="flex items-center space-x-4">
+                  <div
+                    class="w-12 h-12 bg-gradient-to-br from-red-400 to-red-600 rounded-lg flex items-center justify-center">
+                    <i class="fa-brands fa-google text-white text-xl"></i></div>
+                  <div class="flex-1">
+                    <h4 class="font-semibold text-gray-800">Google Calendar</h4>
+                    <p class="text-sm text-gray-600">Connected</p>
+                  </div><i
+                    class="fa-solid fa-check-circle text-green-600 text-xl"></i>
+                </div>
+              </div>
+              <div
+                class="p-4 border border-gray-200 rounded-xl hover:border-gray-300 transition-colors cursor-pointer">
+                <div class="flex items-center space-x-4">
+                  <div
+                    class="w-12 h-12 bg-gradient-to-br from-blue-400 to-blue-600 rounded-lg flex items-center justify-center">
+                    <i class="fa-brands fa-apple text-white text-xl"></i></div>
+                  <div class="flex-1">
+                    <h4 class="font-semibold text-gray-800">Apple Calendar</h4>
+                    <p class="text-sm text-gray-600">Connect to sync events</p>
+                  </div><i class="fa-solid fa-plus text-gray-400"></i>
+                </div>
+              </div>
+              <div
+                class="p-4 border border-gray-200 rounded-xl hover:border-gray-300 transition-colors cursor-pointer">
+                <div class="flex items-center space-x-4">
+                  <div
+                    class="w-12 h-12 bg-gradient-to-br from-blue-600 to-blue-800 rounded-lg flex items-center justify-center">
+                    <i class="fa-brands fa-microsoft text-white text-xl"></i>
+                  </div>
+                  <div class="flex-1">
+                    <h4 class="font-semibold text-gray-800">Outlook Calendar
+                    </h4>
+                    <p class="text-sm text-gray-600">Connect to sync events</p>
+                  </div><i class="fa-solid fa-plus text-gray-400"></i>
+                </div>
+              </div>
+            </div>
+            <div class="mt-8">
+              <h4 class="font-semibold text-gray-800 mb-4">Connected Calendars:
+              </h4>
+              <div class="space-y-3">
+                <div
+                  class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                  <div class="flex items-center space-x-3">
+                    <div class="w-4 h-4 bg-blue-500 rounded-full"></div><span
+                      class="text-gray-800">Work Calendar</span>
+                  </div><input type="checkbox" checked=""
+                    class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                </div>
+                <div
+                  class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                  <div class="flex items-center space-x-3">
+                    <div class="w-4 h-4 bg-green-500 rounded-full"></div><span
+                      class="text-gray-800">Personal Calendar</span>
+                  </div><input type="checkbox" checked=""
+                    class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                </div>
+                <div
+                  class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                  <div class="flex items-center space-x-3">
+                    <div class="w-4 h-4 bg-purple-500 rounded-full"></div><span
+                      class="text-gray-800">Family Calendar</span>
+                  </div><input type="checkbox"
+                    class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                </div>
+              </div>
+            </div>
+            <div class="space-y-4 mt-8"><button
+                class="w-full btn-primary text-white py-4 px-6 rounded-lg font-semibold text-base hover:bg-opacity-90 transition-colors">
+                Continue
+              </button><button
+                class="w-full text-gray-600 py-2 font-medium hover:text-gray-800 transition-colors">
+                Skip for now
+              </button></div>
+          </div>
+        </div>
+      </div>
+    </div><!-- Time Preferences Section -->
+    <div id="time-preferences" class="py-12 bg-surface">
+      <div class="px-6">
+        <div class="max-w-md mx-auto">
+          <div class="flex items-center justify-between mb-8"><button
+              class="p-2 hover:bg-gray-100 rounded-lg transition-colors"><i
+                class="fa-solid fa-arrow-left text-secondary"></i></button>
+            <h2 class="text-xl font-bold text-primary">Preferences</h2><button
+              class="text-primary-light font-medium">Finish</button>
+          </div>
+          <div class="material-card p-6 space-y-6">
+            <div class="text-center mb-6">
+              <h3 class="text-lg font-bold text-primary mb-2">Set your
+                preferences</h3>
+              <p class="text-secondary">Customize your availability settings</p>
+            </div>
+            <div><label class="block text-sm font-medium text-primary mb-3">Your
+                timezone:</label>
+              <div class="relative"><select
+                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-light focus:border-transparent appearance-none">
+                  <option>US Eastern (GMT-5)</option>
+                  <option>US Central (GMT-6)</option>
+                  <option>US Mountain (GMT-7)</option>
+                  <option>US Pacific (GMT-8)</option>
+                </select><i
+                  class="fa-solid fa-chevron-down absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+              </div>
+            </div>
+            <div><label
+                class="block text-sm font-medium text-primary mb-3">Default work
+                hours:</label>
+              <div class="grid grid-cols-2 gap-4">
+                <div class="relative"><select
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-light focus:border-transparent appearance-none">
+                    <option>9:00 AM</option>
+                    <option>8:00 AM</option>
+                    <option>10:00 AM</option>
+                  </select><i
+                    class="fa-solid fa-chevron-down absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                </div>
+                <div class="relative"><select
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-light focus:border-transparent appearance-none">
+                    <option>5:00 PM</option>
+                    <option>4:00 PM</option>
+                    <option>6:00 PM</option>
+                  </select><i
+                    class="fa-solid fa-chevron-down absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                </div>
+              </div>
+            </div>
+            <div><label class="block text-sm font-medium text-primary mb-3">Work
+                days:</label>
+              <div class="flex justify-between"><button
+                  class="w-10 h-10 bg-blue-600 text-white rounded-lg font-medium">M</button><button
+                  class="w-10 h-10 bg-blue-600 text-white rounded-lg font-medium">T</button><button
+                  class="w-10 h-10 bg-blue-600 text-white rounded-lg font-medium">W</button><button
+                  class="w-10 h-10 bg-blue-600 text-white rounded-lg font-medium">Th</button><button
+                  class="w-10 h-10 bg-blue-600 text-white rounded-lg font-medium">F</button><button
+                  class="w-10 h-10 bg-gray-200 text-gray-600 rounded-lg font-medium">Sa</button><button
+                  class="w-10 h-10 bg-gray-200 text-gray-600 rounded-lg font-medium">Su</button>
+              </div>
+            </div>
+            <div><label
+                class="block text-sm font-medium text-primary mb-3">Break
+                preferences:</label>
+              <div class="space-y-3">
+                <div class="flex items-center justify-between"><span
+                    class="text-gray-700">Lunch break (12-1 PM)</span><input
+                    type="checkbox" checked=""
+                    class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                </div>
+                <div class="flex items-center justify-between"><span
+                    class="text-gray-700">15-min buffer between
+                    meetings</span><input type="checkbox" checked=""
+                    class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                </div>
+              </div>
+            </div>
+            <div><label
+                class="block text-sm font-medium text-primary mb-3">Protected
+                time blocks:</label><button
+                class="w-full p-4 border-2 border-dashed border-gray-300 rounded-lg text-gray-500 hover:border-gray-400 hover:text-gray-600 transition-colors"><i
+                  class="fa-solid fa-plus mr-2"></i>
+                Add protected time
+              </button></div>
+          </div>
+          <div class="mt-8"><button
+              class="w-full btn-primary text-white py-4 px-6 rounded-lg font-semibold text-base hover:bg-opacity-90 transition-colors">
+              Let's Start
+            </button></div>
+        </div>
+      </div>
+    </div><!-- Welcome Complete Section -->
+    <div id="welcome-complete"
+      class="py-16 bg-gradient-to-br from-green-50 to-blue-50">
+      <div class="px-6 text-center">
+        <div class="max-w-md mx-auto space-y-8">
+          <div
+            class="w-24 h-24 bg-gradient-to-br from-green-400 to-green-600 rounded-3xl flex items-center justify-center mx-auto">
+            <i class="fa-solid fa-check text-white text-4xl"></i></div>
+          <div>
+            <h2 class="text-3xl font-bold text-gray-800 mb-4">You're all set!
+            </h2>
+            <p class="text-gray-600 text-lg leading-relaxed">Welcome to
+              spareTime. Your personalized availability system is ready to help
+              you manage your time better.</p>
+          </div>
+          <div class="bg-white rounded-2xl p-6 shadow-lg space-y-4">
+            <h3 class="font-semibold text-gray-800 text-left">What's next:</h3>
+            <div class="space-y-3">
+              <div class="flex items-center space-x-3">
+                <div
+                  class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+                  <i class="fa-solid fa-link text-blue-600 text-sm"></i></div>
+                <span class="text-gray-700">Create your first availability
+                  link</span>
+              </div>
+              <div class="flex items-center space-x-3">
+                <div
+                  class="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
+                  <i class="fa-solid fa-calendar text-purple-600 text-sm"></i>
+                </div><span class="text-gray-700">Review your calendar
+                  sync</span>
+              </div>
+              <div class="flex items-center space-x-3">
+                <div
+                  class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
+                  <i class="fa-solid fa-share text-green-600 text-sm"></i></div>
+                <span class="text-gray-700">Share with your first contact</span>
+              </div>
+            </div>
+          </div><button
+            class="w-full btn-primary text-white py-4 px-6 rounded-lg font-semibold text-base hover:bg-opacity-90 transition-colors">
+            Go to Dashboard
+          </button>
+        </div>
+      </div>
+    </div><!-- Quick Tutorial Section -->
+    <div id="quick-tutorial" class="py-12 bg-white">
+      <div class="px-6">
+        <div class="max-w-md mx-auto">
+          <div class="text-center mb-8">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Quick Tutorial
+            </h2>
+            <p class="text-gray-600">Learn the basics in under 2 minutes</p>
+          </div>
+          <div class="space-y-6">
+            <div
+              class="bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl p-6">
+              <div class="flex items-start space-x-4">
+                <div
+                  class="w-10 h-10 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold">
+                  1</div>
+                <div>
+                  <h3 class="font-semibold text-gray-800 mb-2">Create
+                    Availability Links</h3>
+                  <p class="text-gray-600 text-sm">Generate custom links that
+                    show your availability to different audiences - work,
+                    friends, family.</p>
+                </div>
+              </div>
+            </div>
+            <div
+              class="bg-gradient-to-r from-green-50 to-teal-50 rounded-2xl p-6">
+              <div class="flex items-start space-x-4">
+                <div
+                  class="w-10 h-10 bg-green-600 text-white rounded-full flex items-center justify-center font-bold">
+                  2</div>
+                <div>
+                  <h3 class="font-semibold text-gray-800 mb-2">Protect Your Time
+                  </h3>
+                  <p class="text-gray-600 text-sm">Set protected time blocks
+                    that appear as "busy" to others while keeping your privacy
+                    intact.</p>
+                </div>
+              </div>
+            </div>
+            <div
+              class="bg-gradient-to-r from-yellow-50 to-orange-50 rounded-2xl p-6">
+              <div class="flex items-start space-x-4">
+                <div
+                  class="w-10 h-10 bg-yellow-600 text-white rounded-full flex items-center justify-center font-bold">
+                  3</div>
+                <div>
+                  <h3 class="font-semibold text-gray-800 mb-2">Manage Requests
+                  </h3>
+                  <p class="text-gray-600 text-sm">Receive and respond to time
+                    requests directly through the app. Accept, propose
+                    alternatives, or decline.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="flex space-x-4 mt-8"><button
+              class="flex-1 border border-gray-300 text-gray-700 py-3 px-6 rounded-lg font-medium hover:bg-gray-50 transition-colors">
+              Skip Tutorial
+            </button><button
+              class="flex-1 bg-blue-600 text-white py-3 px-6 rounded-lg font-medium hover:bg-blue-700 transition-colors">
+              Start Tutorial
+            </button></div>
+        </div>
+      </div>
+    </div><!-- Notification Permissions Section -->
+    <div id="notification-permissions" class="py-12 bg-surface">
+      <div class="px-6">
+        <div class="max-w-md mx-auto">
+          <div class="material-card p-8 text-center space-y-6">
+            <div
+              class="w-20 h-20 bg-gradient-to-br from-orange-400 to-red-500 rounded-2xl flex items-center justify-center mx-auto">
+              <i class="fa-solid fa-bell text-white text-3xl"></i></div>
+            <div>
+              <h2 class="text-2xl font-bold text-gray-800 mb-4">Stay Updated
+              </h2>
+              <p class="text-gray-600 leading-relaxed">Get notified when someone
+                requests time with you or when your availability changes.</p>
+            </div>
+            <div class="space-y-4">
+              <div
+                class="flex items-center justify-between p-4 bg-gray-50 rounded-xl">
+                <div class="flex items-center space-x-3"><i
+                    class="fa-solid fa-calendar-check text-blue-600"></i><span
+                    class="text-gray-700 font-medium">Time Requests</span></div>
+                <input type="checkbox" checked=""
+                  class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+              </div>
+              <div
+                class="flex items-center justify-between p-4 bg-gray-50 rounded-xl">
+                <div class="flex items-center space-x-3"><i
+                    class="fa-solid fa-clock text-green-600"></i><span
+                    class="text-gray-700 font-medium">Schedule Changes</span>
+                </div><input type="checkbox" checked=""
+                  class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+              </div>
+              <div
+                class="flex items-center justify-between p-4 bg-gray-50 rounded-xl">
+                <div class="flex items-center space-x-3"><i
+                    class="fa-solid fa-star text-yellow-600"></i><span
+                    class="text-gray-700 font-medium">Tips &amp; Updates</span>
+                </div><input type="checkbox"
+                  class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+              </div>
+            </div>
+            <div class="space-y-3"><button
+                class="w-full btn-primary text-white py-4 px-6 rounded-lg font-semibold text-base hover:bg-opacity-90 transition-colors">
+                Enable Notifications
+              </button><button
+                class="w-full text-gray-600 py-2 font-medium hover:text-gray-800 transition-colors">
+                Maybe Later
+              </button></div>
+          </div>
+        </div>
+      </div>
+    </div><!-- First Link Creation Section -->
+    <div id="first-link-creation" class="py-12 bg-white">
+      <div class="px-6">
+        <div class="max-w-md mx-auto">
+          <div class="text-center mb-8">
+            <div
+              class="w-16 h-16 bg-gradient-to-br from-purple-400 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+              <i class="fa-solid fa-link text-white text-2xl"></i></div>
+            <h2 class="text-2xl font-bold text-gray-800 mb-2">Create Your First
+              Link</h2>
+            <p class="text-gray-600">Let's create a link you can share with
+              others</p>
+          </div>
+          <div class="space-y-6">
+            <div><label
+                class="block text-sm font-medium text-gray-700 mb-2">Link
+                Name</label><input type="text" placeholder="e.g., Coffee Chats"
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+            </div>
+            <div><label class="block text-sm font-medium text-gray-700 mb-2">Who
+                is this for? (optional)</label><input type="text"
+                placeholder="e.g., Friends, Colleagues"
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+            </div>
+            <div><label
+                class="block text-sm font-medium text-gray-700 mb-3">What should
+                they see?</label>
+              <div class="space-y-3">
+                <div
+                  class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                  <span class="text-gray-700">Show when I'm busy</span><input
+                    type="checkbox" checked=""
+                    class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                </div>
+                <div
+                  class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                  <span class="text-gray-700">Show negotiable times</span><input
+                    type="checkbox" checked=""
+                    class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                </div>
+                <div
+                  class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                  <span class="text-gray-700">Show event details</span><input
+                    type="checkbox"
+                    class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                </div>
+              </div>
+            </div>
+            <div><label
+                class="block text-sm font-medium text-gray-700 mb-2">Personal
+                Message
+                (optional)</label><textarea rows="3" placeholder="Hi! Here's my availability. Feel free to request a time that works for both of us." class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"></textarea>
+            </div>
+            <div class="bg-gray-50 rounded-xl p-4">
+              <h4 class="font-medium text-gray-800 mb-2">Your link will be:</h4>
+              <div class="flex items-center space-x-2"><span
+                  class="text-blue-600 font-mono text-sm">sparetime.me/you/coffee-chats</span><button
+                  class="p-1 hover:bg-gray-200 rounded"><i
+                    class="fa-solid fa-copy text-gray-500 text-sm"></i></button>
+              </div>
+            </div>
+            <div class="space-y-3"><button
+                class="w-full btn-primary text-white py-4 px-6 rounded-lg font-semibold text-base hover:bg-opacity-90 transition-colors">
+                Create Link
+              </button><button
+                class="w-full border border-gray-300 text-gray-700 py-3 px-6 rounded-lg font-medium hover:bg-gray-50 transition-colors">
+                Preview First
+              </button></div>
+          </div>
+        </div>
+      </div>
+    </div><!-- Success & Next Steps Section -->
+    <div id="success-next-steps"
+      class="py-16 bg-gradient-to-br from-green-50 to-teal-50">
+      <div class="px-6">
+        <div class="max-w-md mx-auto text-center space-y-8">
+          <div
+            class="w-24 h-24 bg-gradient-to-br from-green-400 to-green-600 rounded-3xl flex items-center justify-center mx-auto">
+            <i class="fa-solid fa-rocket text-white text-4xl"></i></div>
+          <div>
+            <h2 class="text-3xl font-bold text-gray-800 mb-4">Ready to Launch!
+            </h2>
+            <p class="text-gray-600 text-lg leading-relaxed">Your spareTime
+              account is fully configured. Start sharing your availability and
+              take control of your schedule.</p>
+          </div>
+          <div class="bg-white rounded-2xl p-6 shadow-lg space-y-4">
+            <h3 class="font-semibold text-gray-800 text-left">Pro Tips:</h3>
+            <div class="space-y-3 text-left">
+              <div class="flex items-start space-x-3"><i
+                  class="fa-solid fa-lightbulb text-yellow-500 mt-1"></i><span
+                  class="text-gray-700 text-sm">Create different links for
+                  different contexts (work, personal, etc.)</span></div>
+              <div class="flex items-start space-x-3"><i
+                  class="fa-solid fa-shield text-blue-500 mt-1"></i><span
+                  class="text-gray-700 text-sm">Use protected time blocks to
+                  maintain work-life balance</span></div>
+              <div class="flex items-start space-x-3"><i
+                  class="fa-solid fa-chart-line text-green-500 mt-1"></i><span
+                  class="text-gray-700 text-sm">Check link analytics to see how
+                  people interact with your availability</span></div>
+            </div>
+          </div>
+          <div class="space-y-4"><button
+              class="w-full btn-primary text-white py-4 px-6 rounded-lg font-semibold text-base hover:bg-opacity-90 transition-colors">
+              Enter spareTime
+            </button>
+            <div class="flex space-x-4"><button
+                class="flex-1 border border-gray-300 text-gray-700 py-3 px-4 rounded-lg font-medium hover:bg-gray-50 transition-colors text-sm"><i
+                  class="fa-solid fa-share mr-2"></i>
+                Share Link
+              </button><button
+                class="flex-1 border border-gray-300 text-gray-700 py-3 px-4 rounded-lg font-medium hover:bg-gray-50 transition-colors text-sm"><i
+                  class="fa-solid fa-calendar mr-2"></i>
+                View Calendar
+              </button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      // Smooth scrolling between sections
+      document.addEventListener('DOMContentLoaded', function()
+      {
+        const buttons = document.querySelectorAll('button');
+        buttons.forEach(button =>
+        {
+          button.addEventListener('click', function()
+          {
+            // Add click animation
+            this.style.transform = 'scale(0.95)';
+            setTimeout(() =>
+            {
+              this.style.transform = 'scale(1)';
+            }, 150);
+          });
+        });
+
+        // Toggle password visibility
+        const passwordToggle = document.querySelector('.fa-eye');
+        if (passwordToggle)
+        {
+          passwordToggle.addEventListener('click', function()
+          {
+            const passwordInput = this.closest('.relative')
+              .querySelector('input');
+            if (passwordInput.type === 'password')
+            {
+              passwordInput.type = 'text';
+              this.classList.remove('fa-eye');
+              this.classList.add('fa-eye-slash');
+            }
+            else
+            {
+              passwordInput.type = 'password';
+              this.classList.remove('fa-eye-slash');
+              this.classList.add('fa-eye');
+            }
+          });
+        }
+
+        // Day selector toggle
+        const dayButtons = document.querySelectorAll(
+        '[class*="w-10 h-10"]');
+        dayButtons.forEach(button =>
+        {
+          if (button.textContent.match(/^[A-Z][a-z]*$/))
+          {
+            button.addEventListener('click', function()
+            {
+              if (this.classList.contains('bg-blue-600'))
+              {
+                this.classList.remove('bg-blue-600', 'text-white');
+                this.classList.add('bg-gray-200', 'text-gray-600');
+              }
+              else
+              {
+                this.classList.remove('bg-gray-200',
+                  'text-gray-600');
+                this.classList.add('bg-blue-600', 'text-white');
+              }
+            });
+          }
+        });
+
+        // Auto-generate link URL
+        const linkNameInput = document.querySelector(
+          'input[placeholder="e.g., Coffee Chats"]');
+        if (linkNameInput)
+        {
+          linkNameInput.addEventListener('input', function()
+          {
+            const linkUrl = document.querySelector('.font-mono');
+            if (linkUrl)
+            {
+              const slug = this.value.toLowerCase().replace(/\s+/g, '-')
+                .replace(/[^a-z0-9-]/g, '');
+              linkUrl.textContent =
+                `sparetime.me/you/${slug || 'your-link'}`;
+            }
+          });
+        }
+      });
+    </script>
+  </body>
+
+</html>

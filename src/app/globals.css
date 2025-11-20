@@ -2,75 +2,321 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ============================================
+   SpareTime Modern iOS Design System
+   Refined for Softness & Strategic Color
+   ============================================ */
+
 @layer base {
   :root {
-    --background: 200 33% 96%;
-    /* #f2f7f9 */
-    --foreground: 200 17% 25%;
-    /* #36454c */
+    /* Brand Colors - Minimal & Professional */
+    --ios-blue: #2e95f3;
+    --ios-blue-hover: #1e85e3;
 
-    --card: 0 0% 100%;
-    --card-foreground: 200 17% 25%;
+    /* Backgrounds - Clean & Subtle */
+    --bg-app: #fafafa;
+    /* Very subtle gray background */
+    --bg-primary: #ffffff;
+    /* Pure White */
+    --bg-secondary: #f9fafb;
+    /* Subtle hover state */
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 200 17% 25%;
+    /* Text Colors */
+    --text-primary: #111827;
+    /* Near black */
+    --text-secondary: #6b7280;
+    /* Medium gray */
+    --text-tertiary: #9ca3af;
+    /* Light gray */
 
-    --primary: 200 17% 25%;
-    /* #36454c */
-    --primary-foreground: 0 0% 100%;
+    /* Status Colors */
+    --status-success: #10b981;
+    --status-warning: #f59e0b;
+    --status-error: #ef4444;
 
-    --secondary: 197 48% 84%;
-    /* #c5e0ea */
-    --secondary-foreground: 200 17% 25%;
+    /* UI Elements - Minimal */
+    --divider: #e5e7eb;
+    --border: #e5e7eb;
+    --shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
 
-    --muted: 200 20% 90%;
-    --muted-foreground: 200 8% 57%;
-    /* #8a9499 */
+    /* Spacing - Compact */
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 12px;
+    --spacing-lg: 16px;
+    --spacing-xl: 20px;
 
-    --accent: 200 20% 96%;
-    --accent-foreground: 200 17% 25%;
+    /* Border Radius - Subtle */
+    --radius-sm: 4px;
+    --radius-md: 6px;
+    --radius-lg: 8px;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 200 20% 79%;
-    /* #bdccd4 */
-    --input: 200 20% 79%;
-    --ring: 200 17% 25%;
-
-    --radius: 0.5rem;
+    /* Typography Scale - Compact */
+    --font-display: 30px;
+    --font-title1: 24px;
+    --font-title2: 18px;
+    --font-title3: 16px;
+    --font-body: 14px;
+    --font-small: 12px;
+    --sidebar-background: 210 100% 98.4%;
+    /* #f6fbff - light blue for contrast */
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
   .dark {
-    --background: 200 17% 25%;
-    --foreground: 200 33% 96%;
-
-    --card: 200 17% 25%;
-    --card-foreground: 200 33% 96%;
-
-    --popover: 200 17% 25%;
-    --popover-foreground: 200 33% 96%;
-
-    --primary: 200 33% 96%;
-    --primary-foreground: 200 17% 25%;
-
-    --secondary: 200 20% 30%;
-    --secondary-foreground: 200 33% 96%;
-
-    --muted: 200 20% 30%;
-    --muted-foreground: 200 8% 60%;
-
-    --accent: 200 20% 30%;
-    --accent-foreground: 200 33% 96%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 200 20% 30%;
-    --input: 200 20% 30%;
-    --ring: 200 33% 96%;
+    --sidebar-background: 200 20% 92%;
+    /* #dfe9ef */
+    --sidebar-foreground: 210 20% 98%;
+    --sidebar-primary: 210 40% 98%;
+    --sidebar-primary-foreground: 210 20% 10%;
+    --sidebar-accent: 210 40% 96%;
+    --sidebar-accent-foreground: 210 20% 10%;
+    --sidebar-border: 210 20% 89%;
+    --sidebar-ring: 210 40% 60%;
+    --sidebar-width: 6.5rem;
+    /* Further reduced for more compact sidebar */
+    --sidebar-width-mobile: 18rem;
+    --sidebar-width-icon: 4.5rem;
+    /* Wide enough for icons and avatar (72px) */
   }
 }
+
+@layer base {
+  * {
+    @apply box-border;
+  }
+
+  body {
+    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: var(--bg-app);
+    color: var(--text-primary);
+    font-weight: 400;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+/* ============================================
+   Modern iOS Components - Enhanced
+   ============================================ */
+
+/* Buttons - Pill Shaped & Soft */
+.ios-btn-primary {
+  background: var(--ios-blue);
+  color: white;
+  border-radius: var(--radius-full);
+  padding: 16px 32px;
+  font-weight: 600;
+  font-size: 16px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 12px rgba(46, 149, 243, 0.25);
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.ios-btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(46, 149, 243, 0.35);
+}
+
+.ios-btn-secondary {
+  background: white;
+  color: var(--text-primary);
+  border-radius: var(--radius-full);
+  padding: 16px 32px;
+  font-weight: 600;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  border: 1px solid var(--divider);
+}
+
+.ios-btn-secondary:hover {
+  background: var(--bg-secondary);
+  border-color: var(--text-secondary);
+}
+
+.ios-btn-ghost {
+  background: transparent;
+  color: var(--text-secondary);
+  border-radius: var(--radius-full);
+  padding: 12px 24px;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.ios-btn-ghost:hover {
+  background: rgba(0, 0, 0, 0.03);
+  color: var(--text-primary);
+}
+
+/* Cards - Enhanced Depth & Spacing */
+.ios-card {
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  box-shadow: var(--shadow-card);
+  border: 1px solid rgba(0, 0, 0, 0.02);
+  transition: all 0.3s ease;
+}
+
+.ios-card-hover {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.ios-card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-float);
+}
+
+/* Inputs - Clean & Rounded */
+.ios-input {
+  background: var(--bg-tertiary);
+  border: 2px solid transparent;
+  border-radius: 16px;
+  padding: 16px 20px;
+  font-size: 16px;
+  color: var(--text-primary);
+  width: 100%;
+  transition: all 0.2s;
+}
+
+.ios-input:focus {
+  background: white;
+  border-color: var(--ios-blue);
+  outline: none;
+  box-shadow: 0 0 0 4px var(--ios-blue-soft);
+}
+
+/* Navigation Bar */
+.ios-nav {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+/* Icons - Large & Prominent */
+.icon-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-icon);
+  width: 56px;
+  height: 56px;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-icon);
+}
+
+.icon-box-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.icon-box-blue {
+  background: linear-gradient(135deg, #2e95f3 0%, #1e85e3 100%);
+  color: white;
+}
+
+.icon-box-success {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+}
+
+.icon-box-warning {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  color: white;
+}
+
+.icon-box-soft {
+  background: var(--ios-blue-soft);
+  color: var(--ios-blue);
+  box-shadow: none;
+}
+
+/* Typography Utilities */
+.text-display {
+  font-size: var(--font-display);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: var(--text-primary);
+}
+
+.text-title1 {
+  font-size: var(--font-title1);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+}
+
+.text-title2 {
+  font-size: var(--font-title2);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+}
+
+.text-title3 {
+  font-size: var(--font-title3);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.text-body {
+  font-size: var(--font-body);
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* Animations */
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
 
 @layer base {
   * {

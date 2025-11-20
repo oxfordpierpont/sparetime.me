@@ -1,0 +1,199 @@
+<div id="main" class="bg-white">
+  <!-- Header -->
+  <header id="header" class="bg-white border-b border-neutral-200 px-4 py-3">
+    <div class="flex items-center justify-between">
+      <button class="flex items-center text-neutral-600">
+        <i class="fa-solid fa-arrow-left mr-2"></i>
+        <span class="text-sm">Back</span>
+      </button>
+      <h1 class="text-lg text-neutral-900">Create Link</h1>
+      <button class="text-neutral-600">
+        <i class="fa-solid fa-ellipsis-vertical"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Create/Edit Link Form -->
+  <section id="link-form-section" class="px-6 py-6">
+    <form class="space-y-6">
+      <!-- Link Name -->
+      <div>
+        <label class="block text-sm text-neutral-700 mb-2">Link Name</label>
+        <input type="text" class="w-full border border-neutral-300 rounded-lg px-3 py-3 text-base" placeholder="e.g., Coffee Chat, Team Meeting" value="">
+      </div>
+
+      <!-- Description -->
+      <div>
+        <label class="block text-sm text-neutral-700 mb-2">Description (Optional)</label>
+        <textarea class="w-full border border-neutral-300 rounded-lg px-3 py-3 text-base h-20" placeholder="Brief description of what this availability is for"></textarea>
+      </div>
+
+      <!-- Recipients -->
+      <div>
+        <label class="block text-sm text-neutral-700 mb-2">Who can use this link?</label>
+        <div class="space-y-3">
+          <div class="flex items-center space-x-3">
+            <input type="radio" name="recipients" value="anyone" class="w-4 h-4">
+            <div>
+              <span class="text-neutral-900 text-sm">Anyone with the link</span>
+              <p class="text-xs text-neutral-600">Public - anyone can book time</p>
+            </div>
+          </div>
+          <div class="flex items-center space-x-3">
+            <input type="radio" name="recipients" value="specific" checked class="w-4 h-4">
+            <div>
+              <span class="text-neutral-900 text-sm">Specific people only</span>
+              <p class="text-xs text-neutral-600">Private - only people you share with</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Duration Options -->
+      <div>
+        <label class="block text-sm text-neutral-700 mb-3">Meeting Duration Options</label>
+        <div class="grid grid-cols-3 gap-3">
+          <button type="button" class="border border-neutral-600 bg-neutral-600 text-white py-2 px-3 rounded-lg text-sm">15 min</button>
+          <button type="button" class="border border-neutral-300 text-neutral-700 py-2 px-3 rounded-lg text-sm">30 min</button>
+          <button type="button" class="border border-neutral-300 text-neutral-700 py-2 px-3 rounded-lg text-sm">45 min</button>
+          <button type="button" class="border border-neutral-300 text-neutral-700 py-2 px-3 rounded-lg text-sm">1 hour</button>
+          <button type="button" class="border border-neutral-300 text-neutral-700 py-2 px-3 rounded-lg text-sm">2 hours</button>
+          <button type="button" class="border border-neutral-300 text-neutral-700 py-2 px-3 rounded-lg text-sm">Custom</button>
+        </div>
+      </div>
+
+      <!-- Calendar Selection -->
+      <div>
+        <label class="block text-sm text-neutral-700 mb-3">Show availability from</label>
+        <div class="space-y-3">
+          <div class="flex items-center justify-between p-3 border border-neutral-300 rounded-lg">
+            <div class="flex items-center space-x-3">
+              <input type="checkbox" checked class="w-4 h-4">
+              <div>
+                <span class="text-sm text-neutral-900">Work Calendar</span>
+                <p class="text-xs text-neutral-600">john@company.com</p>
+              </div>
+            </div>
+            <i class="fa-brands fa-google text-neutral-500"></i>
+          </div>
+          <div class="flex items-center justify-between p-3 border border-neutral-300 rounded-lg">
+            <div class="flex items-center space-x-3">
+              <input type="checkbox" class="w-4 h-4">
+              <div>
+                <span class="text-sm text-neutral-900">Personal Calendar</span>
+                <p class="text-xs text-neutral-600">john.personal@gmail.com</p>
+              </div>
+            </div>
+            <i class="fa-brands fa-google text-neutral-500"></i>
+          </div>
+        </div>
+      </div>
+
+      <!-- Availability Window -->
+      <div>
+        <label class="block text-sm text-neutral-700 mb-3">Availability Window</label>
+        <div class="space-y-4">
+          <div class="flex space-x-3">
+            <div class="flex-1">
+              <label class="block text-xs text-neutral-600 mb-1">From</label>
+              <select class="w-full border border-neutral-300 rounded-lg px-3 py-2 text-sm">
+                <option>Today</option>
+                <option>Tomorrow</option>
+                <option>In 3 days</option>
+                <option>Next week</option>
+              </select>
+            </div>
+            <div class="flex-1">
+              <label class="block text-xs text-neutral-600 mb-1">Until</label>
+              <select class="w-full border border-neutral-300 rounded-lg px-3 py-2 text-sm">
+                <option>No end date</option>
+                <option>In 1 week</option>
+                <option>In 2 weeks</option>
+                <option>In 1 month</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Time Preferences -->
+      <div>
+        <label class="block text-sm text-neutral-700 mb-3">Time Preferences</label>
+        <div class="space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-sm text-neutral-700">Use my work hours (9 AM - 5 PM)</span>
+            <div class="w-12 h-6 bg-neutral-600 rounded-full relative">
+              <div class="w-5 h-5 bg-white rounded-full absolute top-0.5 right-0.5"></div>
+            </div>
+          </div>
+          <div class="flex items-center justify-between">
+            <span class="text-sm text-neutral-700">Allow weekend bookings</span>
+            <div class="w-12 h-6 bg-neutral-300 rounded-full relative">
+              <div class="w-5 h-5 bg-white rounded-full absolute top-0.5 left-0.5"></div>
+            </div>
+          </div>
+          <div class="flex items-center justify-between">
+            <span class="text-sm text-neutral-700">Buffer time between meetings</span>
+            <select class="border border-neutral-300 rounded px-2 py-1 text-sm">
+              <option>15 min</option>
+              <option>30 min</option>
+              <option>None</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Advanced Settings -->
+      <div>
+        <button type="button" class="flex items-center justify-between w-full text-left">
+          <span class="text-sm text-neutral-700">Advanced Settings</span>
+          <i class="fa-solid fa-chevron-down text-neutral-500"></i>
+        </button>
+      </div>
+
+      <!-- Message Template -->
+      <div>
+        <label class="block text-sm text-neutral-700 mb-2">Custom Message (Optional)</label>
+        <textarea class="w-full border border-neutral-300 rounded-lg px-3 py-3 text-base h-20" placeholder="Add a personal message that recipients will see when booking"></textarea>
+      </div>
+    </form>
+  </section>
+
+  <!-- Action Buttons -->
+  <section id="action-buttons" class="px-6 py-4 border-t border-neutral-200 bg-white">
+    <div class="space-y-3">
+      <button class="w-full bg-neutral-600 text-white py-3 px-6 rounded-lg text-base">
+        CREATE LINK
+      </button>
+      <button class="w-full border border-neutral-300 text-neutral-700 py-3 px-6 rounded-lg text-base">
+        SAVE AS DRAFT
+      </button>
+    </div>
+  </section>
+
+  <!-- Bottom Tab Navigation -->
+  <nav id="bottom-nav" class="fixed bottom-0 left-0 right-0 bg-white border-t border-neutral-200">
+    <div class="flex">
+      <a href="#" class="flex-1 flex flex-col items-center py-3">
+        <i class="fa-solid fa-house text-neutral-400 text-lg mb-1"></i>
+        <span class="text-xs text-neutral-400">Home</span>
+      </a>
+      <a href="#" class="flex-1 flex flex-col items-center py-3">
+        <i class="fa-solid fa-link text-neutral-600 text-lg mb-1"></i>
+        <span class="text-xs text-neutral-600">Links</span>
+      </a>
+      <a href="#" class="flex-1 flex flex-col items-center py-3">
+        <i class="fa-solid fa-calendar text-neutral-400 text-lg mb-1"></i>
+        <span class="text-xs text-neutral-400">Calendar</span>
+      </a>
+      <a href="#" class="flex-1 flex flex-col items-center py-3">
+        <i class="fa-solid fa-clock text-neutral-400 text-lg mb-1"></i>
+        <span class="text-xs text-neutral-400">Requests</span>
+      </a>
+      <a href="#" class="flex-1 flex flex-col items-center py-3">
+        <i class="fa-solid fa-user text-neutral-400 text-lg mb-1"></i>
+        <span class="text-xs text-neutral-400">Profile</span>
+      </a>
+    </div>
+  </nav>
+</div>

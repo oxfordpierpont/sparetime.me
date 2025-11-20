@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Management</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script> window.FontAwesomeConfig = { autoReplaceSvg: 'nest'};</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-dark-blue-gray': '#36454c',
+                        'primary-blue': '#6e92a0',
+                        'light-blue': '#c5e0ea',
+                        'gray-text': '#8a9499',
+                        'light-gray': '#bdccd4',
+                        'background-gray': '#f2f7f9',
+                        'status-available': '#22b573',
+                        'status-available-light': '#b3e2cc',
+                        'status-negotiable': '#ffd56b',
+                        'status-negotiable-light': '#ffefcc',
+                        'status-busy': '#ed5a5a',
+                        'status-busy-light': '#fff3f3'
+                    },
+                    fontFamily: {
+                        sans: ['Poppins', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', 'Helvetica', 'Arial', 'sans-serif']
+                    },
+                    fontWeight: {
+                        light: '300',
+                        normal: '400',
+                        semibold: '600',
+                        extrabold: '800'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>::-webkit-scrollbar { display: none;}</style>
+</head>
+<body class="bg-background-gray font-sans">
+    <div id="app-container" class="w-full max-w-md mx-auto bg-white">
+            <header id="analytics-header" class="bg-white p-4 flex items-center justify-between shadow-sm sticky top-0 z-10">
+                <button class="text-primary-dark-blue-gray">
+                    <i class="fa-solid fa-arrow-left fa-lg"></i>
+                </button>
+                <h1 class="text-xl font-semibold text-primary-dark-blue-gray">Analytics & Insights</h1>
+                <button class="text-primary-dark-blue-gray">
+                    <i class="fa-solid fa-share-nodes fa-lg"></i>
+                </button>
+            </header>
+
+            <main class="flex-grow overflow-y-auto p-4 space-y-6">
+                <section id="analytics-summary" class="grid grid-cols-2 gap-4">
+                    <div id="total-views-card" class="bg-white p-4 rounded-xl shadow-[0_2px_4px_rgba(0,0,0,0.1)]">
+                        <div class="flex items-center space-x-2 text-gray-text">
+                            <i class="fa-solid fa-eye"></i>
+                            <span class="text-sm font-semibold">Total Views</span>
+                        </div>
+                        <p class="text-3xl font-extrabold text-primary-dark-blue-gray mt-2">1,284</p>
+                        <div class="flex items-center text-status-available text-sm mt-1">
+                            <i class="fa-solid fa-arrow-up fa-xs mr-1"></i>
+                            <span>12.5%</span>
+                        </div>
+                    </div>
+                    <div id="requests-received-card" class="bg-white p-4 rounded-xl shadow-[0_2px_4px_rgba(0,0,0,0.1)]">
+                        <div class="flex items-center space-x-2 text-gray-text">
+                            <i class="fa-solid fa-inbox"></i>
+                            <span class="text-sm font-semibold">Requests</span>
+                        </div>
+                        <p class="text-3xl font-extrabold text-primary-dark-blue-gray mt-2">73</p>
+                        <div class="flex items-center text-status-busy text-sm mt-1">
+                            <i class="fa-solid fa-arrow-down fa-xs mr-1"></i>
+                            <span>2.1%</span>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="link-views-chart-section">
+                    <div class="bg-white p-4 rounded-xl shadow-[0_2px_4px_rgba(0,0,0,0.1)]">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="font-semibold text-primary-dark-blue-gray">Link Views</h3>
+                            <div class="flex items-center space-x-2 bg-background-gray p-1 rounded-lg text-sm">
+                                <button class="px-3 py-1 rounded-md text-gray-text">Day</button>
+                                <button class="px-3 py-1 rounded-md bg-white shadow text-primary-blue">Week</button>
+                                <button class="px-3 py-1 rounded-md text-gray-text">Month</button>
+                            </div>
+                        </div>
+                        <div id="linkViewsChart" style="height: 250px"></div>
+                    </div>
+                </section>
+                
+                <section id="top-performing-links-section">
+                    <h3 class="text-sm font-semibold text-gray-text px-2 mb-2 uppercase tracking-wider">Top Performing Links</h3>
+                    <div class="space-y-3">
+                        <div id="link-card-1" class="bg-white p-4 rounded-xl shadow-[0_2px_4px_rgba(0,0,0,0.1)] flex items-center justify-between">
+                            <div>
+                                <h4 class="font-semibold text-primary-dark-blue-gray">Work Colleagues</h4>
+                                <p class="text-xs text-gray-text">sparetime.me/maya/work</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="font-bold text-primary-dark-blue-gray">458 views</p>
+                                <p class="text-sm text-status-available">32 requests</p>
+                            </div>
+                        </div>
+                        <div id="link-card-2" class="bg-white p-4 rounded-xl shadow-[0_2px_4px_rgba(0,0,0,0.1)] flex items-center justify-between">
+                            <div>
+                                <h4 class="font-semibold text-primary-dark-blue-gray">Close Friends</h4>
+                                <p class="text-xs text-gray-text">sparetime.me/maya/friends</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="font-bold text-primary-dark-blue-gray">312 views</p>
+                                <p class="text-sm text-status-available">21 requests</p>
+                            </div>
+                        </div>
+                        <div id="link-card-3" class="bg-white p-4 rounded-xl shadow-[0_2px_4px_rgba(0,0,0,0.1)] flex items-center justify-between">
+                            <div>
+                                <h4 class="font-semibold text-primary-dark-blue-gray">Recruiting</h4>
+                                <p class="text-xs text-gray-text">sparetime.me/maya/hiring</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="font-bold text-primary-dark-blue-gray">205 views</p>
+                                <p class="text-sm text-status-negotiable">11 requests</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="request-status-section">
+                    <h3 class="text-sm font-semibold text-gray-text px-2 mb-2 uppercase tracking-wider">Request Status</h3>
+                    <div class="bg-white p-4 rounded-xl shadow-[0_2px_4px_rgba(0,0,0,0.1)] flex justify-around">
+                        <div class="text-center">
+                            <p class="text-2xl font-extrabold text-status-available">45</p>
+                            <p class="text-sm text-gray-text">Accepted</p>
+                        </div>
+                        <div class="border-l border-light-gray"></div>
+                        <div class="text-center">
+                            <p class="text-2xl font-extrabold text-status-negotiable">18</p>
+                            <p class="text-sm text-gray-text">Proposed New</p>
+                        </div>
+                         <div class="border-l border-light-gray"></div>
+                        <div class="text-center">
+                            <p class="text-2xl font-extrabold text-status-busy">10</p>
+                            <p class="text-sm text-gray-text">Declined</p>
+                        </div>
+                    </div>
+                </section>
+
+            </main>
+
+            <nav id="bottom-nav-analytics" class="bg-white border-t border-light-gray flex justify-around items-center p-2 sticky bottom-0">
+                <a href="#" class="flex flex-col items-center text-primary-blue w-1/4">
+                    <i class="fa-solid fa-link fa-lg mb-1"></i>
+                    <span class="text-xs font-semibold">Links</span>
+                </a>
+                <a href="#" class="flex flex-col items-center text-gray-text hover:text-primary-blue w-1/4">
+                    <i class="fa-solid fa-calendar-days fa-lg mb-1"></i>
+                    <span class="text-xs font-semibold">Calendar</span>
+                </a>
+                <a href="#" class="flex flex-col items-center text-gray-text hover:text-primary-blue w-1/4">
+                    <i class="fa-solid fa-bell fa-lg mb-1"></i>
+                    <span class="text-xs font-semibold">Requests</span>
+                </a>
+                <a href="#" class="flex flex-col items-center text-gray-text hover:text-primary-blue w-1/4">
+                    <i class="fa-solid fa-user-circle fa-lg mb-1"></i>
+                    <span class="text-xs font-semibold">Profile</span>
+                </a>
+            </nav>
+        </div>
+    </div>
+    
+    <script src="https://cdn.plot.ly/plotly-3.1.1.min.js"></script>
+    <script>
+        window.addEventListener('load', function() {
+            try {
+                const linkViewsChart = document.getElementById('linkViewsChart');
+                if (linkViewsChart) {
+                    const data = [{
+                        x: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                        y: [65, 59, 80, 81, 56, 55, 90],
+                        type: 'bar',
+                        marker: {
+                            color: '#6e92a0'
+                        }
+                    }];
+
+                    const layout = {
+                        title: { text: '' },
+                        xaxis: { showgrid: false, zeroline: false, linecolor: '#bdccd4' },
+                        yaxis: { showgrid: true, gridcolor: '#f2f7f9', zeroline: false, linecolor: '#bdccd4' },
+                        margin: { t: 20, r: 20, b: 30, l: 40 },
+                        plot_bgcolor: '#ffffff',
+                        paper_bgcolor: '#ffffff',
+                        showlegend: false
+                    };
+                    
+                    const config = {
+                        responsive: true,
+                        displayModeBar: false,
+                        displaylogo: false
+                    };
+
+                    Plotly.newPlot('linkViewsChart', data, layout, config);
+                }
+            } catch (e) {
+                console.error("Plotly chart rendering failed:", e);
+                const chartContainer = document.getElementById('linkViewsChart');
+                if(chartContainer) {
+                    chartContainer.innerHTML = '<div class="flex items-center justify-center h-full text-gray-text text-sm">Chart unavailable</div>';
+                }
+            }
+        });
+    </script>
+</body>
+</html>

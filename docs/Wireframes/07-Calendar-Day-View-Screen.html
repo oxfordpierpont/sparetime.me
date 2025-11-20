@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendar</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-dark': '#36454c',
+                        'primary-blue': '#6e92a0',
+                        'light-blue': '#c5e0ea',
+                        'gray-text': '#8a9499',
+                        'light-gray': '#bdccd4',
+                        'background-gray': '#f2f7f9',
+                        'available': '#22b573',
+                        'available-light': '#b3e2cc',
+                        'negotiable': '#ffd56b',
+                        'negotiable-light': '#ffefcc',
+                        'busy': '#ed5a5a',
+                        'busy-light': '#fff3f3'
+                    },
+                    fontFamily: {
+                        'sans': ['Alright Sans', 'Poppins', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <script> window.FontAwesomeConfig = { autoReplaceSvg: 'nest'};</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>::-webkit-scrollbar { display: none;}</style>
+</head>
+<body class="bg-background-gray">
+    <div id="calendar-main" class="h-[800px] bg-background-gray">
+        <!-- Header -->
+        <header id="header" class="flex items-center justify-between p-4 bg-white shadow-sm">
+            <button class="text-gray-text hover:text-primary-dark transition-colors">
+                <i class="fa-solid fa-bars text-xl"></i>
+            </button>
+            <div class="text-lg font-semibold text-primary-dark">Calendar</div>
+            <div class="flex items-center space-x-3">
+                <button class="text-gray-text hover:text-primary-dark transition-colors relative">
+                    <i class="fa-solid fa-bell text-xl"></i>
+                    <div class="absolute -top-1 -right-1 w-3 h-3 bg-busy rounded-full"></div>
+                </button>
+                <button class="text-gray-text hover:text-primary-dark transition-colors">
+                    <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-5.jpg" alt="Profile" class="w-8 h-8 rounded-full object-cover">
+                </button>
+            </div>
+        </header>
+
+        <!-- Calendar Controls -->
+        <div id="calendar-controls" class="px-4 py-3 bg-white border-b border-light-gray">
+            <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center space-x-3">
+                    <button class="text-gray-text hover:text-primary-dark transition-colors p-2">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </button>
+                    <h2 class="text-lg font-semibold text-primary-dark">January 2025</h2>
+                    <button class="text-gray-text hover:text-primary-dark transition-colors p-2">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+                </div>
+                <button class="text-primary-blue text-sm font-medium px-3 py-1 rounded-md hover:bg-light-blue transition-colors">Today</button>
+            </div>
+            
+            <!-- View Toggle -->
+            <div class="flex bg-background-gray rounded-lg p-1">
+                <button class="flex-1 py-2 px-3 text-sm font-medium text-primary-dark bg-white rounded-md shadow-sm">Day</button>
+                <button class="flex-1 py-2 px-3 text-sm font-medium text-gray-text hover:text-primary-dark transition-colors">Week</button>
+                <button class="flex-1 py-2 px-3 text-sm font-medium text-gray-text hover:text-primary-dark transition-colors">Month</button>
+            </div>
+        </div>
+
+        <!-- Calendar Content -->
+        <div id="calendar-content" class="flex-1 overflow-y-auto">
+            <!-- Date Header -->
+            <div id="date-header" class="px-4 py-4 bg-light-blue border-b border-light-gray">
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-primary-dark">15</div>
+                    <div class="text-sm font-medium text-gray-text">Wednesday</div>
+                </div>
+            </div>
+
+            <!-- Time Slots -->
+            <div id="time-slots" class="px-4 bg-white">
+                <!-- Morning -->
+                <div id="slot-9am" class="border-b border-gray-100 py-3">
+                    <div class="flex items-center">
+                        <div class="w-16 text-sm font-medium text-gray-text">9:00 AM</div>
+                        <div class="flex-1 ml-4">
+                            <div class="bg-available-light border-l-4 border-available rounded-r-lg p-3 shadow-sm">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <div class="text-sm font-semibold text-primary-dark">Available</div>
+                                        <div class="text-xs text-gray-text">Open for meetings</div>
+                                    </div>
+                                    <div class="w-2 h-2 bg-available rounded-full"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="slot-10am" class="border-b border-gray-100 py-3">
+                    <div class="flex items-center">
+                        <div class="w-16 text-sm font-medium text-gray-text">10:00 AM</div>
+                        <div class="flex-1 ml-4">
+                            <div class="bg-busy-light border-l-4 border-busy rounded-r-lg p-3 shadow-sm">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <div class="text-sm font-semibold text-primary-dark">Team Meeting</div>
+                                        <div class="text-xs text-gray-text">Conference Room A</div>
+                                    </div>
+                                    <div class="w-2 h-2 bg-busy rounded-full"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="slot-11am" class="border-b border-gray-100 py-3">
+                    <div class="flex items-center">
+                        <div class="w-16 text-sm font-medium text-gray-text">11:00 AM</div>
+                        <div class="flex-1 ml-4">
+                            <div class="bg-negotiable-light border-l-4 border-negotiable rounded-r-lg p-3 shadow-sm">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <div class="text-sm font-semibold text-primary-dark">Negotiable</div>
+                                        <div class="text-xs text-gray-text">Can reschedule if needed</div>
+                                    </div>
+                                    <i class="fa-solid fa-arrows-rotate text-negotiable text-sm"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lunch -->
+                <div id="slot-12pm" class="border-b border-gray-100 py-3">
+                    <div class="flex items-center">
+                        <div class="w-16 text-sm font-medium text-gray-text">12:00 PM</div>
+                        <div class="flex-1 ml-4">
+                            <div class="bg-light-blue border-l-4 border-primary-blue rounded-r-lg p-3 shadow-sm">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <div class="text-sm font-semibold text-primary-dark">Protected Time</div>
+                                        <div class="text-xs text-gray-text">Lunch break</div>
+                                    </div>
+                                    <i class="fa-solid fa-shield-halved text-primary-blue"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Afternoon -->
+                <div id="slot-1pm" class="border-b border-gray-100 py-3">
+                    <div class="flex items-center">
+                        <div class="w-16 text-sm font-medium text-gray-text">1:00 PM</div>
+                        <div class="flex-1 ml-4">
+                            <div class="bg-available-light border-l-4 border-available rounded-r-lg p-3 shadow-sm">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <div class="text-sm font-semibold text-primary-dark">Available</div>
+                                        <div class="text-xs text-gray-text">Open for meetings</div>
+                                    </div>
+                                    <div class="w-2 h-2 bg-available rounded-full"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="slot-2pm" class="border-b border-gray-100 py-3">
+                    <div class="flex items-center">
+                        <div class="w-16 text-sm font-medium text-gray-text">2:00 PM</div>
+                        <div class="flex-1 ml-4">
+                            <div class="bg-busy-light border-l-4 border-busy rounded-r-lg p-3 shadow-sm">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <div class="text-sm font-semibold text-primary-dark">Client Call</div>
+                                        <div class="text-xs text-gray-text">Project review</div>
+                                    </div>
+                                    <i class="fa-solid fa-video text-busy text-sm"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="slot-3pm" class="border-b border-gray-100 py-3">
+                    <div class="flex items-center">
+                        <div class="w-16 text-sm font-medium text-gray-text">3:00 PM</div>
+                        <div class="flex-1 ml-4">
+                            <div class="bg-available-light border-l-4 border-available rounded-r-lg p-3 shadow-sm">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <div class="text-sm font-semibold text-primary-dark">Available</div>
+                                        <div class="text-xs text-gray-text">Open for meetings</div>
+                                    </div>
+                                    <div class="w-2 h-2 bg-available rounded-full"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="slot-4pm" class="border-b border-gray-100 py-3">
+                    <div class="flex items-center">
+                        <div class="w-16 text-sm font-medium text-gray-text">4:00 PM</div>
+                        <div class="flex-1 ml-4">
+                            <div class="bg-light-blue border-l-4 border-primary-blue rounded-r-lg p-3 shadow-sm">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <div class="text-sm font-semibold text-primary-dark">Focus Time</div>
+                                        <div class="text-xs text-gray-text">Deep work block</div>
+                                    </div>
+                                    <i class="fa-solid fa-brain text-primary-blue"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="py-8"></div>
+            </div>
+        </div>
+
+        <!-- Floating Add Button -->
+        <button id="add-button" class="fixed bottom-24 right-4 w-14 h-14 bg-primary-blue text-white rounded-full shadow-lg flex items-center justify-center hover:bg-primary-dark transition-colors">
+            <i class="fa-solid fa-plus text-xl"></i>
+        </button>
+
+        <!-- Bottom Navigation -->
+        <nav id="bottom-nav" class="fixed bottom-0 left-0 right-0 bg-white border-t border-light-gray shadow-lg">
+            <div class="flex">
+                <button class="flex-1 py-3 flex flex-col items-center text-gray-text hover:text-primary-blue transition-colors">
+                    <i class="fa-solid fa-home text-lg mb-1"></i>
+                    <span class="text-xs font-medium">Dashboard</span>
+                </button>
+                <button class="flex-1 py-3 flex flex-col items-center text-gray-text hover:text-primary-blue transition-colors">
+                    <i class="fa-solid fa-link text-lg mb-1"></i>
+                    <span class="text-xs font-medium">Links</span>
+                </button>
+                <button class="flex-1 py-3 flex flex-col items-center text-primary-blue">
+                    <i class="fa-solid fa-calendar-days text-lg mb-1"></i>
+                    <span class="text-xs font-medium">Calendar</span>
+                </button>
+                <button class="flex-1 py-3 flex flex-col items-center text-gray-text hover:text-primary-blue transition-colors relative">
+                    <i class="fa-solid fa-clock text-lg mb-1"></i>
+                    <span class="text-xs font-medium">Requests</span>
+                    <div class="absolute top-1 right-6 w-2 h-2 bg-busy rounded-full"></div>
+                </button>
+                <button class="flex-1 py-3 flex flex-col items-center text-gray-text hover:text-primary-blue transition-colors">
+                    <i class="fa-solid fa-user text-lg mb-1"></i>
+                    <span class="text-xs font-medium">Profile</span>
+                </button>
+            </div>
+        </nav>
+    </div>
+</body>
+</html>
