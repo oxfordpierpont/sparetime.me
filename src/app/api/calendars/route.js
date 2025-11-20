@@ -1,26 +1,35 @@
 /**
  * Calendars API Routes
- * GET /api/calendars - Get all calendars for a user
+ * GET /api/calendars - Get all calendars for authenticated user
  * POST /api/calendars - Create a new calendar
+ *
+ * Security:
+ * - Authentication required for all endpoints
+ * - Users can only access their own calendars
+ * - Input sanitization
  */
 
 import { NextResponse } from 'next/server';
 import connectDB from '@/lib/database';
 import { Calendar } from '@/models';
+import { requireAuth } from '@/middleware/auth';
+import { sanitizeString } from '@/lib/sanitize';
+import { standardRateLimit } from '@/lib/rateLimit';
 
-// GET - Get all calendars for a user
+// GET - Get all calendars for authenticated user
 export async function GET(request) {
+  // Require authentication
+  const authResult = requireAuth(request);
+  if (authResult instanceof NextResponse) {
+    return authResult;
+  }
+  const authUser = authResult;
+
   try {
     await connectDB();
 
-    const { searchParams } = new URL(request.url);
-    const userId = searchParams.get('userId');
-
-    if (!userId) {
-      return NextResponse.json({ error: 'userId is required' }, { status: 400 });
-    }
-
-    const calendars = await Calendar.find({ userId, isActive: true });
+    // Use authenticated user's ID
+    const calendars = await Calendar.find({ userId: authUser.userId, isActive: true });
 
     return NextResponse.json({
       calendars,
@@ -28,8 +37,13 @@ export async function GET(request) {
     });
   } catch (error) {
     console.error('Get calendars error:', error);
+
+    const message = process.env.NODE_ENV === 'production'
+      ? 'An error occurred while fetching calendars'
+      : error.message;
+
     return NextResponse.json(
-      { error: 'Internal server error', details: error.message },
+      { error: 'Internal server error', message },
       { status: 500 }
     );
   }
@@ -37,23 +51,52 @@ export async function GET(request) {
 
 // POST - Create a new calendar
 export async function POST(request) {
+  // Require authentication
+  const authResult = requireAuth(request);
+  if (authResult instanceof NextResponse) {
+    return authResult;
+  }
+  const authUser = authResult;
+
+  // Rate limiting
+  const rateLimitResult = standardRateLimit(request);
+  if (rateLimitResult instanceof NextResponse) {
+    return rateLimitResult;
+  }
+
   try {
     await connectDB();
 
     const body = await request.json();
-    const { userId, source, sourceId, name, color } = body;
+    const { source, sourceId, name, color } = body;
 
     // Validation
-    if (!userId || !source || !name) {
+    if (!source || !name) {
       return NextResponse.json(
-        { error: 'userId, source, and name are required' },
+        { error: 'source and name are required' },
         { status: 400 }
       );
     }
 
+    // Validate source
+    if (!['google', 'apple', 'manual'].includes(source)) {
+      return NextResponse.json({ error: 'Invalid source' }, { status: 400 });
+    }
+
+    // Sanitize inputs
+    const sanitizedName = sanitizeString(name);
+    const sanitizedSourceId = sourceId ? sanitizeString(sourceId) : null;
+
+    if (sanitizedName.length < 1) {
+      return NextResponse.json({ error: 'Name cannot be empty' }, { status: 400 });
+    }
+
     // Check if calendar with same sourceId already exists (for non-manual)
-    if (source !== 'manual' && sourceId) {
-      const existingCalendar = await Calendar.findOne({ userId, sourceId });
+    if (source !== 'manual' && sanitizedSourceId) {
+      const existingCalendar = await Calendar.findOne({
+        userId: authUser.userId,
+        sourceId: sanitizedSourceId,
+      });
       if (existingCalendar) {
         return NextResponse.json(
           { error: 'Calendar already connected' },
@@ -62,27 +105,41 @@ export async function POST(request) {
       }
     }
 
-    // Create calendar
+    // Create calendar using authenticated user's ID
     const calendar = await Calendar.create({
-      userId,
+      userId: authUser.userId,
       source,
-      sourceId: sourceId || null,
-      name,
+      sourceId: sanitizedSourceId,
+      name: sanitizedName,
       color: color || '#3B82F6',
       isActive: true,
     });
 
-    return NextResponse.json(
+    const response = NextResponse.json(
       {
         message: 'Calendar created successfully',
         calendar,
       },
       { status: 201 }
     );
+
+    // Set rate limit headers
+    if (rateLimitResult.headers) {
+      Object.entries(rateLimitResult.headers).forEach(([key, value]) => {
+        response.headers.set(key, value);
+      });
+    }
+
+    return response;
   } catch (error) {
     console.error('Create calendar error:', error);
+
+    const message = process.env.NODE_ENV === 'production'
+      ? 'An error occurred while creating calendar'
+      : error.message;
+
     return NextResponse.json(
-      { error: 'Internal server error', details: error.message },
+      { error: 'Internal server error', message },
       { status: 500 }
     );
   }
