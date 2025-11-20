@@ -7,6 +7,7 @@
  * - Authentication required for all endpoints
  * - Users can only access their own notifications
  * - ObjectId validation
+ * - Rate limiting on PATCH endpoint
  */
 
 import { NextResponse } from 'next/server';
@@ -14,6 +15,7 @@ import connectDB from '@/lib/database';
 import { Notification } from '@/models';
 import { requireAuth, requireOwner } from '@/middleware/auth';
 import { isValidObjectId } from '@/lib/sanitize';
+import { standardRateLimit } from '@/lib/rateLimit';
 
 // GET - Get notifications for authenticated user
 export async function GET(request) {
@@ -70,6 +72,12 @@ export async function PATCH(request) {
     return authResult;
   }
   const authUser = authResult;
+
+  // Rate limiting
+  const rateLimitResult = standardRateLimit(request);
+  if (rateLimitResult instanceof NextResponse) {
+    return rateLimitResult;
+  }
 
   try {
     await connectDB();

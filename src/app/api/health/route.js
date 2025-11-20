@@ -3,6 +3,10 @@
  * GET /api/health
  *
  * Used by Docker, Coolify, and monitoring tools to check if the application is healthy
+ *
+ * Security:
+ * - Production: Returns minimal status only (ok/degraded/error)
+ * - Development: Returns detailed health information for debugging
  */
 
 import { NextResponse } from 'next/server';
@@ -13,7 +17,27 @@ export async function GET() {
     // Check if database is connected
     const dbConnected = isConnected();
 
-    // Basic health check
+    // Production: Minimal response for security
+    if (process.env.NODE_ENV === 'production') {
+      if (!dbConnected) {
+        return NextResponse.json(
+          { status: 'degraded' },
+          { status: 503 }
+        );
+      }
+
+      return NextResponse.json(
+        { status: 'ok' },
+        {
+          status: 200,
+          headers: {
+            'Cache-Control': 'no-cache, no-store, must-revalidate',
+          },
+        }
+      );
+    }
+
+    // Development: Detailed health information
     const health = {
       status: 'ok',
       timestamp: new Date().toISOString(),
@@ -44,6 +68,15 @@ export async function GET() {
       },
     });
   } catch (error) {
+    // Production: Generic error
+    if (process.env.NODE_ENV === 'production') {
+      return NextResponse.json(
+        { status: 'error' },
+        { status: 500 }
+      );
+    }
+
+    // Development: Detailed error
     return NextResponse.json(
       {
         status: 'error',

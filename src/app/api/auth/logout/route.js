@@ -5,11 +5,19 @@
  * Security:
  * - Clears httpOnly cookie
  * - No authentication required (logout can happen even with invalid token)
+ * - Rate limiting to prevent abuse
  */
 
 import { NextResponse } from 'next/server';
+import { standardRateLimit } from '@/lib/rateLimit';
 
 export async function POST(request) {
+  // Rate limiting
+  const rateLimitResult = standardRateLimit(request);
+  if (rateLimitResult instanceof NextResponse) {
+    return rateLimitResult;
+  }
+
   try {
     const response = NextResponse.json(
       { message: 'Logged out successfully' },

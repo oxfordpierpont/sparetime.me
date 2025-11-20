@@ -5,7 +5,7 @@
  *
  * Security:
  * - Authentication required for GET
- * - Rate limiting for POST (public endpoint)
+ * - Rate limiting on all endpoints
  * - Input sanitization for all inputs
  * - ObjectId validation
  */
@@ -15,7 +15,7 @@ import connectDB from '@/lib/database';
 import { Request, Notification } from '@/models';
 import { requireAuth } from '@/middleware/auth';
 import { isValidObjectId, sanitizeString, sanitizeObject } from '@/lib/sanitize';
-import { strictRateLimit } from '@/lib/rateLimit';
+import { strictRateLimit, standardRateLimit } from '@/lib/rateLimit';
 
 // GET - Get all requests for authenticated user
 export async function GET(request) {
@@ -25,6 +25,12 @@ export async function GET(request) {
     return authResult;
   }
   const authUser = authResult;
+
+  // Rate limiting
+  const rateLimitResult = standardRateLimit(request);
+  if (rateLimitResult instanceof NextResponse) {
+    return rateLimitResult;
+  }
 
   try {
     await connectDB();

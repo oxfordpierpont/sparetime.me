@@ -9,6 +9,7 @@
  * - Ownership verification for PATCH and DELETE
  * - Input sanitization
  * - ObjectId validation
+ * - Rate limiting on all endpoints
  */
 
 import { NextResponse } from 'next/server';
@@ -16,6 +17,7 @@ import connectDB from '@/lib/database';
 import { User } from '@/models';
 import { requireAuth, requireOwner } from '@/middleware/auth';
 import { isValidObjectId, sanitizeObject } from '@/lib/sanitize';
+import { standardRateLimit } from '@/lib/rateLimit';
 
 // GET - Get user by ID
 export async function GET(request, { params }) {
@@ -64,6 +66,12 @@ export async function PATCH(request, { params }) {
     return authResult;
   }
   const authUser = authResult;
+
+  // Rate limiting
+  const rateLimitResult = standardRateLimit(request);
+  if (rateLimitResult instanceof NextResponse) {
+    return rateLimitResult;
+  }
 
   try {
     await connectDB();
@@ -127,6 +135,12 @@ export async function DELETE(request, { params }) {
     return authResult;
   }
   const authUser = authResult;
+
+  // Rate limiting
+  const rateLimitResult = standardRateLimit(request);
+  if (rateLimitResult instanceof NextResponse) {
+    return rateLimitResult;
+  }
 
   try {
     await connectDB();

@@ -1,12 +1,12 @@
 /**
  * Link API Routes
- * GET /api/links/[id] - Get link by ID (requires auth)
+ * GET /api/links/[id] - Get link by ID (requires auth + ownership)
  * PATCH /api/links/[id] - Update link (requires auth + ownership)
  * DELETE /api/links/[id] - Delete link (requires auth + ownership)
  *
  * Security:
  * - Authentication required for all endpoints
- * - Ownership verification for PATCH and DELETE
+ * - Ownership verification for ALL endpoints
  * - Input sanitization
  * - ObjectId validation
  */
@@ -24,6 +24,7 @@ export async function GET(request, { params }) {
   if (authResult instanceof NextResponse) {
     return authResult;
   }
+  const authUser = authResult;
 
   try {
     await connectDB();
@@ -39,6 +40,12 @@ export async function GET(request, { params }) {
 
     if (!link) {
       return NextResponse.json({ error: 'Link not found' }, { status: 404 });
+    }
+
+    // Require ownership - only the owner can view their link details
+    const ownershipResult = requireOwner(authUser.userId, link.userId);
+    if (ownershipResult instanceof NextResponse) {
+      return ownershipResult;
     }
 
     return NextResponse.json({ link });
