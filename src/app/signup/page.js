@@ -7,17 +7,106 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Card, CardContent } from '@/components/ui/card';
-import { Calendar, ArrowLeft, User, Mail, Lock, Eye, EyeOff } from 'lucide-react';
+import { Calendar, ArrowLeft, User, Mail, Lock, Eye, EyeOff, AlertCircle } from 'lucide-react';
 import { useState } from 'react';
-import Image from 'next/image'; // Added Image import
+import Image from 'next/image';
 
 export default function SignUp() {
     const router = useRouter();
     const [showPassword, setShowPassword] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState('');
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        password: '',
+        agreeToTerms: false
+    });
 
-    const handleSubmit = (e) => {
+    const handleChange = (e) => {
+        const { id, value, type, checked } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [id]: type === 'checkbox' ? checked : value
+        }));
+        // Clear error when user starts typing
+        if (error) setError('');
+    };
+
+    const validateForm = () => {
+        if (!formData.name.trim()) {
+            setError('Please enter your full name');
+            return false;
+        }
+        if (!formData.email.trim()) {
+            setError('Please enter your email address');
+            return false;
+        }
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+            setError('Please enter a valid email address');
+            return false;
+        }
+        if (formData.password.length < 8) {
+            setError('Password must be at least 8 characters long');
+            return false;
+        }
+        if (!/[A-Z]/.test(formData.password)) {
+            setError('Password must contain at least one uppercase letter');
+            return false;
+        }
+        if (!/[0-9]/.test(formData.password)) {
+            setError('Password must contain at least one number');
+            return false;
+        }
+        if (!formData.agreeToTerms) {
+            setError('You must agree to the Terms of Service and Privacy Policy');
+            return false;
+        }
+        return true;
+    };
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        router.push('/connect-calendar');
+        setError('');
+
+        // Client-side validation
+        if (!validateForm()) {
+            return;
+        }
+
+        setIsLoading(true);
+
+        try {
+            // Extract username from email (before @)
+            const username = formData.email.split('@')[0];
+
+            const response = await fetch('/api/auth/signup', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email: formData.email,
+                    password: formData.password,
+                    username: username,
+                    name: formData.name
+                }),
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.message || 'Signup failed. Please try again.');
+            }
+
+            // Success! Token is automatically set in httpOnly cookie by the backend
+            // Redirect to connect calendar page
+            router.push('/connect-calendar');
+        } catch (err) {
+            setError(err.message || 'An error occurred during signup. Please try again.');
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     return (
@@ -40,6 +129,13 @@ export default function SignUp() {
                             <p className="text-muted-foreground">Join SpareTime to start managing your availability</p>
                         </div>
 
+                        {error && (
+                            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg flex items-start gap-2">
+                                <AlertCircle className="text-red-600 mt-0.5" size={18} />
+                                <p className="text-sm text-red-800">{error}</p>
+                            </div>
+                        )}
+
                         <form className="space-y-4" onSubmit={handleSubmit}>
                             <div className="space-y-2">
                                 <Label htmlFor="name" className="font-medium">Full Name</Label>
@@ -49,6 +145,9 @@ export default function SignUp() {
                                         id="name"
                                         placeholder="Enter your full name"
                                         className="pl-12 h-12"
+                                        value={formData.name}
+                                        onChange={handleChange}
+                                        disabled={isLoading}
                                         required
                                     />
                                 </div>
@@ -63,6 +162,9 @@ export default function SignUp() {
                                         type="email"
                                         placeholder="Enter your email"
                                         className="pl-12 h-12"
+                                        value={formData.email}
+                                        onChange={handleChange}
+                                        disabled={isLoading}
                                         required
                                     />
                                 </div>
@@ -77,12 +179,16 @@ export default function SignUp() {
                                         type={showPassword ? "text" : "password"}
                                         placeholder="Create a password"
                                         className="pl-12 pr-12 h-12"
+                                        value={formData.password}
+                                        onChange={handleChange}
+                                        disabled={isLoading}
                                         required
                                     />
                                     <button
                                         type="button"
                                         onClick={() => setShowPassword(!showPassword)}
                                         className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground"
+                                        disabled={isLoading}
                                     >
                                         {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                                     </button>
@@ -93,8 +199,18 @@ export default function SignUp() {
                             </div>
 
                             <div className="flex items-start gap-3 pt-2">
-                                <Checkbox id="terms" required className="mt-1" />
-                                <label htmlFor="terms" className="text-sm text-muted-foreground">
+                                <Checkbox
+                                    id="agreeToTerms"
+                                    checked={formData.agreeToTerms}
+                                    onCheckedChange={(checked) => {
+                                        setFormData(prev => ({ ...prev, agreeToTerms: checked }));
+                                        if (error) setError('');
+                                    }}
+                                    disabled={isLoading}
+                                    required
+                                    className="mt-1"
+                                />
+                                <label htmlFor="agreeToTerms" className="text-sm text-muted-foreground">
                                     I agree to the{' '}
                                     <Link href="/terms" className="text-[#6e92a0] hover:underline">Terms of Service</Link>
                                     {' '}and{' '}
@@ -106,8 +222,9 @@ export default function SignUp() {
                                 type="submit"
                                 size="lg"
                                 className="w-full h-12 bg-[#6e92a0] hover:bg-[#5a7a85] mt-6"
+                                disabled={isLoading}
                             >
-                                Create Account
+                                {isLoading ? 'Creating Account...' : 'Create Account'}
                             </Button>
                         </form>
 

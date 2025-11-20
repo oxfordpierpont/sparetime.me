@@ -13,6 +13,12 @@ const nextConfig = {
   env: {
     NEXT_PUBLIC_BASE_URL: process.env.NEXT_PUBLIC_BASE_URL,
   },
+
+  // Experimental features
+  experimental: {
+    // Use system TLS certificates
+    turbopackUseSystemTlsCerts: true,
+  },
 };
 
 export default nextConfig;

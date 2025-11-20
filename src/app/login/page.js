@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Mail, Lock, Eye, EyeOff } from 'lucide-react';
+import { Mail, Lock, Eye, EyeOff, AlertCircle } from 'lucide-react';
 import { useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import Image from 'next/image';
@@ -14,10 +14,78 @@ import Image from 'next/image';
 export default function Login() {
     const router = useRouter();
     const [showPassword, setShowPassword] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState('');
+    const [formData, setFormData] = useState({
+        email: '',
+        password: '',
+        rememberMe: false
+    });
 
-    const handleSubmit = (e) => {
+    const handleChange = (e) => {
+        const { id, name, value, type, checked } = e.target;
+        const fieldName = id || name;
+        setFormData(prev => ({
+            ...prev,
+            [fieldName]: type === 'checkbox' ? checked : value
+        }));
+        // Clear error when user starts typing
+        if (error) setError('');
+    };
+
+    const validateForm = () => {
+        if (!formData.email.trim()) {
+            setError('Please enter your email address');
+            return false;
+        }
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+            setError('Please enter a valid email address');
+            return false;
+        }
+        if (!formData.password) {
+            setError('Please enter your password');
+            return false;
+        }
+        return true;
+    };
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        router.push('/dashboard');
+        setError('');
+
+        // Client-side validation
+        if (!validateForm()) {
+            return;
+        }
+
+        setIsLoading(true);
+
+        try {
+            const response = await fetch('/api/auth/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email: formData.email,
+                    password: formData.password,
+                }),
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.message || 'Login failed. Please check your credentials.');
+            }
+
+            // Success! Token is automatically set in httpOnly cookie by the backend
+            // Redirect to dashboard
+            router.push('/dashboard');
+        } catch (err) {
+            setError(err.message || 'An error occurred during login. Please try again.');
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     return (
@@ -49,6 +117,13 @@ export default function Login() {
             <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
                 <Card className="ios-card shadow-xl border-0">
                     <CardContent className="p-8">
+                        {error && (
+                            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg flex items-start gap-2">
+                                <AlertCircle className="text-red-600 mt-0.5" size={18} />
+                                <p className="text-sm text-red-800">{error}</p>
+                            </div>
+                        )}
+
                         <form className="space-y-6" onSubmit={handleSubmit}>
                             <div className="space-y-2">
                                 <Label htmlFor="email" className="font-medium">Email address</Label>
@@ -64,6 +139,9 @@ export default function Login() {
                                         required
                                         className="ios-input pl-10"
                                         placeholder="you@example.com"
+                                        value={formData.email}
+                                        onChange={handleChange}
+                                        disabled={isLoading}
                                     />
                                 </div>
                             </div>
@@ -82,11 +160,15 @@ export default function Login() {
                                         required
                                         className="ios-input pl-10 pr-10"
                                         placeholder="••••••••"
+                                        value={formData.password}
+                                        onChange={handleChange}
+                                        disabled={isLoading}
                                     />
                                     <button
                                         type="button"
                                         onClick={() => setShowPassword(!showPassword)}
                                         className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
+                                        disabled={isLoading}
                                     >
                                         {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                                     </button>
@@ -95,8 +177,15 @@ export default function Login() {
 
                             <div className="flex items-center justify-between">
                                 <div className="flex items-center">
-                                    <Checkbox id="remember-me" />
-                                    <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">
+                                    <Checkbox
+                                        id="rememberMe"
+                                        checked={formData.rememberMe}
+                                        onCheckedChange={(checked) => {
+                                            setFormData(prev => ({ ...prev, rememberMe: checked }));
+                                        }}
+                                        disabled={isLoading}
+                                    />
+                                    <label htmlFor="rememberMe" className="ml-2 block text-sm text-gray-900">
                                         Remember me
                                     </label>
                                 </div>
@@ -109,8 +198,8 @@ export default function Login() {
                             </div>
 
                             <div>
-                                <Button type="submit" className="w-full ios-btn-primary">
-                                    Sign in
+                                <Button type="submit" className="w-full ios-btn-primary" disabled={isLoading}>
+                                    {isLoading ? 'Signing in...' : 'Sign in'}
                                 </Button>
                             </div>
                         </form>
