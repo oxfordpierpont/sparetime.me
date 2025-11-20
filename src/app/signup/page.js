@@ -96,9 +96,9 @@ export default function SignUp() {
                                 <Checkbox id="terms" required className="mt-1" />
                                 <label htmlFor="terms" className="text-sm text-muted-foreground">
                                     I agree to the{' '}
-                                    <Link href="#" className="text-[#6e92a0] hover:underline">Terms of Service</Link>
+                                    <Link href="/terms" className="text-[#6e92a0] hover:underline">Terms of Service</Link>
                                     {' '}and{' '}
-                                    <Link href="#" className="text-[#6e92a0] hover:underline">Privacy Policy</Link>
+                                    <Link href="/privacy" className="text-[#6e92a0] hover:underline">Privacy Policy</Link>
                                 </label>
                             </div>
 
