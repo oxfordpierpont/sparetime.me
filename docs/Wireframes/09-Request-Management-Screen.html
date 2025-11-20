@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time Requests</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script> window.FontAwesomeConfig = { autoReplaceSvg: 'nest'};</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        ::-webkit-scrollbar { display: none;}
+        body { font-family: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+        .gradient-bg { background: linear-gradient(135deg, #6e92a0 0%, #36454c 100%); }
+        .glass-effect { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); }
+        .calendar-icon { background: linear-gradient(135deg, #22b573, #6e92a0); }
+        .slide-up { animation: slideUp 0.5s ease-out; }
+        .status-busy { background: #fff3f3; border-color: #ed5a5a; }
+        .status-negotiable { background: #ffefcc; border-color: #ffd56b; }
+        .status-available { background: #b3e2cc; border-color: #22b573; }
+        .urgent-indicator { background: linear-gradient(135deg, #ed5a5a, #ff7878); }
+        .priority-high { background: linear-gradient(135deg, #ffd56b, #ffe066); }
+        .priority-normal { background: linear-gradient(135deg, #c5e0ea, #bdccd4); }
+        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        .pulse-animation { animation: pulse 2s infinite; }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+
+    <!-- Header Section -->
+    <div id="header" class="bg-white shadow-sm border-b border-gray-100">
+        <div class="px-4 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <button class="p-2 hover:bg-gray-100 rounded-lg transition-colors" onclick="history.back()">
+                        <i class="fa-solid fa-arrow-left text-gray-600 text-lg"></i>
+                    </button>
+                    <div>
+                        <h1 class="text-xl font-bold text-gray-800">Time Requests</h1>
+                        <p class="text-sm text-gray-500">Manage incoming and outgoing requests</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <button class="p-2 hover:bg-gray-100 rounded-lg transition-colors relative">
+                        <i class="fa-solid fa-filter text-gray-600"></i>
+                        <span class="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full"></span>
+                    </button>
+                    <button class="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                        <i class="fa-solid fa-search text-gray-600"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filter Tabs Section -->
+    <div id="filter-tabs" class="bg-white border-b border-gray-100">
+        <div class="px-4 py-3">
+            <div class="flex space-x-1 bg-gray-100 rounded-lg p-1">
+                <button class="flex-1 py-2 px-4 bg-white text-blue-600 font-semibold rounded-md shadow-sm transition-all">
+                    <span>Incoming</span>
+                    <span class="ml-2 bg-blue-100 text-blue-600 text-xs px-2 py-1 rounded-full">4</span>
+                </button>
+                <button class="flex-1 py-2 px-4 text-gray-600 font-medium rounded-md transition-all hover:bg-gray-50">
+                    <span>Outgoing</span>
+                    <span class="ml-2 bg-gray-200 text-gray-600 text-xs px-2 py-1 rounded-full">2</span>
+                </button>
+                <button class="flex-1 py-2 px-4 text-gray-600 font-medium rounded-md transition-all hover:bg-gray-50">
+                    <span>Past</span>
+                    <span class="ml-2 bg-gray-200 text-gray-600 text-xs px-2 py-1 rounded-full">12</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions Section -->
+    <div id="quick-actions" class="bg-white border-b border-gray-100">
+        <div class="px-4 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <div class="flex items-center space-x-2">
+                        <i class="fa-solid fa-clock text-blue-600"></i>
+                        <span class="text-sm font-medium text-gray-700">Today's Requests</span>
+                        <span class="bg-blue-100 text-blue-600 text-xs px-2 py-1 rounded-full font-semibold">3</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <i class="fa-solid fa-exclamation-triangle text-red-500"></i>
+                        <span class="text-sm font-medium text-gray-700">Urgent</span>
+                        <span class="bg-red-100 text-red-600 text-xs px-2 py-1 rounded-full font-semibold">1</span>
+                    </div>
+                </div>
+                <button class="text-blue-600 text-sm font-medium hover:text-blue-700 transition-colors">
+                    Mark All Read
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Priority Requests Section -->
+    <div id="priority-requests" class="px-4 py-4">
+        <div class="flex items-center justify-between mb-4">
+            <h2 class="text-lg font-semibold text-gray-800">Priority Requests</h2>
+            <button class="text-blue-600 text-sm font-medium hover:text-blue-700 transition-colors">
+                View All
+            </button>
+        </div>
+
+        <!-- Urgent Request Card -->
+        <div class="bg-white rounded-xl shadow-sm border border-red-100 p-4 mb-4 slide-up">
+            <div class="flex items-start justify-between mb-3">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gradient-to-br from-red-400 to-red-600 rounded-full flex items-center justify-center">
+                        <span class="text-white font-semibold text-sm">AK</span>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-gray-800">Alex Kim</h3>
+                        <p class="text-sm text-gray-500">alex.kim@company.com</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <div class="urgent-indicator text-white text-xs px-2 py-1 rounded-full font-semibold pulse-animation">
+                        URGENT
+                    </div>
+                    <span class="text-xs text-gray-400">2 min ago</span>
+                </div>
+            </div>
+            
+            <div class="mb-4">
+                <h4 class="font-medium text-gray-800 mb-2">Emergency Project Discussion</h4>
+                <div class="flex items-center space-x-2 mb-2">
+                    <i class="fa-solid fa-calendar text-blue-600"></i>
+                    <span class="text-sm font-medium text-gray-700">Today, November 15</span>
+                    <i class="fa-solid fa-clock text-green-600 ml-2"></i>
+                    <span class="text-sm font-medium text-gray-700">2:00 PM - 3:00 PM</span>
+                </div>
+                <p class="text-sm text-gray-600 bg-gray-50 rounded-lg p-3">
+                    "Hi! We have a critical client issue that needs immediate attention. Can we discuss the mitigation strategy this afternoon? This is blocking their go-live."
+                </p>
+            </div>
+            
+            <div class="flex items-center space-x-3">
+                <button class="flex-1 bg-green-600 text-white py-2.5 px-4 rounded-lg font-medium hover:bg-green-700 transition-colors">
+                    <i class="fa-solid fa-check mr-2"></i>Accept
+                </button>
+                <button class="flex-1 bg-yellow-500 text-white py-2.5 px-4 rounded-lg font-medium hover:bg-yellow-600 transition-colors">
+                    <i class="fa-solid fa-clock mr-2"></i>Propose
+                </button>
+                <button class="flex-1 bg-red-500 text-white py-2.5 px-4 rounded-lg font-medium hover:bg-red-600 transition-colors">
+                    <i class="fa-solid fa-times mr-2"></i>Decline
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Regular Requests Section -->
+    <div id="regular-requests" class="px-4">
+        <h2 class="text-lg font-semibold text-gray-800 mb-4">Regular Requests</h2>
+
+        <!-- Coffee Chat Request -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-4 mb-4 slide-up">
+            <div class="flex items-start justify-between mb-3">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gradient-to-br from-purple-400 to-purple-600 rounded-full flex items-center justify-center">
+                        <span class="text-white font-semibold text-sm">SM</span>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-gray-800">Sarah Martinez</h3>
+                        <p class="text-sm text-gray-500">sarah.m@designco.com</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <div class="priority-normal text-gray-700 text-xs px-2 py-1 rounded-full font-medium">
+                        NORMAL
+                    </div>
+                    <span class="text-xs text-gray-400">1 hour ago</span>
+                </div>
+            </div>
+            
+            <div class="mb-4">
+                <h4 class="font-medium text-gray-800 mb-2">Coffee & Design Chat</h4>
+                <div class="flex items-center space-x-2 mb-2">
+                    <i class="fa-solid fa-calendar text-blue-600"></i>
+                    <span class="text-sm font-medium text-gray-700">Friday, November 17</span>
+                    <i class="fa-solid fa-clock text-green-600 ml-2"></i>
+                    <span class="text-sm font-medium text-gray-700">4:00 PM - 5:00 PM</span>
+                </div>
+                <p class="text-sm text-gray-600 bg-gray-50 rounded-lg p-3">
+                    "Would love to catch up and discuss some design trends I've been exploring. The new coffee shop downtown has amazing espresso!"
+                </p>
+                <div class="flex items-center space-x-2 mt-2">
+                    <i class="fa-solid fa-map-marker-alt text-red-500 text-xs"></i>
+                    <span class="text-xs text-gray-600">Downtown Coffee Co.</span>
+                </div>
+            </div>
+            
+            <div class="flex items-center space-x-3">
+                <button class="flex-1 bg-green-600 text-white py-2.5 px-4 rounded-lg font-medium hover:bg-green-700 transition-colors">
+                    <i class="fa-solid fa-check mr-2"></i>Accept
+                </button>
+                <button class="flex-1 bg-yellow-500 text-white py-2.5 px-4 rounded-lg font-medium hover:bg-yellow-600 transition-colors">
+                    <i class="fa-solid fa-clock mr-2"></i>Propose
+                </button>
+                <button class="flex-1 bg-gray-400 text-white py-2.5 px-4 rounded-lg font-medium hover:bg-gray-500 transition-colors">
+                    <i class="fa-solid fa-times mr-2"></i>Decline
+                </button>
+            </div>
+        </div>
+
+        <!-- Team Sync Request -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-4 mb-4 slide-up">
+            <div class="flex items-start justify-between mb-3">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center">
+                        <span class="text-white font-semibold text-sm">MT</span>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-gray-800">Marketing Team</h3>
+                        <p class="text-sm text-gray-500">team@company.com</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <div class="priority-high text-yellow-800 text-xs px-2 py-1 rounded-full font-medium">
+                        HIGH
+                    </div>
+                    <span class="text-xs text-gray-400">3 hours ago</span>
+                </div>
+            </div>
+            
+            <div class="mb-4">
+                <h4 class="font-medium text-gray-800 mb-2">Weekly Marketing Sync</h4>
+                <div class="flex items-center space-x-2 mb-2">
+                    <i class="fa-solid fa-calendar text-blue-600"></i>
+                    <span class="text-sm font-medium text-gray-700">Monday, November 20</span>
+                    <i class="fa-solid fa-clock text-green-600 ml-2"></i>
+                    <span class="text-sm font-medium text-gray-700">10:00 AM - 11:00 AM</span>
+                </div>
+                <p class="text-sm text-gray-600 bg-gray-50 rounded-lg p-3">
+                    "Our regular weekly sync to discuss campaign performance, upcoming launches, and Q4 planning. We'll cover the new product launch timeline."
+                </p>
+                <div class="flex items-center space-x-4 mt-2">
+                    <div class="flex items-center space-x-1">
+                        <i class="fa-solid fa-users text-blue-500 text-xs"></i>
+                        <span class="text-xs text-gray-600">5 attendees</span>
+                    </div>
+                    <div class="flex items-center space-x-1">
+                        <i class="fa-solid fa-video text-purple-500 text-xs"></i>
+                        <span class="text-xs text-gray-600">Zoom Meeting</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flex items-center space-x-3">
+                <button class="flex-1 bg-green-600 text-white py-2.5 px-4 rounded-lg font-medium hover:bg-green-700 transition-colors">
+                    <i class="fa-solid fa-check mr-2"></i>Accept
+                </button>
+                <button class="flex-1 bg-yellow-500 text-white py-2.5 px-4 rounded-lg font-medium hover:bg-yellow-600 transition-colors">
+                    <i class="fa-solid fa-clock mr-2"></i>Propose
+                </button>
+                <button class="flex-1 bg-gray-400 text-white py-2.5 px-4 rounded-lg font-medium hover:bg-gray-500 transition-colors">
+                    <i class="fa-solid fa-times mr-2"></i>Decline
+                </button>
+            </div>
+        </div>
+
+        <!-- Client Meeting Request -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-4 mb-4 slide-up">
+            <div class="flex items-start justify-between mb-3">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center">
+                        <span class="text-white font-semibold text-sm">JD</span>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-gray-800">John Davis</h3>
+                        <p class="text-sm text-gray-500">john@clientcorp.com</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <div class="priority-normal text-gray-700 text-xs px-2 py-1 rounded-full font-medium">
+                        NORMAL
+                    </div>
+                    <span class="text-xs text-gray-400">5 hours ago</span>
+                </div>
+            </div>
+            
+            <div class="mb-4">
+                <h4 class="font-medium text-gray-800 mb-2">Q4 Strategy Review</h4>
+                <div class="flex items-center space-x-2 mb-2">
+                    <i class="fa-solid fa-calendar text-blue-600"></i>
+                    <span class="text-sm font-medium text-gray-700">Tuesday, November 21</span>
+                    <i class="fa-solid fa-clock text-green-600 ml-2"></i>
+                    <span class="text-sm font-medium text-gray-700">2:00 PM - 3:30 PM</span>
+                </div>
+                <p class="text-sm text-gray-600 bg-gray-50 rounded-lg p-3">
+                    "Let's review our Q4 performance and discuss strategic initiatives for next year. I'd like to explore some new partnership opportunities."
+                </p>
+                <div class="flex items-center space-x-4 mt-2">
+                    <div class="flex items-center space-x-1">
+                        <i class="fa-solid fa-building text-gray-500 text-xs"></i>
+                        <span class="text-xs text-gray-600">ClientCorp HQ</span>
+                    </div>
+                    <div class="flex items-center space-x-1">
+                        <i class="fa-solid fa-handshake text-blue-500 text-xs"></i>
+                        <span class="text-xs text-gray-600">Business Meeting</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flex items-center space-x-3">
+                <button class="flex-1 bg-green-600 text-white py-2.5 px-4 rounded-lg font-medium hover:bg-green-700 transition-colors">
+                    <i class="fa-solid fa-check mr-2"></i>Accept
+                </button>
+                <button class="flex-1 bg-yellow-500 text-white py-2.5 px-4 rounded-lg font-medium hover:bg-yellow-600 transition-colors">
+                    <i class="fa-solid fa-clock mr-2"></i>Propose
+                </button>
+                <button class="flex-1 bg-gray-400 text-white py-2.5 px-4 rounded-lg font-medium hover:bg-gray-500 transition-colors">
+                    <i class="fa-solid fa-times mr-2"></i>Decline
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Request Analytics Section -->
+    <div id="request-analytics" class="px-4 py-6 bg-gray-50">
+        <h2 class="text-lg font-semibold text-gray-800 mb-4">Request Insights</h2>
+        
+        <div class="grid grid-cols-2 gap-4 mb-4">
+            <div class="bg-white rounded-xl p-4 shadow-sm">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-sm font-medium text-gray-600">This Week</span>
+                    <i class="fa-solid fa-chart-line text-green-500"></i>
+                </div>
+                <div class="text-2xl font-bold text-gray-800">12</div>
+                <div class="text-xs text-green-600 font-medium">+3 from last week</div>
+            </div>
+            
+            <div class="bg-white rounded-xl p-4 shadow-sm">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-sm font-medium text-gray-600">Response Rate</span>
+                    <i class="fa-solid fa-percentage text-blue-500"></i>
+                </div>
+                <div class="text-2xl font-bold text-gray-800">94%</div>
+                <div class="text-xs text-blue-600 font-medium">Above average</div>
+            </div>
+        </div>
+        
+        <div class="bg-white rounded-xl p-4 shadow-sm mb-4">
+            <h3 class="font-semibold text-gray-800 mb-3">Popular Request Times</h3>
+            <div class="space-y-2">
+                <div class="flex items-center justify-between">
+                    <span class="text-sm text-gray-600">2:00 PM - 4:00 PM</span>
+                    <div class="flex items-center space-x-2">
+                        <div class="w-16 bg-gray-200 rounded-full h-2">
+                            <div class="bg-blue-500 h-2 rounded-full" style="width: 85%"></div>
+                        </div>
+                        <span class="text-xs text-gray-500">85%</span>
+                    </div>
+                </div>
+                <div class="flex items-center justify-between">
+                    <span class="text-sm text-gray-600">10:00 AM - 12:00 PM</span>
+                    <div class="flex items-center space-x-2">
+                        <div class="w-16 bg-gray-200 rounded-full h-2">
+                            <div class="bg-green-500 h-2 rounded-full" style="width: 72%"></div>
+                        </div>
+                        <span class="text-xs text-gray-500">72%</span>
+                    </div>
+                </div>
+                <div class="flex items-center justify-between">
+                    <span class="text-sm text-gray-600">4:00 PM - 6:00 PM</span>
+                    <div class="flex items-center space-x-2">
+                        <div class="w-16 bg-gray-200 rounded-full h-2">
+                            <div class="bg-yellow-500 h-2 rounded-full" style="width: 58%"></div>
+                        </div>
+                        <span class="text-xs text-gray-500">58%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Responses Section -->
+    <div id="quick-responses" class="px-4 py-4 bg-white">
+        <h2 class="text-lg font-semibold text-gray-800 mb-4">Quick Response Templates</h2>
+        
+        <div class="space-y-3">
+            <button class="w-full text-left p-3 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors">
+                <div class="flex items-center justify-between">
+                    <span class="font-medium text-gray-800">Accept with enthusiasm</span>
+                    <i class="fa-solid fa-chevron-right text-gray-400"></i>
+                </div>
+                <p class="text-sm text-gray-600 mt-1">"Looking forward to our meeting! I'll send a calendar invite shortly."</p>
+            </button>
+            
+            <button class="w-full text-left p-3 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors">
+                <div class="flex items-center justify-between">
+                    <span class="font-medium text-gray-800">Propose alternative time</span>
+                    <i class="fa-solid fa-chevron-right text-gray-400"></i>
+                </div>
+                <p class="text-sm text-gray-600 mt-1">"I have a conflict at that time. Would [alternative time] work better for you?"</p>
+            </button>
+            
+            <button class="w-full text-left p-3 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors">
+                <div class="flex items-center justify-between">
+                    <span class="font-medium text-gray-800">Polite decline</span>
+                    <i class="fa-solid fa-chevron-right text-gray-400"></i>
+                </div>
+                <p class="text-sm text-gray-600 mt-1">"Thank you for thinking of me. Unfortunately, I won't be able to make it."</p>
+            </button>
+        </div>
+    </div>
+
+    <!-- Batch Actions Section -->
+    <div id="batch-actions" class="px-4 py-4 bg-gray-50">
+        <div class="bg-white rounded-xl p-4 shadow-sm">
+            <h3 class="font-semibold text-gray-800 mb-3">Bulk Actions</h3>
+            
+            <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center space-x-2">
+                    <input type="checkbox" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                    <span class="text-sm text-gray-600">Select all visible requests</span>
+                </div>
+                <span class="text-xs text-gray-400">4 selected</span>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-3">
+                <button class="flex items-center justify-center py-2.5 px-4 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 transition-colors">
+                    <i class="fa-solid fa-check mr-2"></i>Accept All
+                </button>
+                <button class="flex items-center justify-center py-2.5 px-4 bg-red-500 text-white rounded-lg font-medium hover:bg-red-600 transition-colors">
+                    <i class="fa-solid fa-times mr-2"></i>Decline All
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings & Preferences Section -->
+    <div id="request-settings" class="px-4 py-4 bg-white">
+        <h2 class="text-lg font-semibold text-gray-800 mb-4">Request Settings</h2>
+        
+        <div class="space-y-4">
+            <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                <div>
+                    <span class="font-medium text-gray-800">Auto-accept recurring meetings</span>
+                    <p class="text-sm text-gray-600">Automatically accept requests from trusted contacts</p>
+                </div>
+                <input type="checkbox" checked class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+            </div>
+            
+            <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                <div>
+                    <span class="font-medium text-gray-800">Require approval for urgent requests</span>
+                    <p class="text-sm text-gray-600">Get notified immediately for urgent requests</p>
+                </div>
+                <input type="checkbox" checked class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+            </div>
+            
+            <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                <div>
+                    <span class="font-medium text-gray-800">Send response reminders</span>
+                    <p class="text-sm text-gray-600">Remind me to respond to requests after 24 hours</p>
+                </div>
+                <input type="checkbox" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+            </div>
+        </div>
+        
+        <div class="mt-6">
+            <button class="w-full bg-blue-600 text-white py-3 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">
+                <i class="fa-solid fa-cog mr-2"></i>Advanced Request Settings
+            </button>
+        </div>
+    </div>
+
+    <!-- Load More Section -->
+    <div id="load-more" class="px-4 py-6 text-center">
+        <button class="text-blue-600 font-medium hover:text-blue-700 transition-colors">
+            <i class="fa-solid fa-chevron-down mr-2"></i>Load more requests
+        </button>
+        <p class="text-sm text-gray-500 mt-2">Showing 4 of 23 total requests</p>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <div id="bottom-navigation" class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 shadow-lg">
+        <div class="px-4 py-3">
+            <div class="grid grid-cols-4 gap-1">
+                <button class="flex flex-col items-center py-2 px-3 rounded-lg hover:bg-gray-50 transition-colors">
+                    <i class="fa-solid fa-home text-gray-400 text-lg mb-1"></i>
+                    <span class="text-xs text-gray-600">Dashboard</span>
+                </button>
+                <button class="flex flex-col items-center py-2 px-3 rounded-lg hover:bg-gray-50 transition-colors">
+                    <i class="fa-solid fa-link text-gray-400 text-lg mb-1"></i>
+                    <span class="text-xs text-gray-600">Links</span>
+                </button>
+                <button class="flex flex-col items-center py-2 px-3 rounded-lg bg-blue-50 border border-blue-200">
+                    <i class="fa-solid fa-inbox text-blue-600 text-lg mb-1"></i>
+                    <span class="text-xs text-blue-600 font-medium">Requests</span>
+                    <span class="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">4</span>
+                </button>
+                <button class="flex flex-col items-center py-2 px-3 rounded-lg hover:bg-gray-50 transition-colors">
+                    <i class="fa-solid fa-user text-gray-400 text-lg mb-1"></i>
+                    <span class="text-xs text-gray-600">Profile</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Action Button -->
+    <div id="fab" class="fixed bottom-20 right-4">
+        <button class="w-14 h-14 bg-blue-600 text-white rounded-full shadow-lg hover:bg-blue-700 transition-all hover:scale-110 flex items-center justify-center">
+            <i class="fa-solid fa-plus text-xl"></i>
+        </button>
+    </div>
+
+    <script>
+        // Tab switching functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabButtons = document.querySelectorAll('#filter-tabs button');
+            tabButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active state from all buttons
+                    tabButtons.forEach(btn => {
+                        btn.classList.remove('bg-white', 'text-blue-600', 'shadow-sm');
+                        btn.classList.add('text-gray-600');
+                    });
+                    
+                    // Add active state to clicked button
+                    this.classList.add('bg-white', 'text-blue-600', 'shadow-sm');
+                    this.classList.remove('text-gray-600');
+                });
+            });
+
+            // Request action buttons
+            const actionButtons = document.querySelectorAll('button[class*="bg-green-600"], button[class*="bg-yellow-500"], button[class*="bg-red-500"]');
+            actionButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const requestCard = this.closest('.bg-white.rounded-xl');
+                    const action = this.textContent.trim().toLowerCase();
+                    
+                    // Add visual feedback
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = 'scale(1)';
+                    }, 150);
+                    
+                    // Show confirmation (in a real app, this would handle the actual request)
+                    if (action.includes('accept')) {
+                        requestCard.style.backgroundColor = '#f0fdf4';
+                        requestCard.style.borderColor = '#22c55e';
+                    } else if (action.includes('decline')) {
+                        requestCard.style.backgroundColor = '#fef2f2';
+                        requestCard.style.borderColor = '#ef4444';
+                    }
+                });
+            });
+
+            // Checkbox selection for batch actions
+            const selectAllCheckbox = document.querySelector('#batch-actions input[type="checkbox"]');
+            const requestCheckboxes = document.querySelectorAll('.bg-white.rounded-xl input[type="checkbox"]');
+            
+            if (selectAllCheckbox) {
+                selectAllCheckbox.addEventListener('change', function() {
+                    requestCheckboxes.forEach(checkbox => {
+                        checkbox.checked = this.checked;
+                    });
+                });
+            }
+
+            // Quick response templates
+            const responseTemplates = document.querySelectorAll('#quick-responses button');
+            responseTemplates.forEach(template => {
+                template.addEventListener('click', function() {
+                    const templateText = this.querySelector('p').textContent;
+                    console.log('Selected template:', templateText);
+                    // In a real app, this would open a compose dialog with the template
+                });
+            });
+
+            // Floating action button
+            const fab = document.querySelector('#fab button');
+            fab.addEventListener('click', function() {
+                console.log('Create new request');
+                // In a real app, this would open the request creation flow
+            });
+
+            // Add smooth scrolling for better UX
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+
+            // Auto-refresh functionality (simulated)
+            setInterval(() => {
+                const timestamps = document.querySelectorAll('.text-xs.text-gray-400');
+                timestamps.forEach(timestamp => {
+                    const currentText = timestamp.textContent;
+                    if (currentText.includes('min ago')) {
+                        const minutes = parseInt(currentText.match(/\d+/)[0]);
+                        if (minutes < 60) {
+                            timestamp.textContent = `${minutes + 1} min ago`;
+                        }
+                    }
+                });
+            }, 60000); // Update every minute
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Protected Time</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script> window.FontAwesomeConfig = { autoReplaceSvg: 'nest'};</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        ::-webkit-scrollbar { display: none;}
+        body { font-family: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+        .gradient-bg { background: linear-gradient(135deg, #6e92a0 0%, #36454c 100%); }
+        .glass-effect { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); }
+        .calendar-icon { background: linear-gradient(135deg, #22b573, #6e92a0); }
+        .slide-up { animation: slideUp 0.5s ease-out; }
+        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .time-picker { background: linear-gradient(135deg, #f2f7f9 0%, #c5e0ea 100%); }
+        .protected-time-bg { background: linear-gradient(135deg, #22b573 0%, #b3e2cc 100%); }
+        .negotiable-bg { background: linear-gradient(135deg, #ffd56b 0%, #ffefcc 100%); }
+        .busy-bg { background: linear-gradient(135deg, #ed5a5a 0%, #fff3f3 100%); }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+    <!-- Header Section -->
+    <div id="header" class="sticky top-0 z-50 bg-white border-b border-gray-100 px-6 py-4">
+        <div class="flex items-center justify-between">
+            <button class="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                <i class="fa-solid fa-arrow-left text-gray-600 text-lg"></i>
+            </button>
+            <h1 class="text-xl font-bold text-gray-800">Add Protected Time</h1>
+            <button class="text-blue-600 font-semibold text-lg hover:text-blue-700 transition-colors">Save</button>
+        </div>
+    </div>
+
+    <!-- Protected Time Hero Section -->
+    <div id="protected-time-hero" class="bg-gradient-to-br from-green-50 to-teal-50 px-6 py-8">
+        <div class="text-center space-y-4">
+            <div class="w-16 h-16 protected-time-bg rounded-2xl flex items-center justify-center mx-auto shadow-lg">
+                <i class="fa-solid fa-shield-halved text-white text-2xl"></i>
+            </div>
+            <div>
+                <h2 class="text-2xl font-bold text-gray-800 mb-2">Protect Your Focus Time</h2>
+                <p class="text-gray-600 leading-relaxed">Block out time that's important to you. Others will see this as busy time, keeping your boundaries intact.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Basic Details Section -->
+    <div id="basic-details" class="bg-white px-6 py-6 space-y-6">
+        <div class="space-y-4">
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-3">Title</label>
+                <input type="text" class="w-full px-4 py-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent text-lg" placeholder="e.g., Deep Focus Time, Lunch Break, Gym">
+            </div>
+            
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-3">Description (optional)</label>
+                <textarea class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent" rows="3" placeholder="Add notes about this protected time..."></textarea>
+            </div>
+        </div>
+    </div>
+
+    <!-- Date & Time Section -->
+    <div id="date-time-section" class="bg-gray-50 px-6 py-6">
+        <div class="bg-white rounded-2xl p-6 shadow-sm space-y-6">
+            <h3 class="text-lg font-bold text-gray-800 flex items-center">
+                <i class="fa-solid fa-calendar-days text-blue-600 mr-3"></i>
+                When
+            </h3>
+            
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-3">Date</label>
+                    <div class="relative">
+                        <input type="date" class="w-full px-4 py-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent text-lg" value="2025-10-24">
+                        <i class="fa-solid fa-calendar absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                    </div>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-3">Time</label>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="relative">
+                            <label class="block text-xs text-gray-500 mb-1">From</label>
+                            <input type="time" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent" value="13:00">
+                        </div>
+                        <div class="relative">
+                            <label class="block text-xs text-gray-500 mb-1">To</label>
+                            <input type="time" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent" value="15:00">
+                        </div>
+                    </div>
+                    <div class="mt-2 text-sm text-gray-600 bg-blue-50 p-3 rounded-lg">
+                        <i class="fa-solid fa-info-circle text-blue-500 mr-2"></i>
+                        Duration: 2 hours
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Time Presets Section -->
+    <div id="time-presets" class="bg-white px-6 py-6">
+        <div class="space-y-4">
+            <h3 class="text-lg font-bold text-gray-800">Quick Presets</h3>
+            <div class="grid grid-cols-2 gap-3">
+                <button class="p-4 border border-gray-200 rounded-xl hover:border-green-300 hover:bg-green-50 transition-colors text-left">
+                    <div class="font-semibold text-gray-800 text-sm">Lunch Break</div>
+                    <div class="text-xs text-gray-500">12:00 - 13:00</div>
+                </button>
+                <button class="p-4 border border-gray-200 rounded-xl hover:border-green-300 hover:bg-green-50 transition-colors text-left">
+                    <div class="font-semibold text-gray-800 text-sm">Focus Block</div>
+                    <div class="text-xs text-gray-500">2 hours</div>
+                </button>
+                <button class="p-4 border border-gray-200 rounded-xl hover:border-green-300 hover:bg-green-50 transition-colors text-left">
+                    <div class="font-semibold text-gray-800 text-sm">Morning Routine</div>
+                    <div class="text-xs text-gray-500">07:00 - 09:00</div>
+                </button>
+                <button class="p-4 border border-gray-200 rounded-xl hover:border-green-300 hover:bg-green-50 transition-colors text-left">
+                    <div class="font-semibold text-gray-800 text-sm">Evening Wind Down</div>
+                    <div class="text-xs text-gray-500">19:00 - 21:00</div>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Repeat Settings Section -->
+    <div id="repeat-settings" class="bg-gray-50 px-6 py-6">
+        <div class="bg-white rounded-2xl p-6 shadow-sm space-y-6">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h3 class="text-lg font-bold text-gray-800 flex items-center">
+                        <i class="fa-solid fa-repeat text-purple-600 mr-3"></i>
+                        Repeat
+                    </h3>
+                    <p class="text-sm text-gray-600 mt-1">Make this a recurring protected time</p>
+                </div>
+                <label class="relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" class="sr-only peer">
+                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-600"></div>
+                </label>
+            </div>
+            
+            <div id="repeat-options" class="space-y-4 opacity-50 pointer-events-none">
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-3">Frequency</label>
+                    <div class="relative">
+                        <select class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent appearance-none">
+                            <option>Weekly</option>
+                            <option>Daily</option>
+                            <option>Monthly</option>
+                            <option>Custom</option>
+                        </select>
+                        <i class="fa-solid fa-chevron-down absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                    </div>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-3">Repeat on</label>
+                    <div class="flex justify-between space-x-2">
+                        <button class="flex-1 py-3 bg-gray-100 text-gray-600 rounded-lg font-medium text-sm">M</button>
+                        <button class="flex-1 py-3 bg-green-600 text-white rounded-lg font-medium text-sm">T</button>
+                        <button class="flex-1 py-3 bg-gray-100 text-gray-600 rounded-lg font-medium text-sm">W</button>
+                        <button class="flex-1 py-3 bg-green-600 text-white rounded-lg font-medium text-sm">Th</button>
+                        <button class="flex-1 py-3 bg-green-600 text-white rounded-lg font-medium text-sm">F</button>
+                        <button class="flex-1 py-3 bg-gray-100 text-gray-600 rounded-lg font-medium text-sm">Sa</button>
+                        <button class="flex-1 py-3 bg-gray-100 text-gray-600 rounded-lg font-medium text-sm">Su</button>
+                    </div>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-3">Ends</label>
+                    <div class="relative">
+                        <select class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent appearance-none">
+                            <option>Never</option>
+                            <option>After 10 occurrences</option>
+                            <option>On specific date</option>
+                        </select>
+                        <i class="fa-solid fa-chevron-down absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Visibility Settings Section -->
+    <div id="visibility-settings" class="bg-white px-6 py-6">
+        <div class="space-y-6">
+            <div>
+                <h3 class="text-lg font-bold text-gray-800 flex items-center mb-4">
+                    <i class="fa-solid fa-eye text-indigo-600 mr-3"></i>
+                    How Others See This
+                </h3>
+                <p class="text-sm text-gray-600 mb-4">Choose how this appears to different audiences</p>
+            </div>
+            
+            <div class="space-y-4">
+                <div class="p-4 border border-gray-200 rounded-xl">
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center">
+                                <i class="fa-solid fa-users text-gray-600 text-sm"></i>
+                            </div>
+                            <span class="font-semibold text-gray-800">Default (Everyone)</span>
+                        </div>
+                        <div class="relative">
+                            <select class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent appearance-none text-sm">
+                                <option>Busy</option>
+                                <option>Negotiable</option>
+                                <option>Free</option>
+                                <option>Hidden</option>
+                            </select>
+                            <i class="fa-solid fa-chevron-down absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 text-xs"></i>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <div class="w-3 h-3 busy-bg rounded-full"></div>
+                        <span class="text-xs text-gray-600">Appears as busy time to everyone</span>
+                    </div>
+                </div>
+                
+                <div class="p-4 border border-gray-200 rounded-xl">
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+                                <i class="fa-solid fa-briefcase text-blue-600 text-sm"></i>
+                            </div>
+                            <span class="font-semibold text-gray-800">Work Colleagues</span>
+                        </div>
+                        <div class="relative">
+                            <select class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent appearance-none text-sm">
+                                <option>Negotiable</option>
+                                <option>Busy</option>
+                                <option>Free</option>
+                                <option>Hidden</option>
+                            </select>
+                            <i class="fa-solid fa-chevron-down absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 text-xs"></i>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <div class="w-3 h-3 negotiable-bg rounded-full"></div>
+                        <span class="text-xs text-gray-600">Can request to move if urgent</span>
+                    </div>
+                </div>
+                
+                <div class="p-4 border border-gray-200 rounded-xl">
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
+                                <i class="fa-solid fa-heart text-green-600 text-sm"></i>
+                            </div>
+                            <span class="font-semibold text-gray-800">Close Friends</span>
+                        </div>
+                        <div class="relative">
+                            <select class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent appearance-none text-sm">
+                                <option>Free</option>
+                                <option>Negotiable</option>
+                                <option>Busy</option>
+                                <option>Hidden</option>
+                            </select>
+                            <i class="fa-solid fa-chevron-down absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 text-xs"></i>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <div class="w-3 h-3 bg-gray-300 rounded-full"></div>
+                        <span class="text-xs text-gray-600">Appears as free time</span>
+                    </div>
+                </div>
+                
+                <button class="w-full p-3 border-2 border-dashed border-gray-300 rounded-xl text-gray-500 hover:border-gray-400 hover:text-gray-600 transition-colors">
+                    <i class="fa-solid fa-plus mr-2"></i>
+                    Add audience override
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Priority & Flexibility Section -->
+    <div id="priority-flexibility" class="bg-gray-50 px-6 py-6">
+        <div class="bg-white rounded-2xl p-6 shadow-sm space-y-6">
+            <h3 class="text-lg font-bold text-gray-800 flex items-center">
+                <i class="fa-solid fa-star text-yellow-600 mr-3"></i>
+                Priority & Flexibility
+            </h3>
+            
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-3">Priority Level</label>
+                    <div class="relative">
+                        <select class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent appearance-none">
+                            <option>High - Cannot be moved</option>
+                            <option>Medium - Can be moved if necessary</option>
+                            <option>Low - Flexible timing</option>
+                        </select>
+                        <i class="fa-solid fa-chevron-down absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                    </div>
+                    <div class="mt-2 text-sm text-gray-600 bg-yellow-50 p-3 rounded-lg">
+                        <i class="fa-solid fa-info-circle text-yellow-500 mr-2"></i>
+                        High priority blocks are protected from scheduling conflicts
+                    </div>
+                </div>
+                
+                <div class="flex items-center justify-between p-4 bg-gray-50 rounded-xl">
+                    <div>
+                        <h4 class="font-semibold text-gray-800">Allow moving if urgent</h4>
+                        <p class="text-sm text-gray-600">Others can request to reschedule this time</p>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" class="sr-only peer">
+                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-600"></div>
+                    </label>
+                </div>
+                
+                <div class="flex items-center justify-between p-4 bg-gray-50 rounded-xl">
+                    <div>
+                        <h4 class="font-semibold text-gray-800">Buffer time</h4>
+                        <p class="text-sm text-gray-600">Add extra time before/after this block</p>
+                    </div>
+                    <div class="relative">
+                        <select class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent appearance-none text-sm">
+                            <option>None</option>
+                            <option>15 minutes</option>
+                            <option>30 minutes</option>
+                            <option>1 hour</option>
+                        </select>
+                        <i class="fa-solid fa-chevron-down absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 text-xs"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Categories & Tags Section -->
+    <div id="categories-tags" class="bg-white px-6 py-6">
+        <div class="space-y-6">
+            <h3 class="text-lg font-bold text-gray-800 flex items-center">
+                <i class="fa-solid fa-tags text-purple-600 mr-3"></i>
+                Organization
+            </h3>
+            
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-3">Category</label>
+                    <div class="grid grid-cols-2 gap-3">
+                        <button class="p-3 border border-gray-200 rounded-xl hover:border-green-300 hover:bg-green-50 transition-colors text-left">
+                            <div class="flex items-center space-x-2">
+                                <div class="w-4 h-4 bg-blue-500 rounded-full"></div>
+                                <span class="text-sm font-medium">Work</span>
+                            </div>
+                        </button>
+                        <button class="p-3 border border-gray-200 rounded-xl hover:border-green-300 hover:bg-green-50 transition-colors text-left">
+                            <div class="flex items-center space-x-2">
+                                <div class="w-4 h-4 bg-green-500 rounded-full"></div>
+                                <span class="text-sm font-medium">Personal</span>
+                            </div>
+                        </button>
+                        <button class="p-3 border-2 border-purple-300 bg-purple-50 rounded-xl text-left">
+                            <div class="flex items-center space-x-2">
+                                <div class="w-4 h-4 bg-purple-500 rounded-full"></div>
+                                <span class="text-sm font-medium">Focus</span>
+                            </div>
+                        </button>
+                        <button class="p-3 border border-gray-200 rounded-xl hover:border-green-300 hover:bg-green-50 transition-colors text-left">
+                            <div class="flex items-center space-x-2">
+                                <div class="w-4 h-4 bg-red-500 rounded-full"></div>
+                                <span class="text-sm font-medium">Health</span>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-3">Tags (optional)</label>
+                    <div class="flex flex-wrap gap-2 mb-3">
+                        <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">
+                            deep-work
+                            <button class="ml-2 text-blue-600 hover:text-blue-800">
+                                <i class="fa-solid fa-times text-xs"></i>
+                            </button>
+                        </span>
+                        <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium">
+                            no-interruptions
+                            <button class="ml-2 text-green-600 hover:text-green-800">
+                                <i class="fa-solid fa-times text-xs"></i>
+                            </button>
+                        </span>
+                    </div>
+                    <input type="text" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent" placeholder="Add tags separated by commas...">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Templates Section -->
+    <div id="templates" class="bg-gray-50 px-6 py-6">
+        <div class="bg-white rounded-2xl p-6 shadow-sm space-y-6">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h3 class="text-lg font-bold text-gray-800 flex items-center">
+                        <i class="fa-solid fa-bookmark text-orange-600 mr-3"></i>
+                        Save as Template
+                    </h3>
+                    <p class="text-sm text-gray-600 mt-1">Reuse these settings for future protected time</p>
+                </div>
+                <label class="relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" class="sr-only peer">
+                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-orange-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-orange-600"></div>
+                </label>
+            </div>
+            
+            <div id="template-options" class="space-y-4 opacity-50 pointer-events-none">
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Template Name</label>
+                    <input type="text" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent" placeholder="e.g., Daily Focus Block">
+                </div>
+                
+                <div class="bg-orange-50 p-4 rounded-lg">
+                    <h4 class="font-semibold text-orange-800 text-sm mb-2">Template will include:</h4>
+                    <ul class="text-sm text-orange-700 space-y-1">
+                        <li>• Duration and time preferences</li>
+                        <li>• Visibility settings for all audiences</li>
+                        <li>• Priority and flexibility options</li>
+                        <li>• Category and tags</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Preview Section -->
+    <div id="preview-section" class="bg-white px-6 py-6">
+        <div class="space-y-6">
+            <h3 class="text-lg font-bold text-gray-800 flex items-center">
+                <i class="fa-solid fa-eye text-indigo-600 mr-3"></i>
+                Preview
+            </h3>
+            
+            <div class="bg-gray-50 rounded-2xl p-4">
+                <h4 class="font-semibold text-gray-800 mb-3">How this appears to others:</h4>
+                
+                <div class="space-y-3">
+                    <div class="bg-white rounded-xl p-4 border border-gray-200">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="font-medium text-gray-800">Work Colleagues</span>
+                            <span class="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full">Negotiable</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <div class="w-3 h-3 negotiable-bg rounded-full"></div>
+                            <span class="text-sm text-gray-600">1:00 PM - 3:00 PM • Busy (movable if urgent)</span>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl p-4 border border-gray-200">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="font-medium text-gray-800">Close Friends</span>
+                            <span class="text-xs bg-gray-100 text-gray-800 px-2 py-1 rounded-full">Free</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <div class="w-3 h-3 bg-gray-300 rounded-full"></div>
+                            <span class="text-sm text-gray-600">1:00 PM - 3:00 PM • Available</span>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl p-4 border border-gray-200">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="font-medium text-gray-800">Everyone Else</span>
+                            <span class="text-xs bg-red-100 text-red-800 px-2 py-1 rounded-full">Busy</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <div class="w-3 h-3 busy-bg rounded-full"></div>
+                            <span class="text-sm text-gray-600">1:00 PM - 3:00 PM • Busy</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="w-full border border-gray-300 text-gray-700 py-3 px-6 rounded-xl font-medium hover:bg-gray-50 transition-colors">
+                <i class="fa-solid fa-external-link-alt mr-2"></i>
+                Preview in Calendar View
+            </button>
+        </div>
+    </div>
+
+    <!-- Action Buttons Section -->
+    <div id="action-buttons" class="bg-white px-6 py-8 border-t border-gray-100">
+        <div class="space-y-4">
+            <button class="w-full bg-green-600 text-white py-4 px-6 rounded-xl font-semibold text-lg hover:bg-green-700 transition-colors shadow-lg">
+                <i class="fa-solid fa-shield-halved mr-2"></i>
+                Create Protected Time
+            </button>
+            
+            <div class="grid grid-cols-2 gap-4">
+                <button class="border border-gray-300 text-gray-700 py-3 px-4 rounded-xl font-medium hover:bg-gray-50 transition-colors">
+                    <i class="fa-solid fa-save mr-2"></i>
+                    Save Draft
+                </button>
+                <button class="border border-gray-300 text-gray-700 py-3 px-4 rounded-xl font-medium hover:bg-gray-50 transition-colors">
+                    <i class="fa-solid fa-copy mr-2"></i>
+                    Duplicate
+                </button>
+            </div>
+            
+            <button class="w-full text-gray-500 py-2 font-medium hover:text-gray-700 transition-colors">
+                Cancel
+            </button>
+        </div>
+    </div>
+
+    <!-- Tips Section -->
+    <div id="tips-section" class="bg-gradient-to-br from-blue-50 to-indigo-50 px-6 py-8">
+        <div class="max-w-md mx-auto">
+            <div class="text-center mb-6">
+                <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-3">
+                    <i class="fa-solid fa-lightbulb text-white text-xl"></i>
+                </div>
+                <h3 class="text-lg font-bold text-gray-800">Pro Tips</h3>
+            </div>
+            
+            <div class="space-y-4">
+                <div class="bg-white rounded-xl p-4 shadow-sm">
+                    <div class="flex items-start space-x-3">
+                        <div class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                            <i class="fa-solid fa-check text-green-600 text-xs"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-800 text-sm mb-1">Use Different Priorities</h4>
+                            <p class="text-xs text-gray-600">Set high priority for non-negotiable time, medium for flexible blocks</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-xl p-4 shadow-sm">
+                    <div class="flex items-start space-x-3">
+                        <div class="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                            <i class="fa-solid fa-users text-blue-600 text-xs"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-800 text-sm mb-1">Audience-Specific Settings</h4>
+                            <p class="text-xs text-gray-600">Show family your gym time as free, but work colleagues as busy</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-xl p-4 shadow-sm">
+                    <div class="flex items-start space-x-3">
+                        <div class="w-6 h-6 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                            <i class="fa-solid fa-repeat text-purple-600 text-xs"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-800 text-sm mb-1">Create Recurring Blocks</h4>
+                            <p class="text-xs text-gray-600">Set up daily focus time or weekly planning sessions automatically</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div id="footer" class="bg-gray-100 px-6 py-4 text-center">
+        <p class="text-xs text-gray-500">spareTime Calendar • Your Availability, Your Way</p>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Toggle repeat options
+            const repeatToggle = document.querySelector('#repeat-settings input[type="checkbox"]');
+            const repeatOptions = document.getElementById('repeat-options');
+            
+            repeatToggle.addEventListener('change', function() {
+                if (this.checked) {
+                    repeatOptions.classList.remove('opacity-50', 'pointer-events-none');
+                } else {
+                    repeatOptions.classList.add('opacity-50', 'pointer-events-none');
+                }
+            });
+
+            // Toggle template options
+            const templateToggle = document.querySelector('#templates input[type="checkbox"]');
+            const templateOptions = document.getElementById('template-options');
+            
+            templateToggle.addEventListener('change', function() {
+                if (this.checked) {
+                    templateOptions.classList.remove('opacity-50', 'pointer-events-none');
+                } else {
+                    templateOptions.classList.add('opacity-50', 'pointer-events-none');
+                }
+            });
+
+            // Day selector toggle
+            const dayButtons = document.querySelectorAll('#repeat-settings button[class*="flex-1 py-3"]');
+            dayButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    if (this.classList.contains('bg-green-600')) {
+                        this.classList.remove('bg-green-600', 'text-white');
+                        this.classList.add('bg-gray-100', 'text-gray-600');
+                    } else {
+                        this.classList.remove('bg-gray-100', 'text-gray-600');
+                        this.classList.add('bg-green-600', 'text-white');
+                    }
+                });
+            });
+
+            // Category selection
+            const categoryButtons = document.querySelectorAll('#categories-tags .grid button');
+            categoryButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    // Remove active state from all buttons
+                    categoryButtons.forEach(btn => {
+                        btn.classList.remove('border-purple-300', 'bg-purple-50');
+                        btn.classList.add('border-gray-200', 'hover:border-green-300', 'hover:bg-green-50');
+                    });
+                    // Add active state to clicked button
+                    this.classList.remove('border-gray-200', 'hover:border-green-300', 'hover:bg-green-50');
+                    this.classList.add('border-purple-300', 'bg-purple-50');
+                });
+            });
+
+            // Time presets
+            const presetButtons = document.querySelectorAll('#time-presets button');
+            presetButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const timeInputs = document.querySelectorAll('input[type="time"]');
+                    const preset = this.querySelector('.text-xs').textContent;
+                    
+                    if (preset.includes('12:00 - 13:00')) {
+                        timeInputs[0].value = '12:00';
+                        timeInputs[1].value = '13:00';
+                    } else if (preset.includes('07:00 - 09:00')) {
+                        timeInputs[0].value = '07:00';
+                        timeInputs[1].value = '09:00';
+                    } else if (preset.includes('19:00 - 21:00')) {
+                        timeInputs[0].value = '19:00';
+                        timeInputs[1].value = '21:00';
+                    } else if (preset.includes('2 hours')) {
+                        const currentStart = timeInputs[0].value || '09:00';
+                        const [hours, minutes] = currentStart.split(':');
+                        const endHours = parseInt(hours) + 2;
+                        timeInputs[1].value = `${endHours.toString().padStart(2, '0')}:${minutes}`;
+                    }
+                    
+                    // Add visual feedback
+                    this.classList.add('bg-green-100', 'border-green-300');
+                    setTimeout(() => {
+                        this.classList.remove('bg-green-100', 'border-green-300');
+                    }, 1000);
+                });
+            });
+
+            // Update duration display
+            const timeInputs = document.querySelectorAll('input[type="time"]');
+            const updateDuration = () => {
+                if (timeInputs[0].value && timeInputs[1].value) {
+                    const start = new Date(`2000-01-01 ${timeInputs[0].value}`);
+                    const end = new Date(`2000-01-01 ${timeInputs[1].value}`);
+                    const diff = (end - start) / (1000 * 60 * 60);
+                    
+                    if (diff > 0) {
+                        const durationText = document.querySelector('.text-blue-500').parentElement;
+                        if (diff === 1) {
+                            durationText.innerHTML = '<i class="fa-solid fa-info-circle text-blue-500 mr-2"></i>Duration: 1 hour';
+                        } else if (diff < 1) {
+                            durationText.innerHTML = `<i class="fa-solid fa-info-circle text-blue-500 mr-2"></i>Duration: ${Math.round(diff * 60)} minutes`;
+                        } else {
+                            durationText.innerHTML = `<i class="fa-solid fa-info-circle text-blue-500 mr-2"></i>Duration: ${diff} hours`;
+                        }
+                    }
+                }
+            };
+
+            timeInputs.forEach(input => {
+                input.addEventListener('change', updateDuration);
+            });
+
+            // Tag removal
+            const tagRemoveButtons = document.querySelectorAll('#categories-tags .fa-times');
+            tagRemoveButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    this.closest('span').remove();
+                });
+            });
+
+            // Add new tags
+            const tagInput = document.querySelector('#categories-tags input[type="text"]');
+            tagInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter' && this.value.trim()) {
+                    e.preventDefault();
+                    const tags = this.value.split(',').map(tag => tag.trim()).filter(tag => tag);
+                    const tagContainer = this.previousElementSibling;
+                    
+                    tags.forEach(tag => {
+                        const tagElement = document.createElement('span');
+                        tagElement.className = 'px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium';
+                        tagElement.innerHTML = `
+                            ${tag}
+                            <button class="ml-2 text-blue-600 hover:text-blue-800">
+                                <i class="fa-solid fa-times text-xs"></i>
+                            </button>
+                        `;
+                        tagContainer.appendChild(tagElement);
+                        
+                        // Add remove functionality to new tag
+                        tagElement.querySelector('.fa-times').addEventListener('click', function(e) {
+                            e.preventDefault();
+                            tagElement.remove();
+                        });
+                    });
+                    
+                    this.value = '';
+                }
+            });
+
+            // Button interactions
+            const buttons = document.querySelectorAll('button');
+            buttons.forEach(button => {
+                button.addEventListener('click', function() {
+                    if (!this.disabled) {
+                        this.style.transform = 'scale(0.95)';
+                        setTimeout(() => {
+                            this.style.transform = 'scale(1)';
+                        }, 150);
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>

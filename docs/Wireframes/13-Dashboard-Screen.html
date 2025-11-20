@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script> window.FontAwesomeConfig = { autoReplaceSvg: 'nest'};</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        ::-webkit-scrollbar { display: none;}
+        body { font-family: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+        .gradient-bg { background: linear-gradient(135deg, #6e92a0 0%, #36454c 100%); }
+        .glass-effect { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); }
+        .calendar-icon { background: linear-gradient(135deg, #22b573, #6e92a0); }
+        .slide-up { animation: slideUp 0.5s ease-out; }
+        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .status-available { background: linear-gradient(135deg, #22b573, #16a085); }
+        .status-negotiable { background: linear-gradient(135deg, #ffd56b, #f39c12); }
+        .status-busy { background: linear-gradient(135deg, #ed5a5a, #e74c3c); }
+        .pulse { animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+
+    <!-- Header Section -->
+    <div id="header" class="bg-white shadow-sm border-b border-gray-100 sticky top-0 z-50">
+        <div class="px-4 py-3">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 calendar-icon rounded-xl flex items-center justify-center">
+                        <i class="fa-solid fa-calendar-days text-white text-lg"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-lg font-bold text-gray-800">spareTime</h1>
+                        <p class="text-xs text-gray-500 -mt-1">Your Availability</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <button class="relative p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                        <i class="fa-solid fa-bell text-gray-600 text-lg"></i>
+                        <span class="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">3</span>
+                    </button>
+                    <button class="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                        <i class="fa-solid fa-cog text-gray-600 text-lg"></i>
+                    </button>
+                    <div class="w-8 h-8 rounded-full overflow-hidden">
+                        <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-1.jpg" alt="Profile" class="w-full h-full object-cover">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Welcome Banner Section -->
+    <div id="welcome-banner" class="px-4 py-6 gradient-bg">
+        <div class="text-white">
+            <h2 class="text-2xl font-bold mb-1">Welcome back, Maya</h2>
+            <p class="text-gray-100 opacity-90">Here's what's happening with your availability</p>
+        </div>
+        <div class="mt-4 bg-white bg-opacity-10 backdrop-blur-sm rounded-xl p-4">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-white text-sm opacity-80">Today's Status</p>
+                    <p class="text-white font-semibold">Mostly Available</p>
+                </div>
+                <div class="w-12 h-12 status-available rounded-full flex items-center justify-center">
+                    <i class="fa-solid fa-check text-white text-lg"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Stats Section -->
+    <div id="quick-stats" class="px-4 py-4 -mt-4 relative z-10">
+        <div class="bg-white rounded-2xl shadow-lg p-4">
+            <h3 class="font-semibold text-gray-800 mb-4">Quick Overview</h3>
+            <div class="grid grid-cols-3 gap-4">
+                <div class="text-center">
+                    <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mx-auto mb-2">
+                        <i class="fa-solid fa-link text-blue-600 text-xl"></i>
+                    </div>
+                    <p class="text-2xl font-bold text-gray-800">5</p>
+                    <p class="text-xs text-gray-600">Active Links</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center mx-auto mb-2">
+                        <i class="fa-solid fa-clock text-orange-600 text-xl"></i>
+                    </div>
+                    <p class="text-2xl font-bold text-gray-800">3</p>
+                    <p class="text-xs text-gray-600">Pending Requests</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center mx-auto mb-2">
+                        <i class="fa-solid fa-eye text-green-600 text-xl"></i>
+                    </div>
+                    <p class="text-2xl font-bold text-gray-800">42</p>
+                    <p class="text-xs text-gray-600">Total Views</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Active Links Section -->
+    <div id="active-links" class="px-4 py-4">
+        <div class="flex items-center justify-between mb-4">
+            <h3 class="text-lg font-semibold text-gray-800">Active Links (5)</h3>
+            <button class="text-blue-600 font-medium text-sm hover:text-blue-700 transition-colors">
+                View All
+            </button>
+        </div>
+        
+        <div class="space-y-3">
+            <div class="bg-white rounded-2xl shadow-sm p-4 border border-gray-100">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-purple-100 rounded-xl flex items-center justify-center">
+                            <i class="fa-solid fa-coffee text-purple-600"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-800">Coffee Chats</h4>
+                            <p class="text-xs text-gray-500">For friends & networking</p>
+                        </div>
+                    </div>
+                    <button class="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                        <i class="fa-solid fa-ellipsis-vertical text-gray-400"></i>
+                    </button>
+                </div>
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-4">
+                        <div class="text-center">
+                            <p class="text-sm font-semibold text-gray-800">18</p>
+                            <p class="text-xs text-gray-500">views</p>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-sm font-semibold text-gray-800">2</p>
+                            <p class="text-xs text-gray-500">requests</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <button class="px-3 py-1 bg-blue-100 text-blue-700 text-xs font-medium rounded-lg hover:bg-blue-200 transition-colors">
+                            <i class="fa-solid fa-share text-xs mr-1"></i>
+                            Share
+                        </button>
+                        <button class="px-3 py-1 bg-gray-100 text-gray-700 text-xs font-medium rounded-lg hover:bg-gray-200 transition-colors">
+                            Edit
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-sm p-4 border border-gray-100">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center">
+                            <i class="fa-solid fa-briefcase text-blue-600"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-800">Work Meetings</h4>
+                            <p class="text-xs text-gray-500">For colleagues & clients</p>
+                        </div>
+                    </div>
+                    <button class="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                        <i class="fa-solid fa-ellipsis-vertical text-gray-400"></i>
+                    </button>
+                </div>
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-4">
+                        <div class="text-center">
+                            <p class="text-sm font-semibold text-gray-800">12</p>
+                            <p class="text-xs text-gray-500">views</p>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-sm font-semibold text-gray-800">1</p>
+                            <p class="text-xs text-gray-500">requests</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <button class="px-3 py-1 bg-blue-100 text-blue-700 text-xs font-medium rounded-lg hover:bg-blue-200 transition-colors">
+                            <i class="fa-solid fa-share text-xs mr-1"></i>
+                            Share
+                        </button>
+                        <button class="px-3 py-1 bg-gray-100 text-gray-700 text-xs font-medium rounded-lg hover:bg-gray-200 transition-colors">
+                            Edit
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-sm p-4 border border-gray-100">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-green-100 rounded-xl flex items-center justify-center">
+                            <i class="fa-solid fa-heart text-green-600"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-800">Family Time</h4>
+                            <p class="text-xs text-gray-500">For family & close friends</p>
+                        </div>
+                    </div>
+                    <button class="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                        <i class="fa-solid fa-ellipsis-vertical text-gray-400"></i>
+                    </button>
+                </div>
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-4">
+                        <div class="text-center">
+                            <p class="text-sm font-semibold text-gray-800">8</p>
+                            <p class="text-xs text-gray-500">views</p>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-sm font-semibold text-gray-800">0</p>
+                            <p class="text-xs text-gray-500">requests</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <button class="px-3 py-1 bg-blue-100 text-blue-700 text-xs font-medium rounded-lg hover:bg-blue-200 transition-colors">
+                            <i class="fa-solid fa-share text-xs mr-1"></i>
+                            Share
+                        </button>
+                        <button class="px-3 py-1 bg-gray-100 text-gray-700 text-xs font-medium rounded-lg hover:bg-gray-200 transition-colors">
+                            Edit
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pending Requests Section -->
+    <div id="pending-requests" class="px-4 py-4">
+        <div class="flex items-center justify-between mb-4">
+            <h3 class="text-lg font-semibold text-gray-800">Pending Requests (3)</h3>
+            <button class="text-blue-600 font-medium text-sm hover:text-blue-700 transition-colors">
+                View All
+            </button>
+        </div>
+
+        <div class="space-y-3">
+            <div class="bg-white rounded-2xl shadow-sm p-4 border border-gray-100">
+                <div class="flex items-start space-x-3">
+                    <div class="w-10 h-10 rounded-full overflow-hidden">
+                        <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-2.jpg" alt="Alex" class="w-full h-full object-cover">
+                    </div>
+                    <div class="flex-1">
+                        <div class="flex items-center justify-between mb-2">
+                            <h4 class="font-semibold text-gray-800">Coffee with Alex</h4>
+                            <span class="text-xs text-orange-600 bg-orange-100 px-2 py-1 rounded-full font-medium">Urgent</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-2">Tomorrow at 3:30 PM</p>
+                        <p class="text-xs text-gray-500 mb-3">"Would love to catch up and discuss the new project ideas!"</p>
+                        <div class="flex items-center space-x-2">
+                            <button class="px-4 py-2 bg-green-600 text-white text-xs font-medium rounded-lg hover:bg-green-700 transition-colors">
+                                <i class="fa-solid fa-check mr-1"></i>
+                                Accept
+                            </button>
+                            <button class="px-4 py-2 bg-blue-100 text-blue-700 text-xs font-medium rounded-lg hover:bg-blue-200 transition-colors">
+                                <i class="fa-solid fa-clock mr-1"></i>
+                                Propose
+                            </button>
+                            <button class="px-4 py-2 bg-gray-100 text-gray-700 text-xs font-medium rounded-lg hover:bg-gray-200 transition-colors">
+                                <i class="fa-solid fa-times mr-1"></i>
+                                Decline
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-sm p-4 border border-gray-100">
+                <div class="flex items-start space-x-3">
+                    <div class="w-10 h-10 rounded-full overflow-hidden">
+                        <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-3.jpg" alt="Sarah" class="w-full h-full object-cover">
+                    </div>
+                    <div class="flex-1">
+                        <div class="flex items-center justify-between mb-2">
+                            <h4 class="font-semibold text-gray-800">Team Sync with Sarah</h4>
+                            <span class="text-xs text-gray-600 bg-gray-100 px-2 py-1 rounded-full font-medium">Regular</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-2">Friday at 2:00 PM</p>
+                        <p class="text-xs text-gray-500 mb-3">"Weekly check-in to review project progress and next steps."</p>
+                        <div class="flex items-center space-x-2">
+                            <button class="px-4 py-2 bg-green-600 text-white text-xs font-medium rounded-lg hover:bg-green-700 transition-colors">
+                                <i class="fa-solid fa-check mr-1"></i>
+                                Accept
+                            </button>
+                            <button class="px-4 py-2 bg-blue-100 text-blue-700 text-xs font-medium rounded-lg hover:bg-blue-200 transition-colors">
+                                <i class="fa-solid fa-clock mr-1"></i>
+                                Propose
+                            </button>
+                            <button class="px-4 py-2 bg-gray-100 text-gray-700 text-xs font-medium rounded-lg hover:bg-gray-200 transition-colors">
+                                <i class="fa-solid fa-times mr-1"></i>
+                                Decline
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-sm p-4 border border-gray-100">
+                <div class="flex items-start space-x-3">
+                    <div class="w-10 h-10 rounded-full overflow-hidden">
+                        <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-4.jpg" alt="Mike" class="w-full h-full object-cover">
+                    </div>
+                    <div class="flex-1">
+                        <div class="flex items-center justify-between mb-2">
+                            <h4 class="font-semibold text-gray-800">Lunch with Mike</h4>
+                            <span class="text-xs text-gray-600 bg-gray-100 px-2 py-1 rounded-full font-medium">Regular</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-2">Next Monday at 12:30 PM</p>
+                        <p class="text-xs text-gray-500 mb-3">"Let's grab lunch and catch up! It's been too long."</p>
+                        <div class="flex items-center space-x-2">
+                            <button class="px-4 py-2 bg-green-600 text-white text-xs font-medium rounded-lg hover:bg-green-700 transition-colors">
+                                <i class="fa-solid fa-check mr-1"></i>
+                                Accept
+                            </button>
+                            <button class="px-4 py-2 bg-blue-100 text-blue-700 text-xs font-medium rounded-lg hover:bg-blue-200 transition-colors">
+                                <i class="fa-solid fa-clock mr-1"></i>
+                                Propose
+                            </button>
+                            <button class="px-4 py-2 bg-gray-100 text-gray-700 text-xs font-medium rounded-lg hover:bg-gray-200 transition-colors">
+                                <i class="fa-solid fa-times mr-1"></i>
+                                Decline
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Today's Schedule Section -->
+    <div id="todays-schedule" class="px-4 py-4">
+        <div class="flex items-center justify-between mb-4">
+            <h3 class="text-lg font-semibold text-gray-800">Today's Schedule</h3>
+            <button class="text-blue-600 font-medium text-sm hover:text-blue-700 transition-colors">
+                View Calendar
+            </button>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-sm p-4 border border-gray-100">
+            <div class="flex items-center justify-between mb-4">
+                <p class="text-sm font-medium text-gray-800">Thursday, October 24</p>
+                <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full font-medium">Mostly Available</span>
+            </div>
+
+            <div class="space-y-3">
+                <div class="flex items-center space-x-3 p-3 bg-red-50 rounded-xl border border-red-100">
+                    <div class="w-3 h-3 status-busy rounded-full"></div>
+                    <div class="flex-1">
+                        <p class="text-sm font-medium text-gray-800">9:00 - 10:30 AM</p>
+                        <p class="text-xs text-gray-600">Team Standup Meeting</p>
+                    </div>
+                    <span class="text-xs bg-red-100 text-red-700 px-2 py-1 rounded-full font-medium">Busy</span>
+                </div>
+
+                <div class="flex items-center space-x-3 p-3 bg-green-50 rounded-xl border border-green-100">
+                    <div class="w-3 h-3 status-available rounded-full"></div>
+                    <div class="flex-1">
+                        <p class="text-sm font-medium text-gray-800">10:30 - 12:00 PM</p>
+                        <p class="text-xs text-gray-600">Available for meetings</p>
+                    </div>
+                    <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full font-medium">Free</span>
+                </div>
+
+                <div class="flex items-center space-x-3 p-3 bg-yellow-50 rounded-xl border border-yellow-100">
+                    <div class="w-3 h-3 status-negotiable rounded-full"></div>
+                    <div class="flex-1">
+                        <p class="text-sm font-medium text-gray-800">12:00 - 1:00 PM</p>
+                        <p class="text-xs text-gray-600">Lunch Break (flexible)</p>
+                    </div>
+                    <span class="text-xs bg-yellow-100 text-yellow-700 px-2 py-1 rounded-full font-medium">Negotiable</span>
+                </div>
+
+                <div class="flex items-center space-x-3 p-3 bg-red-50 rounded-xl border border-red-100">
+                    <div class="w-3 h-3 status-busy rounded-full"></div>
+                    <div class="flex-1">
+                        <p class="text-sm font-medium text-gray-800">2:00 - 3:30 PM</p>
+                        <p class="text-xs text-gray-600">Client Presentation</p>
+                    </div>
+                    <span class="text-xs bg-red-100 text-red-700 px-2 py-1 rounded-full font-medium">Busy</span>
+                </div>
+
+                <div class="flex items-center space-x-3 p-3 bg-green-50 rounded-xl border border-green-100">
+                    <div class="w-3 h-3 status-available rounded-full"></div>
+                    <div class="flex-1">
+                        <p class="text-sm font-medium text-gray-800">4:00 - 6:00 PM</p>
+                        <p class="text-xs text-gray-600">Available for meetings</p>
+                    </div>
+                    <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full font-medium">Free</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions Section -->
+    <div id="quick-actions" class="px-4 py-4">
+        <h3 class="text-lg font-semibold text-gray-800 mb-4">Quick Actions</h3>
+        
+        <div class="grid grid-cols-2 gap-3">
+            <button class="bg-white rounded-2xl shadow-sm p-4 border border-gray-100 hover:shadow-md transition-all duration-200 text-left">
+                <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-3">
+                    <i class="fa-solid fa-plus text-blue-600 text-xl"></i>
+                </div>
+                <h4 class="font-semibold text-gray-800 mb-1">Create Link</h4>
+                <p class="text-xs text-gray-600">Share your availability</p>
+            </button>
+
+            <button class="bg-white rounded-2xl shadow-sm p-4 border border-gray-100 hover:shadow-md transition-all duration-200 text-left">
+                <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center mb-3">
+                    <i class="fa-solid fa-shield text-purple-600 text-xl"></i>
+                </div>
+                <h4 class="font-semibold text-gray-800 mb-1">Protected Time</h4>
+                <p class="text-xs text-gray-600">Block personal time</p>
+            </button>
+
+            <button class="bg-white rounded-2xl shadow-sm p-4 border border-gray-100 hover:shadow-md transition-all duration-200 text-left">
+                <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center mb-3">
+                    <i class="fa-solid fa-calendar text-green-600 text-xl"></i>
+                </div>
+                <h4 class="font-semibold text-gray-800 mb-1">View Calendar</h4>
+                <p class="text-xs text-gray-600">See full schedule</p>
+            </button>
+
+            <button class="bg-white rounded-2xl shadow-sm p-4 border border-gray-100 hover:shadow-md transition-all duration-200 text-left">
+                <div class="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center mb-3">
+                    <i class="fa-solid fa-chart-line text-orange-600 text-xl"></i>
+                </div>
+                <h4 class="font-semibold text-gray-800 mb-1">Analytics</h4>
+                <p class="text-xs text-gray-600">View link stats</p>
+            </button>
+        </div>
+    </div>
+
+    <!-- Recent Activity Section -->
+    <div id="recent-activity" class="px-4 py-4">
+        <div class="flex items-center justify-between mb-4">
+            <h3 class="text-lg font-semibold text-gray-800">Recent Activity</h3>
+            <button class="text-blue-600 font-medium text-sm hover:text-blue-700 transition-colors">
+                View All
+            </button>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100">
+            <div class="p-4 space-y-4">
+                <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                        <i class="fa-solid fa-eye text-blue-600 text-sm"></i>
+                    </div>
+                    <div class="flex-1">
+                        <p class="text-sm text-gray-800">Someone viewed your <span class="font-medium">Coffee Chats</span> link</p>
+                        <p class="text-xs text-gray-500">2 minutes ago</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+                        <i class="fa-solid fa-clock text-green-600 text-sm"></i>
+                    </div>
+                    <div class="flex-1">
+                        <p class="text-sm text-gray-800">New time request from <span class="font-medium">Alex Johnson</span></p>
+                        <p class="text-xs text-gray-500">15 minutes ago</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center">
+                        <i class="fa-solid fa-share text-purple-600 text-sm"></i>
+                    </div>
+                    <div class="flex-1">
+                        <p class="text-sm text-gray-800">You shared your <span class="font-medium">Work Meetings</span> link</p>
+                        <p class="text-xs text-gray-500">1 hour ago</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 bg-yellow-100 rounded-full flex items-center justify-center">
+                        <i class="fa-solid fa-calendar text-yellow-600 text-sm"></i>
+                    </div>
+                    <div class="flex-1">
+                        <p class="text-sm text-gray-800">Calendar sync completed successfully</p>
+                        <p class="text-xs text-gray-500">3 hours ago</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center">
+                        <i class="fa-solid fa-times text-red-600 text-sm"></i>
+                    </div>
+                    <div class="flex-1">
+                        <p class="text-sm text-gray-800">Meeting request declined from <span class="font-medium">Sarah Miller</span></p>
+                        <p class="text-xs text-gray-500">5 hours ago</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tips & Insights Section -->
+    <div id="tips-insights" class="px-4 py-4">
+        <h3 class="text-lg font-semibold text-gray-800 mb-4">Tips & Insights</h3>
+        
+        <div class="bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl p-4 border border-blue-100 mb-4">
+            <div class="flex items-start space-x-3">
+                <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center">
+                    <i class="fa-solid fa-lightbulb text-white"></i>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-gray-800 mb-1">Optimize Your Availability</h4>
+                    <p class="text-sm text-gray-600 mb-3">Your Coffee Chats link gets 3x more views than others. Consider creating similar casual meeting links!</p>
+                    <button class="text-blue-600 text-sm font-medium hover:text-blue-700 transition-colors">
+                        Learn More <i class="fa-solid fa-arrow-right ml-1"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-gradient-to-r from-green-50 to-teal-50 rounded-2xl p-4 border border-green-100">
+            <div class="flex items-start space-x-3">
+                <div class="w-10 h-10 bg-green-600 rounded-xl flex items-center justify-center">
+                    <i class="fa-solid fa-chart-line text-white"></i>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-gray-800 mb-1">Weekly Summary</h4>
+                    <p class="text-sm text-gray-600 mb-3">This week: 42 link views, 8 requests received, 6 meetings scheduled. You're 20% more available than last week!</p>
+                    <button class="text-green-600 text-sm font-medium hover:text-green-700 transition-colors">
+                        View Full Report <i class="fa-solid fa-arrow-right ml-1"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Upcoming Events Section -->
+    <div id="upcoming-events" class="px-4 py-4">
+        <div class="flex items-center justify-between mb-4">
+            <h3 class="text-lg font-semibold text-gray-800">Upcoming Events</h3>
+            <button class="text-blue-600 font-medium text-sm hover:text-blue-700 transition-colors">
+                View Calendar
+            </button>
+        </div>
+
+        <div class="space-y-3">
+            <div class="bg-white rounded-2xl shadow-sm p-4 border border-gray-100">
+                <div class="flex items-center space-x-3">
+                    <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
+                        <i class="fa-solid fa-video text-blue-600"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h4 class="font-semibold text-gray-800">Product Review Meeting</h4>
+                        <p class="text-sm text-gray-600">Tomorrow at 10:00 AM</p>
+                        <p class="text-xs text-gray-500">with Design Team</p>
+                    </div>
+                    <button class="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                        <i class="fa-solid fa-ellipsis-vertical text-gray-400"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-sm p-4 border border-gray-100">
+                <div class="flex items-center space-x-3">
+                    <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
+                        <i class="fa-solid fa-coffee text-green-600"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h4 class="font-semibold text-gray-800">Coffee with Emma</h4>
+                        <p class="text-sm text-gray-600">Friday at 3:00 PM</p>
+                        <p class="text-xs text-gray-500">at Local Coffee Shop</p>
+                    </div>
+                    <button class="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                        <i class="fa-solid fa-ellipsis-vertical text-gray-400"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-sm p-4 border border-gray-100">
+                <div class="flex items-center space-x-3">
+                    <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center">
+                        <i class="fa-solid fa-users text-purple-600"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h4 class="font-semibold text-gray-800">Team Workshop</h4>
+                        <p class="text-sm text-gray-600">Monday at 2:00 PM</p>
+                        <p class="text-xs text-gray-500">Conference Room B</p>
+                    </div>
+                    <button class="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                        <i class="fa-solid fa-ellipsis-vertical text-gray-400"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <div id="bottom-navigation" class="sticky bottom-0 bg-white border-t border-gray-200 px-4 py-2 mt-8">
+        <div class="flex items-center justify-around">
+            <button class="flex flex-col items-center space-y-1 p-2 text-blue-600">
+                <i class="fa-solid fa-home text-xl"></i>
+                <span class="text-xs font-medium">Home</span>
+            </button>
+            <button class="flex flex-col items-center space-y-1 p-2 text-gray-400 hover:text-gray-600 transition-colors">
+                <i class="fa-solid fa-link text-xl"></i>
+                <span class="text-xs">Links</span>
+            </button>
+            <button class="flex flex-col items-center space-y-1 p-2 text-gray-400 hover:text-gray-600 transition-colors">
+                <i class="fa-solid fa-calendar text-xl"></i>
+                <span class="text-xs">Calendar</span>
+            </button>
+            <button class="flex flex-col items-center space-y-1 p-2 text-gray-400 hover:text-gray-600 transition-colors relative">
+                <i class="fa-solid fa-clock text-xl"></i>
+                <span class="text-xs">Requests</span>
+                <span class="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">3</span>
+            </button>
+            <button class="flex flex-col items-center space-y-1 p-2 text-gray-400 hover:text-gray-600 transition-colors">
+                <i class="fa-solid fa-user text-xl"></i>
+                <span class="text-xs">Profile</span>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Button click animations
+            const buttons = document.querySelectorAll('button');
+            buttons.forEach(button => {
+                button.addEventListener('click', function() {
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = 'scale(1)';
+                    }, 150);
+                });
+            });
+
+            // Request action handlers
+            const acceptButtons = document.querySelectorAll('button:contains("Accept")');
+            const proposeButtons = document.querySelectorAll('button:contains("Propose")');
+            const declineButtons = document.querySelectorAll('button:contains("Decline")');
+
+            // Notification bell pulse
+            const notificationBell = document.querySelector('.fa-bell').closest('button');
+            setInterval(() => {
+                notificationBell.classList.add('pulse');
+                setTimeout(() => {
+                    notificationBell.classList.remove('pulse');
+                }, 1000);
+            }, 10000);
+
+            // Auto-refresh activity feed
+            setInterval(() => {
+                // Simulate new activity
+                console.log('Checking for new activity...');
+            }, 30000);
+
+            // Status indicator updates
+            const statusElements = document.querySelectorAll('.status-available, .status-negotiable, .status-busy');
+            statusElements.forEach(element => {
+                element.addEventListener('mouseenter', function() {
+                    this.style.transform = 'scale(1.1)';
+                });
+                element.addEventListener('mouseleave', function() {
+                    this.style.transform = 'scale(1)';
+                });
+            });
+
+            // Link sharing functionality
+            const shareButtons = document.querySelectorAll('button:contains("Share")');
+            shareButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Simulate sharing
+                    const linkCard = this.closest('.bg-white');
+                    const linkName = linkCard.querySelector('h4').textContent;
+                    
+                    if (navigator.share) {
+                        navigator.share({
+                            title: `${linkName} - spareTime`,
+                            text: `Check out my availability for ${linkName}`,
+                            url: `https://sparetime.me/maya/${linkName.toLowerCase().replace(/\s+/g, '-')}`
+                        });
+                    } else {
+                        // Fallback: copy to clipboard
+                        navigator.clipboard.writeText(`https://sparetime.me/maya/${linkName.toLowerCase().replace(/\s+/g, '-')}`);
+                        
+                        // Show feedback
+                        const originalText = this.innerHTML;
+                        this.innerHTML = '<i class="fa-solid fa-check text-xs mr-1"></i>Copied!';
+                        this.classList.add('bg-green-100', 'text-green-700');
+                        this.classList.remove('bg-blue-100', 'text-blue-700');
+                        
+                        setTimeout(() => {
+                            this.innerHTML = originalText;
+                            this.classList.remove('bg-green-100', 'text-green-700');
+                            this.classList.add('bg-blue-100', 'text-blue-700');
+                        }, 2000);
+                    }
+                });
+            });
+
+            // Quick action handlers
+            const quickActionButtons = document.querySelectorAll('#quick-actions button');
+            quickActionButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const actionTitle = this.querySelector('h4').textContent;
+                    console.log(`Navigating to ${actionTitle}...`);
+                    
+                    // Add loading state
+                    const icon = this.querySelector('i');
+                    const originalIcon = icon.className;
+                    icon.className = 'fa-solid fa-spinner fa-spin text-xl';
+                    
+                    setTimeout(() => {
+                        icon.className = originalIcon;
+                    }, 1000);
+                });
+            });
+
+            // Tab navigation
+            const tabButtons = document.querySelectorAll('#bottom-navigation button');
+            tabButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active state from all tabs
+                    tabButtons.forEach(tab => {
+                        tab.classList.remove('text-blue-600');
+                        tab.classList.add('text-gray-400');
+                    });
+                    
+                    // Add active state to clicked tab
+                    this.classList.remove('text-gray-400');
+                    this.classList.add('text-blue-600');
+                });
+            });
+
+            // Swipe gestures for mobile
+            let startX, startY, distX, distY;
+            const threshold = 150;
+            const restraint = 100;
+            const allowedTime = 300;
+            let elapsedTime, startTime;
+
+            document.addEventListener('touchstart', function(e) {
+                const touchobj = e.changedTouches[0];
+                startX = touchobj.pageX;
+                startY = touchobj.pageY;
+                startTime = new Date().getTime();
+            }, false);
+
+            document.addEventListener('touchend', function(e) {
+                const touchobj = e.changedTouches[0];
+                distX = touchobj.pageX - startX;
+                distY = touchobj.pageY - startY;
+                elapsedTime = new Date().getTime() - startTime;
+
+                if (elapsedTime <= allowedTime) {
+                    if (Math.abs(distX) >= threshold && Math.abs(distY) <= restraint) {
+                        if (distX > 0) {
+                            // Swipe right - go to previous section
+                            console.log('Swipe right detected');
+                        } else {
+                            // Swipe left - go to next section
+                            console.log('Swipe left detected');
+                        }
+                    }
+                }
+            }, false);
+        });
+    </script>
+
+</body>
+</html>

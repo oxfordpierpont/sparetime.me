@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Link Management</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script> window.FontAwesomeConfig = { autoReplaceSvg: 'nest'};</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        ::-webkit-scrollbar { display: none;}
+        body { font-family: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+        .gradient-bg { background: linear-gradient(135deg, #6e92a0 0%, #36454c 100%); }
+        .glass-effect { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); }
+        .calendar-icon { background: linear-gradient(135deg, #22b573, #6e92a0); }
+        .slide-up { animation: slideUp 0.5s ease-out; }
+        .pulse-ring { animation: pulse-ring 2s cubic-bezier(0.455, 0.03, 0.515, 0.955) infinite; }
+        .fade-in { animation: fadeIn 0.6s ease-out; }
+        .bounce-in { animation: bounceIn 0.8s ease-out; }
+        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        @keyframes pulse-ring { 0% { transform: scale(1); opacity: 1; } 80%, 100% { transform: scale(1.4); opacity: 0; } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes bounceIn { 0% { transform: scale(0.3); opacity: 0; } 50% { transform: scale(1.05); } 70% { transform: scale(0.9); } 100% { transform: scale(1); opacity: 1; } }
+        .status-active { background: linear-gradient(135deg, #22b573, #16a085); }
+        .status-paused { background: linear-gradient(135deg, #ffd56b, #f39c12); }
+        .status-expired { background: linear-gradient(135deg, #ed5a5a, #c0392b); }
+        .link-card-hover { transition: all 0.3s ease; }
+        .link-card-hover:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        .floating-action { position: fixed; bottom: 24px; right: 24px; z-index: 50; }
+        .stats-counter { font-variant-numeric: tabular-nums; }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+    <!-- Header Section -->
+    <div id="header" class="bg-white shadow-sm border-b border-gray-100">
+        <div class="px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <button class="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                        <i class="fa-solid fa-arrow-left text-gray-600"></i>
+                    </button>
+                    <div>
+                        <h1 class="text-2xl font-bold text-gray-800">My Links</h1>
+                        <p class="text-sm text-gray-500">Manage your availability links</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <button class="p-2 hover:bg-gray-100 rounded-lg transition-colors relative">
+                        <i class="fa-solid fa-bell text-gray-600"></i>
+                        <div class="absolute -top-1 -right-1 w-5 h-5 bg-red-500 rounded-full flex items-center justify-center">
+                            <span class="text-xs text-white font-bold">3</span>
+                        </div>
+                    </button>
+                    <button class="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                        <i class="fa-solid fa-search text-gray-600"></i>
+                    </button>
+                    <button class="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                        <i class="fa-solid fa-filter text-gray-600"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Stats Section -->
+    <div id="quick-stats" class="px-6 py-6 bg-white">
+        <div class="grid grid-cols-3 gap-4">
+            <div class="text-center p-4 bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl">
+                <div class="text-2xl font-bold text-blue-600 stats-counter">7</div>
+                <div class="text-xs text-blue-700 font-medium">Active Links</div>
+            </div>
+            <div class="text-center p-4 bg-gradient-to-br from-green-50 to-green-100 rounded-xl">
+                <div class="text-2xl font-bold text-green-600 stats-counter">142</div>
+                <div class="text-xs text-green-700 font-medium">Total Views</div>
+            </div>
+            <div class="text-center p-4 bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl">
+                <div class="text-2xl font-bold text-purple-600 stats-counter">23</div>
+                <div class="text-xs text-purple-700 font-medium">Requests</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filter Tabs Section -->
+    <div id="filter-tabs" class="px-6 py-4 bg-white border-b border-gray-100">
+        <div class="flex space-x-1 bg-gray-100 rounded-lg p-1">
+            <button class="flex-1 py-2 px-4 bg-blue-600 text-white rounded-md text-sm font-medium transition-all">
+                All Links
+            </button>
+            <button class="flex-1 py-2 px-4 text-gray-600 rounded-md text-sm font-medium hover:bg-white transition-all">
+                Active
+            </button>
+            <button class="flex-1 py-2 px-4 text-gray-600 rounded-md text-sm font-medium hover:bg-white transition-all">
+                Paused
+            </button>
+            <button class="flex-1 py-2 px-4 text-gray-600 rounded-md text-sm font-medium hover:bg-white transition-all">
+                Expired
+            </button>
+        </div>
+    </div>
+
+    <!-- Featured Link Section -->
+    <div id="featured-link" class="px-6 py-6">
+        <div class="bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl p-6 text-white relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-32 h-32 bg-white bg-opacity-10 rounded-full transform translate-x-16 -translate-y-16"></div>
+            <div class="absolute bottom-0 left-0 w-24 h-24 bg-white bg-opacity-10 rounded-full transform -translate-x-12 translate-y-12"></div>
+            <div class="relative">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-12 h-12 bg-white bg-opacity-20 rounded-xl flex items-center justify-center">
+                            <i class="fa-solid fa-star text-white text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-lg">Most Popular Link</h3>
+                            <p class="text-purple-100 text-sm">Coffee Chats</p>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <div class="text-2xl font-bold">87</div>
+                        <div class="text-purple-100 text-xs">views this week</div>
+                    </div>
+                </div>
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-4 text-sm">
+                        <div class="flex items-center space-x-1">
+                            <i class="fa-solid fa-eye text-purple-200"></i>
+                            <span>87 views</span>
+                        </div>
+                        <div class="flex items-center space-x-1">
+                            <i class="fa-solid fa-calendar-check text-purple-200"></i>
+                            <span>12 requests</span>
+                        </div>
+                    </div>
+                    <button class="bg-white bg-opacity-20 hover:bg-opacity-30 px-4 py-2 rounded-lg text-sm font-medium transition-all">
+                        View Details
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Links List Section -->
+    <div id="links-list" class="px-6 pb-24">
+        <div class="flex items-center justify-between mb-6">
+            <h2 class="text-lg font-bold text-gray-800">Your Links</h2>
+            <div class="flex items-center space-x-2">
+                <button class="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                    <i class="fa-solid fa-sort text-gray-500"></i>
+                </button>
+                <button class="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                    <i class="fa-solid fa-list text-gray-500"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="space-y-4">
+            <!-- Active Link Card -->
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 link-card-hover fade-in">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="flex items-start space-x-4">
+                        <div class="w-12 h-12 status-active rounded-xl flex items-center justify-center">
+                            <i class="fa-solid fa-coffee text-white text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-gray-800 text-lg">Coffee Chats</h3>
+                            <p class="text-gray-500 text-sm mb-2">For friends and networking</p>
+                            <div class="flex items-center space-x-1">
+                                <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+                                <span class="text-green-600 text-xs font-medium">Active</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                        <i class="fa-solid fa-ellipsis-vertical text-gray-400"></i>
+                    </button>
+                </div>
+
+                <div class="bg-gray-50 rounded-xl p-4 mb-4">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-xs text-gray-500 font-medium">LINK URL</span>
+                        <button class="p-1 hover:bg-gray-200 rounded transition-colors">
+                            <i class="fa-solid fa-copy text-gray-500 text-xs"></i>
+                        </button>
+                    </div>
+                    <p class="text-blue-600 font-mono text-sm">sparetime.me/you/coffee-chats</p>
+                </div>
+
+                <div class="grid grid-cols-3 gap-4 mb-4">
+                    <div class="text-center">
+                        <div class="text-xl font-bold text-gray-800 stats-counter">87</div>
+                        <div class="text-xs text-gray-500">Views</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-xl font-bold text-gray-800 stats-counter">12</div>
+                        <div class="text-xs text-gray-500">Requests</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-xl font-bold text-gray-800 stats-counter">8</div>
+                        <div class="text-xs text-gray-500">Booked</div>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center">
+                            <i class="fa-solid fa-eye text-blue-600 text-xs"></i>
+                        </div>
+                        <span class="text-sm text-gray-600">Shows busy times</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <button class="px-4 py-2 bg-blue-50 text-blue-600 rounded-lg text-sm font-medium hover:bg-blue-100 transition-colors">
+                            Edit
+                        </button>
+                        <button class="px-4 py-2 bg-gray-50 text-gray-600 rounded-lg text-sm font-medium hover:bg-gray-100 transition-colors">
+                            Share
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Work Link Card -->
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 link-card-hover fade-in">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="flex items-start space-x-4">
+                        <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
+                            <i class="fa-solid fa-briefcase text-white text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-gray-800 text-lg">Work Meetings</h3>
+                            <p class="text-gray-500 text-sm mb-2">For colleagues and clients</p>
+                            <div class="flex items-center space-x-1">
+                                <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+                                <span class="text-green-600 text-xs font-medium">Active</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                        <i class="fa-solid fa-ellipsis-vertical text-gray-400"></i>
+                    </button>
+                </div>
+
+                <div class="bg-gray-50 rounded-xl p-4 mb-4">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-xs text-gray-500 font-medium">LINK URL</span>
+                        <button class="p-1 hover:bg-gray-200 rounded transition-colors">
+                            <i class="fa-solid fa-copy text-gray-500 text-xs"></i>
+                        </button>
+                    </div>
+                    <p class="text-blue-600 font-mono text-sm">sparetime.me/you/work-meetings</p>
+                </div>
+
+                <div class="grid grid-cols-3 gap-4 mb-4">
+                    <div class="text-center">
+                        <div class="text-xl font-bold text-gray-800 stats-counter">34</div>
+                        <div class="text-xs text-gray-500">Views</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-xl font-bold text-gray-800 stats-counter">7</div>
+                        <div class="text-xs text-gray-500">Requests</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-xl font-bold text-gray-800 stats-counter">5</div>
+                        <div class="text-xs text-gray-500">Booked</div>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-6 h-6 bg-purple-100 rounded-full flex items-center justify-center">
+                            <i class="fa-solid fa-shield text-purple-600 text-xs"></i>
+                        </div>
+                        <span class="text-sm text-gray-600">Protected details</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <button class="px-4 py-2 bg-blue-50 text-blue-600 rounded-lg text-sm font-medium hover:bg-blue-100 transition-colors">
+                            Edit
+                        </button>
+                        <button class="px-4 py-2 bg-gray-50 text-gray-600 rounded-lg text-sm font-medium hover:bg-gray-100 transition-colors">
+                            Share
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Family Link Card -->
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 link-card-hover fade-in">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="flex items-start space-x-4">
+                        <div class="w-12 h-12 bg-gradient-to-br from-pink-500 to-pink-600 rounded-xl flex items-center justify-center">
+                            <i class="fa-solid fa-heart text-white text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-gray-800 text-lg">Family Time</h3>
+                            <p class="text-gray-500 text-sm mb-2">For family members</p>
+                            <div class="flex items-center space-x-1">
+                                <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+                                <span class="text-green-600 text-xs font-medium">Active</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                        <i class="fa-solid fa-ellipsis-vertical text-gray-400"></i>
+                    </button>
+                </div>
+
+                <div class="bg-gray-50 rounded-xl p-4 mb-4">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-xs text-gray-500 font-medium">LINK URL</span>
+                        <button class="p-1 hover:bg-gray-200 rounded transition-colors">
+                            <i class="fa-solid fa-copy text-gray-500 text-xs"></i>
+                        </button>
+                    </div>
+                    <p class="text-blue-600 font-mono text-sm">sparetime.me/you/family-time</p>
+                </div>
+
+                <div class="grid grid-cols-3 gap-4 mb-4">
+                    <div class="text-center">
+                        <div class="text-xl font-bold text-gray-800 stats-counter">15</div>
+                        <div class="text-xs text-gray-500">Views</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-xl font-bold text-gray-800 stats-counter">3</div>
+                        <div class="text-xs text-gray-500">Requests</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-xl font-bold text-gray-800 stats-counter">2</div>
+                        <div class="text-xs text-gray-500">Booked</div>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center">
+                            <i class="fa-solid fa-calendar text-green-600 text-xs"></i>
+                        </div>
+                        <span class="text-sm text-gray-600">Shows all details</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <button class="px-4 py-2 bg-blue-50 text-blue-600 rounded-lg text-sm font-medium hover:bg-blue-100 transition-colors">
+                            Edit
+                        </button>
+                        <button class="px-4 py-2 bg-gray-50 text-gray-600 rounded-lg text-sm font-medium hover:bg-gray-100 transition-colors">
+                            Share
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Paused Link Card -->
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 link-card-hover fade-in opacity-75">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="flex items-start space-x-4">
+                        <div class="w-12 h-12 status-paused rounded-xl flex items-center justify-center">
+                            <i class="fa-solid fa-graduation-cap text-white text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-gray-800 text-lg">Study Sessions</h3>
+                            <p class="text-gray-500 text-sm mb-2">For study groups</p>
+                            <div class="flex items-center space-x-1">
+                                <div class="w-2 h-2 bg-yellow-500 rounded-full"></div>
+                                <span class="text-yellow-600 text-xs font-medium">Paused</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                        <i class="fa-solid fa-ellipsis-vertical text-gray-400"></i>
+                    </button>
+                </div>
+
+                <div class="bg-gray-50 rounded-xl p-4 mb-4">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-xs text-gray-500 font-medium">LINK URL</span>
+                        <button class="p-1 hover:bg-gray-200 rounded transition-colors">
+                            <i class="fa-solid fa-copy text-gray-500 text-xs"></i>
+                        </button>
+                    </div>
+                    <p class="text-gray-400 font-mono text-sm">sparetime.me/you/study-sessions</p>
+                </div>
+
+                <div class="grid grid-cols-3 gap-4 mb-4">
+                    <div class="text-center">
+                        <div class="text-xl font-bold text-gray-600 stats-counter">6</div>
+                        <div class="text-xs text-gray-500">Views</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-xl font-bold text-gray-600 stats-counter">1</div>
+                        <div class="text-xs text-gray-500">Requests</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-xl font-bold text-gray-600 stats-counter">0</div>
+                        <div class="text-xs text-gray-500">Booked</div>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-6 h-6 bg-yellow-100 rounded-full flex items-center justify-center">
+                            <i class="fa-solid fa-pause text-yellow-600 text-xs"></i>
+                        </div>
+                        <span class="text-sm text-gray-500">Link is paused</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <button class="px-4 py-2 bg-yellow-50 text-yellow-600 rounded-lg text-sm font-medium hover:bg-yellow-100 transition-colors">
+                            Resume
+                        </button>
+                        <button class="px-4 py-2 bg-gray-50 text-gray-600 rounded-lg text-sm font-medium hover:bg-gray-100 transition-colors">
+                            Edit
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Expired Link Card -->
+            <div class="bg-white rounded-2xl shadow-sm border border-red-100 p-6 link-card-hover fade-in opacity-60">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="flex items-start space-x-4">
+                        <div class="w-12 h-12 status-expired rounded-xl flex items-center justify-center">
+                            <i class="fa-solid fa-calendar-xmark text-white text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-gray-800 text-lg">Holiday Planning</h3>
+                            <p class="text-gray-500 text-sm mb-2">Expired Dec 31, 2024</p>
+                            <div class="flex items-center space-x-1">
+                                <div class="w-2 h-2 bg-red-500 rounded-full"></div>
+                                <span class="text-red-600 text-xs font-medium">Expired</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                        <i class="fa-solid fa-ellipsis-vertical text-gray-400"></i>
+                    </button>
+                </div>
+
+                <div class="bg-red-50 rounded-xl p-4 mb-4">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-xs text-red-500 font-medium">EXPIRED LINK</span>
+                        <i class="fa-solid fa-exclamation-triangle text-red-500 text-xs"></i>
+                    </div>
+                    <p class="text-red-400 font-mono text-sm">sparetime.me/you/holiday-planning</p>
+                </div>
+
+                <div class="grid grid-cols-3 gap-4 mb-4">
+                    <div class="text-center">
+                        <div class="text-xl font-bold text-gray-500 stats-counter">42</div>
+                        <div class="text-xs text-gray-500">Views</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-xl font-bold text-gray-500 stats-counter">8</div>
+                        <div class="text-xs text-gray-500">Requests</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-xl font-bold text-gray-500 stats-counter">6</div>
+                        <div class="text-xs text-gray-500">Booked</div>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-6 h-6 bg-red-100 rounded-full flex items-center justify-center">
+                            <i class="fa-solid fa-clock text-red-600 text-xs"></i>
+                        </div>
+                        <span class="text-sm text-gray-500">Link has expired</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <button class="px-4 py-2 bg-green-50 text-green-600 rounded-lg text-sm font-medium hover:bg-green-100 transition-colors">
+                            Renew
+                        </button>
+                        <button class="px-4 py-2 bg-gray-50 text-gray-600 rounded-lg text-sm font-medium hover:bg-gray-100 transition-colors">
+                            Archive
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions Link Card -->
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 link-card-hover fade-in">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="flex items-start space-x-4">
+                        <div class="w-12 h-12 bg-gradient-to-br from-teal-500 to-teal-600 rounded-xl flex items-center justify-center">
+                            <i class="fa-solid fa-bolt text-white text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-gray-800 text-lg">Quick Calls</h3>
+                            <p class="text-gray-500 text-sm mb-2">15-minute availability slots</p>
+                            <div class="flex items-center space-x-1">
+                                <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+                                <span class="text-green-600 text-xs font-medium">Active</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                        <i class="fa-solid fa-ellipsis-vertical text-gray-400"></i>
+                    </button>
+                </div>
+
+                <div class="bg-gray-50 rounded-xl p-4 mb-4">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-xs text-gray-500 font-medium">LINK URL</span>
+                        <button class="p-1 hover:bg-gray-200 rounded transition-colors">
+                            <i class="fa-solid fa-copy text-gray-500 text-xs"></i>
+                        </button>
+                    </div>
+                    <p class="text-blue-600 font-mono text-sm">sparetime.me/you/quick-calls</p>
+                </div>
+
+                <div class="grid grid-cols-3 gap-4 mb-4">
+                    <div class="text-center">
+                        <div class="text-xl font-bold text-gray-800 stats-counter">23</div>
+                        <div class="text-xs text-gray-500">Views</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-xl font-bold text-gray-800 stats-counter">9</div>
+                        <div class="text-xs text-gray-500">Requests</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-xl font-bold text-gray-800 stats-counter">7</div>
+                        <div class="text-xs text-gray-500">Booked</div>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-6 h-6 bg-teal-100 rounded-full flex items-center justify-center">
+                            <i class="fa-solid fa-clock text-teal-600 text-xs"></i>
+                        </div>
+                        <span class="text-sm text-gray-600">15-min slots only</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <button class="px-4 py-2 bg-blue-50 text-blue-600 rounded-lg text-sm font-medium hover:bg-blue-100 transition-colors">
+                            Edit
+                        </button>
+                        <button class="px-4 py-2 bg-gray-50 text-gray-600 rounded-lg text-sm font-medium hover:bg-gray-100 transition-colors">
+                            Share
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- One-on-One Link Card -->
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 link-card-hover fade-in">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="flex items-start space-x-4">
+                        <div class="w-12 h-12 bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-xl flex items-center justify-center">
+                            <i class="fa-solid fa-user-tie text-white text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-gray-800 text-lg">1:1 Meetings</h3>
+                            <p class="text-gray-500 text-sm mb-2">Personal consultations</p>
+                            <div class="flex items-center space-x-1">
+                                <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+                                <span class="text-green-600 text-xs font-medium">Active</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                        <i class="fa-solid fa-ellipsis-vertical text-gray-400"></i>
+                    </button>
+                </div>
+
+                <div class="bg-gray-50 rounded-xl p-4 mb-4">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-xs text-gray-500 font-medium">LINK URL</span>
+                        <button class="p-1 hover:bg-gray-200 rounded transition-colors">
+                            <i class="fa-solid fa-copy text-gray-500 text-xs"></i>
+                        </button>
+                    </div>
+                    <p class="text-blue-600 font-mono text-sm">sparetime.me/you/one-on-one</p>
+                </div>
+
+                <div class="grid grid-cols-3 gap-4 mb-4">
+                    <div class="text-center">
+                        <div class="text-xl font-bold text-gray-800 stats-counter">18</div>
+                        <div class="text-xs text-gray-500">Views</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-xl font-bold text-gray-800 stats-counter">4</div>
+                        <div class="text-xs text-gray-500">Requests</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-xl font-bold text-gray-800 stats-counter">3</div>
+                        <div class="text-xs text-gray-500">Booked</div>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-6 h-6 bg-indigo-100 rounded-full flex items-center justify-center">
+                            <i class="fa-solid fa-lock text-indigo-600 text-xs"></i>
+                        </div>
+                        <span class="text-sm text-gray-600">Private details</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <button class="px-4 py-2 bg-blue-50 text-blue-600 rounded-lg text-sm font-medium hover:bg-blue-100 transition-colors">
+                            Edit
+                        </button>
+                        <button class="px-4 py-2 bg-gray-50 text-gray-600 rounded-lg text-sm font-medium hover:bg-gray-100 transition-colors">
+                            Share
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Load More Section -->
+        <div id="load-more" class="text-center py-8">
+            <button class="px-6 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl font-medium transition-colors">
+                <i class="fa-solid fa-chevron-down mr-2"></i>
+                Load More Links
+            </button>
+        </div>
+    </div>
+
+    <!-- Floating Action Button -->
+    <div class="floating-action">
+        <button class="w-14 h-14 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-lg hover:shadow-xl transition-all transform hover:scale-105 bounce-in">
+            <i class="fa-solid fa-plus text-xl"></i>
+        </button>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <div id="bottom-navigation" class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-6 py-3">
+        <div class="flex items-center justify-around">
+            <button class="flex flex-col items-center space-y-1 p-2 text-gray-400 hover:text-gray-600 transition-colors">
+                <i class="fa-solid fa-home text-xl"></i>
+                <span class="text-xs font-medium">Home</span>
+            </button>
+            <button class="flex flex-col items-center space-y-1 p-2 text-blue-600">
+                <i class="fa-solid fa-link text-xl"></i>
+                <span class="text-xs font-medium">Links</span>
+            </button>
+            <button class="flex flex-col items-center space-y-1 p-2 text-gray-400 hover:text-gray-600 transition-colors">
+                <i class="fa-solid fa-calendar text-xl"></i>
+                <span class="text-xs font-medium">Calendar</span>
+            </button>
+            <button class="flex flex-col items-center space-y-1 p-2 text-gray-400 hover:text-gray-600 transition-colors">
+                <i class="fa-solid fa-bell text-xl"></i>
+                <span class="text-xs font-medium">Requests</span>
+            </button>
+            <button class="flex flex-col items-center space-y-1 p-2 text-gray-400 hover:text-gray-600 transition-colors">
+                <i class="fa-solid fa-user text-xl"></i>
+                <span class="text-xs font-medium">Profile</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Quick Actions Modal (Hidden by default) -->
+    <div id="quick-actions-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
+        <div class="absolute bottom-0 left-0 right-0 bg-white rounded-t-2xl p-6">
+            <div class="w-12 h-1 bg-gray-300 rounded-full mx-auto mb-6"></div>
+            <h3 class="text-xl font-bold text-gray-800 mb-6">Quick Actions</h3>
+            <div class="grid grid-cols-2 gap-4 mb-6">
+                <button class="p-4 bg-blue-50 hover:bg-blue-100 rounded-xl transition-colors">
+                    <i class="fa-solid fa-plus text-blue-600 text-2xl mb-2"></i>
+                    <div class="text-sm font-medium text-blue-600">Create Link</div>
+                </button>
+                <button class="p-4 bg-green-50 hover:bg-green-100 rounded-xl transition-colors">
+                    <i class="fa-solid fa-copy text-green-600 text-2xl mb-2"></i>
+                    <div class="text-sm font-medium text-green-600">Duplicate Link</div>
+                </button>
+                <button class="p-4 bg-purple-50 hover:bg-purple-100 rounded-xl transition-colors">
+                    <i class="fa-solid fa-chart-line text-purple-600 text-2xl mb-2"></i>
+                    <div class="text-sm font-medium text-purple-600">Analytics</div>
+                </button>
+                <button class="p-4 bg-orange-50 hover:bg-orange-100 rounded-xl transition-colors">
+                    <i class="fa-solid fa-share text-orange-600 text-2xl mb-2"></i>
+                    <div class="text-sm font-medium text-orange-600">Bulk Share</div>
+                </button>
+            </div>
+            <button class="w-full py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl font-medium transition-colors">
+                Cancel
+            </button>
+        </div>
+    </div>
+
+    <!-- Link Options Modal (Hidden by default) -->
+    <div id="link-options-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
+        <div class="absolute bottom-0 left-0 right-0 bg-white rounded-t-2xl p-6">
+            <div class="w-12 h-1 bg-gray-300 rounded-full mx-auto mb-6"></div>
+            <h3 class="text-xl font-bold text-gray-800 mb-6">Link Options</h3>
+            <div class="space-y-3 mb-6">
+                <button class="w-full flex items-center space-x-4 p-4 hover:bg-gray-50 rounded-xl transition-colors">
+                    <i class="fa-solid fa-edit text-blue-600 text-xl"></i>
+                    <span class="font-medium text-gray-800">Edit Link</span>
+                </button>
+                <button class="w-full flex items-center space-x-4 p-4 hover:bg-gray-50 rounded-xl transition-colors">
+                    <i class="fa-solid fa-copy text-green-600 text-xl"></i>
+                    <span class="font-medium text-gray-800">Duplicate Link</span>
+                </button>
+                <button class="w-full flex items-center space-x-4 p-4 hover:bg-gray-50 rounded-xl transition-colors">
+                    <i class="fa-solid fa-share text-purple-600 text-xl"></i>
+                    <span class="font-medium text-gray-800">Share Link</span>
+                </button>
+                <button class="w-full flex items-center space-x-4 p-4 hover:bg-gray-50 rounded-xl transition-colors">
+                    <i class="fa-solid fa-chart-bar text-orange-600 text-xl"></i>
+                    <span class="font-medium text-gray-800">View Analytics</span>
+                </button>
+                <button class="w-full flex items-center space-x-4 p-4 hover:bg-gray-50 rounded-xl transition-colors">
+                    <i class="fa-solid fa-pause text-yellow-600 text-xl"></i>
+                    <span class="font-medium text-gray-800">Pause Link</span>
+                </button>
+                <button class="w-full flex items-center space-x-4 p-4 hover:bg-gray-50 rounded-xl transition-colors">
+                    <i class="fa-solid fa-trash text-red-600 text-xl"></i>
+                    <span class="font-medium text-red-600">Delete Link</span>
+                </button>
+            </div>
+            <button class="w-full py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl font-medium transition-colors">
+                Cancel
+            </button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Filter tab functionality
+            const filterTabs = document.querySelectorAll('#filter-tabs button');
+            filterTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    filterTabs.forEach(t => {
+                        t.classList.remove('bg-blue-600', 'text-white');
+                        t.classList.add('text-gray-600');
+                    });
+                    this.classList.add('bg-blue-600', 'text-white');
+                    this.classList.remove('text-gray-600');
+                });
+            });
+
+            // Floating action button
+            const fab = document.querySelector('.floating-action button');
+            fab.addEventListener('click', function() {
+                document.getElementById('quick-actions-modal').classList.remove('hidden');
+            });
+
+            // Close modal functionality
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('bg-black')) {
+                    document.getElementById('quick-actions-modal').classList.add('hidden');
+                    document.getElementById('link-options-modal').classList.add('hidden');
+                }
+            });
+
+            // Link options menu
+            const linkMenuButtons = document.querySelectorAll('.fa-ellipsis-vertical');
+            linkMenuButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    document.getElementById('link-options-modal').classList.remove('hidden');
+                });
+            });
+
+            // Copy link functionality
+            const copyButtons = document.querySelectorAll('.fa-copy');
+            copyButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const linkText = this.closest('.bg-gray-50').querySelector('.font-mono').textContent;
+                    navigator.clipboard.writeText(`https://${linkText}`).then(() => {
+                        // Show feedback
+                        this.classList.remove('fa-copy');
+                        this.classList.add('fa-check');
+                        this.style.color = '#22b573';
+                        setTimeout(() => {
+                            this.classList.remove('fa-check');
+                            this.classList.add('fa-copy');
+                            this.style.color = '';
+                        }, 2000);
+                    });
+                });
+            });
+
+            // Button click animations
+            const buttons = document.querySelectorAll('button');
+            buttons.forEach(button => {
+                button.addEventListener('click', function() {
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = 'scale(1)';
+                    }, 150);
+                });
+            });
+
+            // Animate stats counters
+            const counters = document.querySelectorAll('.stats-counter');
+            const animateCounters = () => {
+                counters.forEach(counter => {
+                    const target = parseInt(counter.textContent);
+                    let current = 0;
+                    const increment = target / 20;
+                    const timer = setInterval(() => {
+                        current += increment;
+                        if (current >= target) {
+                            counter.textContent = target;
+                            clearInterval(timer);
+                        } else {
+                            counter.textContent = Math.floor(current);
+                        }
+                    }, 50);
+                });
+            };
+
+            // Trigger counter animation on load
+            setTimeout(animateCounters, 500);
+
+            // Bottom navigation
+            const navButtons = document.querySelectorAll('#bottom-navigation button');
+            navButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    navButtons.forEach(b => {
+                        b.classList.remove('text-blue-600');
+                        b.classList.add('text-gray-400');
+                    });
+                    this.classList.add('text-blue-600');
+                    this.classList.remove('text-gray-400');
+                });
+            });
+
+            // Search functionality
+            const searchButton = document.querySelector('.fa-search').parentElement;
+            searchButton.addEventListener('click', function() {
+                // Create search input
+                const searchInput = document.createElement('input');
+                searchInput.type = 'text';
+                searchInput.placeholder = 'Search links...';
+                searchInput.className = 'px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent';
+                
+                // Replace search button with input
+                this.parentElement.insertBefore(searchInput, this);
+                this.style.display = 'none';
+                searchInput.focus();
+                
+                // Handle search input
+                searchInput.addEventListener('blur', function() {
+                    this.remove();
+                    searchButton.style.display = 'block';
+                });
+            });
+
+            // Pull to refresh simulation
+            let startY = 0;
+            let currentY = 0;
+            let isPulling = false;
+
+            document.addEventListener('touchstart', function(e) {
+                startY = e.touches[0].clientY;
+                isPulling = window.scrollY === 0;
+            });
+
+            document.addEventListener('touchmove', function(e) {
+                if (!isPulling) return;
+                currentY = e.touches[0].clientY;
+                const pullDistance = currentY - startY;
+                
+                if (pullDistance > 80) {
+                    // Show refresh indicator
+                    document.body.style.paddingTop = '20px';
+                }
+            });
+
+            document.addEventListener('touchend', function(e) {
+                if (isPulling && currentY - startY > 80) {
+                    // Simulate refresh
+                    setTimeout(() => {
+                        document.body.style.paddingTop = '0';
+                        // Refresh data here
+                    }, 1000);
+                } else {
+                    document.body.style.paddingTop = '0';
+                }
+                isPulling = false;
+            });
+        });
+    </script>
+
+</body>
+</html>

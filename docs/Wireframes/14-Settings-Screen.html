@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script> window.FontAwesomeConfig = { autoReplaceSvg: 'nest'};</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        ::-webkit-scrollbar { display: none;}
+        body { font-family: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+        .gradient-bg { background: linear-gradient(135deg, #6e92a0 0%, #36454c 100%); }
+        .glass-effect { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); }
+        .slide-up { animation: slideUp 0.5s ease-out; }
+        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .setting-item:hover { background: #f8fafc; }
+        .toggle-switch { transition: all 0.3s ease; }
+        .toggle-switch.active { background: #6e92a0; }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+    <!-- Header Section -->
+    <div id="header" class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="px-6 py-4">
+            <div class="flex items-center justify-between">
+                <button class="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                    <i class="fa-solid fa-arrow-left text-gray-600 text-lg"></i>
+                </button>
+                <h1 class="text-xl font-bold text-gray-800">Settings</h1>
+                <div class="w-10"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Profile Header Section -->
+    <div id="profile-header" class="bg-white px-6 py-6 border-b border-gray-100">
+        <div class="flex items-center space-x-4">
+            <div class="w-16 h-16 rounded-full overflow-hidden">
+                <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-1.jpg" alt="Profile" class="w-full h-full object-cover">
+            </div>
+            <div class="flex-1">
+                <h2 class="text-lg font-semibold text-gray-800">Maya Johnson</h2>
+                <p class="text-gray-600 text-sm">maya.johnson@email.com</p>
+                <div class="flex items-center space-x-2 mt-1">
+                    <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+                    <span class="text-xs text-green-600 font-medium">Premium Plan</span>
+                </div>
+            </div>
+            <button class="text-blue-600 font-medium text-sm">Edit</button>
+        </div>
+    </div>
+
+    <!-- Quick Stats Section -->
+    <div id="quick-stats" class="bg-white px-6 py-4 border-b border-gray-100">
+        <div class="grid grid-cols-3 gap-4">
+            <div class="text-center">
+                <div class="text-2xl font-bold text-gray-800">12</div>
+                <div class="text-xs text-gray-600">Active Links</div>
+            </div>
+            <div class="text-center">
+                <div class="text-2xl font-bold text-gray-800">47</div>
+                <div class="text-xs text-gray-600">Total Requests</div>
+            </div>
+            <div class="text-center">
+                <div class="text-2xl font-bold text-gray-800">89%</div>
+                <div class="text-xs text-gray-600">Response Rate</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Account Settings Section -->
+    <div id="account-settings" class="bg-white mt-6">
+        <div class="px-6 py-4 border-b border-gray-100">
+            <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wider">Account</h3>
+        </div>
+        <div class="divide-y divide-gray-100">
+            <div class="setting-item px-6 py-4 flex items-center justify-between cursor-pointer transition-colors">
+                <div class="flex items-center space-x-4">
+                    <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-user text-blue-600"></i>
+                    </div>
+                    <div>
+                        <div class="font-medium text-gray-800">Profile Information</div>
+                        <div class="text-sm text-gray-600">Name, email, photo, timezone</div>
+                    </div>
+                </div>
+                <i class="fa-solid fa-chevron-right text-gray-400"></i>
+            </div>
+            
+            <div class="setting-item px-6 py-4 flex items-center justify-between cursor-pointer transition-colors">
+                <div class="flex items-center space-x-4">
+                    <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-shield text-purple-600"></i>
+                    </div>
+                    <div>
+                        <div class="font-medium text-gray-800">Privacy & Security</div>
+                        <div class="text-sm text-gray-600">Password, 2FA, data visibility</div>
+                    </div>
+                </div>
+                <i class="fa-solid fa-chevron-right text-gray-400"></i>
+            </div>
+            
+            <div class="setting-item px-6 py-4 flex items-center justify-between cursor-pointer transition-colors">
+                <div class="flex items-center space-x-4">
+                    <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-crown text-green-600"></i>
+                    </div>
+                    <div>
+                        <div class="font-medium text-gray-800">Subscription & Billing</div>
+                        <div class="text-sm text-gray-600">Premium plan, payment methods</div>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <span class="bg-green-100 text-green-800 text-xs font-medium px-2 py-1 rounded-full">Premium</span>
+                    <i class="fa-solid fa-chevron-right text-gray-400"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notifications Section -->
+    <div id="notification-settings" class="bg-white mt-6">
+        <div class="px-6 py-4 border-b border-gray-100">
+            <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wider">Notifications</h3>
+        </div>
+        <div class="divide-y divide-gray-100">
+            <div class="px-6 py-4 flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <div class="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-bell text-orange-600"></i>
+                    </div>
+                    <div>
+                        <div class="font-medium text-gray-800">Push Notifications</div>
+                        <div class="text-sm text-gray-600">Receive alerts on your device</div>
+                    </div>
+                </div>
+                <div class="toggle-switch active w-12 h-6 bg-gray-300 rounded-full p-1 cursor-pointer">
+                    <div class="w-4 h-4 bg-white rounded-full shadow-md transform translate-x-6 transition-transform"></div>
+                </div>
+            </div>
+            
+            <div class="px-6 py-4 flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-envelope text-blue-600"></i>
+                    </div>
+                    <div>
+                        <div class="font-medium text-gray-800">Email Notifications</div>
+                        <div class="text-sm text-gray-600">Daily summaries and updates</div>
+                    </div>
+                </div>
+                <div class="toggle-switch active w-12 h-6 bg-gray-300 rounded-full p-1 cursor-pointer">
+                    <div class="w-4 h-4 bg-white rounded-full shadow-md transform translate-x-6 transition-transform"></div>
+                </div>
+            </div>
+            
+            <div class="px-6 py-4 flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <div class="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-clock text-red-600"></i>
+                    </div>
+                    <div>
+                        <div class="font-medium text-gray-800">Time Request Alerts</div>
+                        <div class="text-sm text-gray-600">Instant alerts for new requests</div>
+                    </div>
+                </div>
+                <div class="toggle-switch active w-12 h-6 bg-gray-300 rounded-full p-1 cursor-pointer">
+                    <div class="w-4 h-4 bg-white rounded-full shadow-md transform translate-x-6 transition-transform"></div>
+                </div>
+            </div>
+            
+            <div class="px-6 py-4 flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <div class="w-10 h-10 bg-yellow-100 rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-calendar-check text-yellow-600"></i>
+                    </div>
+                    <div>
+                        <div class="font-medium text-gray-800">Schedule Reminders</div>
+                        <div class="text-sm text-gray-600">Upcoming meetings and events</div>
+                    </div>
+                </div>
+                <div class="toggle-switch w-12 h-6 bg-gray-300 rounded-full p-1 cursor-pointer">
+                    <div class="w-4 h-4 bg-white rounded-full shadow-md transform transition-transform"></div>
+                </div>
+            </div>
+            
+            <div class="setting-item px-6 py-4 flex items-center justify-between cursor-pointer transition-colors">
+                <div class="flex items-center space-x-4">
+                    <div class="w-10 h-10 bg-indigo-100 rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-sliders text-indigo-600"></i>
+                    </div>
+                    <div>
+                        <div class="font-medium text-gray-800">Notification Preferences</div>
+                        <div class="text-sm text-gray-600">Customize timing and frequency</div>
+                    </div>
+                </div>
+                <i class="fa-solid fa-chevron-right text-gray-400"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- Calendar Settings Section -->
+    <div id="calendar-settings" class="bg-white mt-6">
+        <div class="px-6 py-4 border-b border-gray-100">
+            <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wider">Calendar & Scheduling</h3>
+        </div>
+        <div class="divide-y divide-gray-100">
+            <div class="setting-item px-6 py-4 flex items-center justify-between cursor-pointer transition-colors">
+                <div class="flex items-center space-x-4">
+                    <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-calendar-plus text-green-600"></i>
+                    </div>
+                    <div>
+                        <div class="font-medium text-gray-800">Connected Calendars</div>
+                        <div class="text-sm text-gray-600">Google, Apple, Outlook calendars</div>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full">3 connected</span>
+                    <i class="fa-solid fa-chevron-right text-gray-400"></i>
+                </div>
+            </div>
+            
+            <div class="setting-item px-6 py-4 flex items-center justify-between cursor-pointer transition-colors">
+                <div class="flex items-center space-x-4">
+                    <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-sync text-blue-600"></i>
+                    </div>
+                    <div>
+                        <div class="font-medium text-gray-800">Sync Settings</div>
+                        <div class="text-sm text-gray-600">Frequency, conflicts, updates</div>
+                    </div>
+                </div>
+                <i class="fa-solid fa-chevron-right text-gray-400"></i>
+            </div>
+            
+            <div class="setting-item px-6 py-4 flex items-center justify-between cursor-pointer transition-colors">
+                <div class="flex items-center space-x-4">
+                    <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-clock text-purple-600"></i>
+                    </div>
+                    <div>
+                        <div class="font-medium text-gray-800">Working Hours</div>
+                        <div class="text-sm text-gray-600">9:00 AM - 5:00 PM, Mon-Fri</div>
+                    </div>
+                </div>
+                <i class="fa-solid fa-chevron-right text-gray-400"></i>
+            </div>
+            
+            <div class="setting-item px-6 py-4 flex items-center justify-between cursor-pointer transition-colors">
+                <div class="flex items-center space-x-4">
+                    <div class="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-shield-halved text-red-600"></i>
+                    </div>
+                    <div>
+                        <div class="font-medium text-gray-800">Protected Time</div>
+                        <div class="text-sm text-gray-600">Focus blocks and personal time</div>
+                    </div>
+                </div>
+                <i class="fa-solid fa-chevron-right text-gray-400"></i>
+            </div>
+            
+            <div class="px-6 py-4 flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <div class="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-buffer text-orange-600"></i>
+                    </div>
+                    <div>
+                        <div class="font-medium text-gray-800">Meeting Buffer</div>
+                        <div class="text-sm text-gray-600">15 minutes between meetings</div>
+                    </div>
+                </div>
+                <div class="toggle-switch active w-12 h-6 bg-gray-300 rounded-full p-1 cursor-pointer">
+                    <div class="w-4 h-4 bg-white rounded-full shadow-md transform translate-x-6 transition-transform"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Link Management Section -->
+    <div id="link-management" class="bg-white mt-6">
+        <div class="px-6 py-4 border-b border-gray-100">
+            <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wider">Link Management</h3>
+        </div>
+        <div class="divide-y divide-gray-100">
+            <div class="setting-item px-6 py-4 flex items-center justify-between cursor-pointer transition-colors">
+                <div class="flex items-center space-x-4">
+                    <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-link text-blue-600"></i>
+                    </div>
+                    <div>
+                        <div class="font-medium text-gray-800">Default Link Settings</div>
+                        <div class="text-sm text-gray-600">Visibility, expiration, templates</div>
+                    </div>
+                </div>
+                <i class="fa-solid fa-chevron-right text-gray-400"></i>
+            </div>
+            
+            <div class="setting-item px-6 py-4 flex items-center justify-between cursor-pointer transition-colors">
+                <div class="flex items-center space-x-4">
+                    <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-chart-line text-green-600"></i>
+                    </div>
+                    <div>
+                        <div class="font-medium text-gray-800">Analytics & Insights</div>
+                        <div class="text-sm text-gray-600">View counts, request patterns</div>
+                    </div>
+                </div>
+                <i class="fa-solid fa-chevron-right text-gray-400"></i>
+            </div>
+            
+            <div class="px-6 py-4 flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <div class="w-10 h-10 bg-yellow-100 rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-eye text-yellow-600"></i>
+                    </div>
+                    <div>
+                        <div class="font-medium text-gray-800">Auto-approve Requests</div>
+                        <div class="text-sm text-gray-600">For trusted contacts</div>
+                    </div>
+                </div>
+                <div class="toggle-switch w-12 h-6 bg-gray-300 rounded-full p-1 cursor-pointer">
+                    <div class="w-4 h-4 bg-white rounded-full shadow-md transform transition-transform"></div>
+                </div>
+            </div>
+            
+            <div class="setting-item px-6 py-4 flex items-center justify-between cursor-pointer transition-colors">
+                <div class="flex items-center space-x-4">
+                    <div class="w-10 h-10 bg-indigo-100 rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-users text-indigo-600"></i>
+                    </div>
+                    <div>
+                        <div class="font-medium text-gray-800">Audience Groups</div>
+                        <div class="text-sm text-gray-600">Work, friends, family settings</div>
+                    </div>
+                </div>
+                <i class="fa-solid fa-chevron-right text-gray-400"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- App Preferences Section -->
+    <div id="app-preferences" class="bg-white mt-6">
+        <div class="px-6 py-4 border-b border-gray-100">
+            <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wider">App Preferences</h3>
+        </div>
+        <div class="divide-y divide-gray-100">
+            <div class="setting-item px-6 py-4 flex items-center justify-between cursor-pointer transition-colors">
+                <div class="flex items-center space-x-4">
+                    <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-globe text-purple-600"></i>
+                    </div>
+                    <div>
+                        <div class="font-medium text-gray-800">Time Zone</div>
+                        <div class="text-sm text-gray-600">US Eastern (GMT-5)</div>
+                    </div>
+                </div>
+                <i class="fa-solid fa-chevron-right text-gray-400"></i>
+            </div>
+            
+            <div class="setting-item px-6 py-4 flex items-center justify-between cursor-pointer transition-colors">
+                <div class="flex items-center space-x-4">
+                    <div class="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-palette text-gray-600"></i>
+                    </div>
+                    <div>
+                        <div class="font-medium text-gray-800">Theme</div>
+                        <div class="text-sm text-gray-600">Light mode</div>
+                    </div>
+                </div>
+                <i class="fa-solid fa-chevron-right text-gray-400"></i>
+            </div>
+            
+            <div class="setting-item px-6 py-4 flex items-center justify-between cursor-pointer transition-colors">
+                <div class="flex items-center space-x-4">
+                    <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-language text-blue-600"></i>
+                    </div>
+                    <div>
+                        <div class="font-medium text-gray-800">Language</div>
+                        <div class="text-sm text-gray-600">English (US)</div>
+                    </div>
+                </div>
+                <i class="fa-solid fa-chevron-right text-gray-400"></i>
+            </div>
+            
+            <div class="px-6 py-4 flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-mobile text-green-600"></i>
+                    </div>
+                    <div>
+                        <div class="font-medium text-gray-800">Haptic Feedback</div>
+                        <div class="text-sm text-gray-600">Vibration for interactions</div>
+                    </div>
+                </div>
+                <div class="toggle-switch active w-12 h-6 bg-gray-300 rounded-full p-1 cursor-pointer">
+                    <div class="w-4 h-4 bg-white rounded-full shadow-md transform translate-x-6 transition-transform"></div>
+                </div>
+            </div>
+            
+            <div class="px-6 py-4 flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <div class="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-chart-bar text-orange-600"></i>
+                    </div>
+                    <div>
+                        <div class="font-medium text-gray-800">Analytics Tracking</div>
+                        <div class="text-sm text-gray-600">Help improve the app</div>
+                    </div>
+                </div>
+                <div class="toggle-switch active w-12 h-6 bg-gray-300 rounded-full p-1 cursor-pointer">
+                    <div class="w-4 h-4 bg-white rounded-full shadow-md transform translate-x-6 transition-transform"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Data & Storage Section -->
+    <div id="data-storage" class="bg-white mt-6">
+        <div class="px-6 py-4 border-b border-gray-100">
+            <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wider">Data & Storage</h3>
+        </div>
+        <div class="divide-y divide-gray-100">
+            <div class="setting-item px-6 py-4 flex items-center justify-between cursor-pointer transition-colors">
+                <div class="flex items-center space-x-4">
+                    <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-download text-blue-600"></i>
+                    </div>
+                    <div>
+                        <div class="font-medium text-gray-800">Export Data</div>
+                        <div class="text-sm text-gray-600">Download your information</div>
+                    </div>
+                </div>
+                <i class="fa-solid fa-chevron-right text-gray-400"></i>
+            </div>
+            
+            <div class="setting-item px-6 py-4 flex items-center justify-between cursor-pointer transition-colors">
+                <div class="flex items-center space-x-4">
+                    <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-cloud text-purple-600"></i>
+                    </div>
+                    <div>
+                        <div class="font-medium text-gray-800">Backup & Sync</div>
+                        <div class="text-sm text-gray-600">Cloud storage settings</div>
+                    </div>
+                </div>
+                <i class="fa-solid fa-chevron-right text-gray-400"></i>
+            </div>
+            
+            <div class="px-6 py-4">
+                <div class="flex items-center space-x-4 mb-3">
+                    <div class="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-database text-gray-600"></i>
+                    </div>
+                    <div>
+                        <div class="font-medium text-gray-800">Storage Usage</div>
+                        <div class="text-sm text-gray-600">2.3 MB of 100 MB used</div>
+                    </div>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-2">
+                    <div class="bg-blue-600 h-2 rounded-full" style="width: 2.3%"></div>
+                </div>
+            </div>
+            
+            <div class="setting-item px-6 py-4 flex items-center justify-between cursor-pointer transition-colors">
+                <div class="flex items-center space-x-4">
+                    <div class="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-trash text-red-600"></i>
+                    </div>
+                    <div>
+                        <div class="font-medium text-gray-800">Clear Cache</div>
+                        <div class="text-sm text-gray-600">Free up storage space</div>
+                    </div>
+                </div>
+                <span class="text-sm text-gray-500">847 KB</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Help & Support Section -->
+    <div id="help-support" class="bg-white mt-6">
+        <div class="px-6 py-4 border-b border-gray-100">
+            <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wider">Help & Support</h3>
+        </div>
+        <div class="divide-y divide-gray-100">
+            <div class="setting-item px-6 py-4 flex items-center justify-between cursor-pointer transition-colors">
+                <div class="flex items-center space-x-4">
+                    <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-question-circle text-blue-600"></i>
+                    </div>
+                    <div>
+                        <div class="font-medium text-gray-800">Help Center</div>
+                        <div class="text-sm text-gray-600">FAQs and tutorials</div>
+                    </div>
+                </div>
+                <i class="fa-solid fa-chevron-right text-gray-400"></i>
+            </div>
+            
+            <div class="setting-item px-6 py-4 flex items-center justify-between cursor-pointer transition-colors">
+                <div class="flex items-center space-x-4">
+                    <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-headset text-green-600"></i>
+                    </div>
+                    <div>
+                        <div class="font-medium text-gray-800">Contact Support</div>
+                        <div class="text-sm text-gray-600">Get help from our team</div>
+                    </div>
+                </div>
+                <i class="fa-solid fa-chevron-right text-gray-400"></i>
+            </div>
+            
+            <div class="setting-item px-6 py-4 flex items-center justify-between cursor-pointer transition-colors">
+                <div class="flex items-center space-x-4">
+                    <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-bug text-purple-600"></i>
+                    </div>
+                    <div>
+                        <div class="font-medium text-gray-800">Report a Bug</div>
+                        <div class="text-sm text-gray-600">Help us improve the app</div>
+                    </div>
+                </div>
+                <i class="fa-solid fa-chevron-right text-gray-400"></i>
+            </div>
+            
+            <div class="setting-item px-6 py-4 flex items-center justify-between cursor-pointer transition-colors">
+                <div class="flex items-center space-x-4">
+                    <div class="w-10 h-10 bg-yellow-100 rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-lightbulb text-yellow-600"></i>
+                    </div>
+                    <div>
+                        <div class="font-medium text-gray-800">Feature Requests</div>
+                        <div class="text-sm text-gray-600">Suggest improvements</div>
+                    </div>
+                </div>
+                <i class="fa-solid fa-chevron-right text-gray-400"></i>
+            </div>
+            
+            <div class="setting-item px-6 py-4 flex items-center justify-between cursor-pointer transition-colors">
+                <div class="flex items-center space-x-4">
+                    <div class="w-10 h-10 bg-indigo-100 rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-graduation-cap text-indigo-600"></i>
+                    </div>
+                    <div>
+                        <div class="font-medium text-gray-800">Onboarding Tutorial</div>
+                        <div class="text-sm text-gray-600">Replay the getting started guide</div>
+                    </div>
+                </div>
+                <i class="fa-solid fa-chevron-right text-gray-400"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- About Section -->
+    <div id="about-section" class="bg-white mt-6">
+        <div class="px-6 py-4 border-b border-gray-100">
+            <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wider">About</h3>
+        </div>
+        <div class="divide-y divide-gray-100">
+            <div class="setting-item px-6 py-4 flex items-center justify-between cursor-pointer transition-colors">
+                <div class="flex items-center space-x-4">
+                    <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-info-circle text-blue-600"></i>
+                    </div>
+                    <div>
+                        <div class="font-medium text-gray-800">App Version</div>
+                        <div class="text-sm text-gray-600">2.1.4 (Build 2024.10.24)</div>
+                    </div>
+                </div>
+                <span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full">Latest</span>
+            </div>
+            
+            <div class="setting-item px-6 py-4 flex items-center justify-between cursor-pointer transition-colors">
+                <div class="flex items-center space-x-4">
+                    <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-file-contract text-purple-600"></i>
+                    </div>
+                    <div>
+                        <div class="font-medium text-gray-800">Terms of Service</div>
+                        <div class="text-sm text-gray-600">Legal agreement</div>
+                    </div>
+                </div>
+                <i class="fa-solid fa-chevron-right text-gray-400"></i>
+            </div>
+            
+            <div class="setting-item px-6 py-4 flex items-center justify-between cursor-pointer transition-colors">
+                <div class="flex items-center space-x-4">
+                    <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-shield-halved text-green-600"></i>
+                    </div>
+                    <div>
+                        <div class="font-medium text-gray-800">Privacy Policy</div>
+                        <div class="text-sm text-gray-600">How we handle your data</div>
+                    </div>
+                </div>
+                <i class="fa-solid fa-chevron-right text-gray-400"></i>
+            </div>
+            
+            <div class="setting-item px-6 py-4 flex items-center justify-between cursor-pointer transition-colors">
+                <div class="flex items-center space-x-4">
+                    <div class="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-heart text-orange-600"></i>
+                    </div>
+                    <div>
+                        <div class="font-medium text-gray-800">Rate spareTime</div>
+                        <div class="text-sm text-gray-600">Share your experience</div>
+                    </div>
+                </div>
+                <i class="fa-solid fa-chevron-right text-gray-400"></i>
+            </div>
+            
+            <div class="setting-item px-6 py-4 flex items-center justify-between cursor-pointer transition-colors">
+                <div class="flex items-center space-x-4">
+                    <div class="w-10 h-10 bg-teal-100 rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-share text-teal-600"></i>
+                    </div>
+                    <div>
+                        <div class="font-medium text-gray-800">Share spareTime</div>
+                        <div class="text-sm text-gray-600">Invite friends to join</div>
+                    </div>
+                </div>
+                <i class="fa-solid fa-chevron-right text-gray-400"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- Advanced Settings Section -->
+    <div id="advanced-settings" class="bg-white mt-6">
+        <div class="px-6 py-4 border-b border-gray-100">
+            <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wider">Advanced</h3>
+        </div>
+        <div class="divide-y divide-gray-100">
+            <div class="setting-item px-6 py-4 flex items-center justify-between cursor-pointer transition-colors">
+                <div class="flex items-center space-x-4">
+                    <div class="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-code text-gray-600"></i>
+                    </div>
+                    <div>
+                        <div class="font-medium text-gray-800">Developer Options</div>
+                        <div class="text-sm text-gray-600">API access and webhooks</div>
+                    </div>
+                </div>
+                <i class="fa-solid fa-chevron-right text-gray-400"></i>
+            </div>
+            
+            <div class="setting-item px-6 py-4 flex items-center justify-between cursor-pointer transition-colors">
+                <div class="flex items-center space-x-4">
+                    <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-plug text-blue-600"></i>
+                    </div>
+                    <div>
+                        <div class="font-medium text-gray-800">Integrations</div>
+                        <div class="text-sm text-gray-600">Third-party app connections</div>
+                    </div>
+                </div>
+                <i class="fa-solid fa-chevron-right text-gray-400"></i>
+            </div>
+            
+            <div class="px-6 py-4 flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <div class="w-10 h-10 bg-yellow-100 rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-flask text-yellow-600"></i>
+                    </div>
+                    <div>
+                        <div class="font-medium text-gray-800">Beta Features</div>
+                        <div class="text-sm text-gray-600">Try experimental features</div>
+                    </div>
+                </div>
+                <div class="toggle-switch w-12 h-6 bg-gray-300 rounded-full p-1 cursor-pointer">
+                    <div class="w-4 h-4 bg-white rounded-full shadow-md transform transition-transform"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Danger Zone Section -->
+    <div id="danger-zone" class="bg-white mt-6 mb-6">
+        <div class="px-6 py-4 border-b border-gray-100">
+            <h3 class="text-sm font-semibold text-red-500 uppercase tracking-wider">Danger Zone</h3>
+        </div>
+        <div class="divide-y divide-gray-100">
+            <div class="setting-item px-6 py-4 flex items-center justify-between cursor-pointer transition-colors">
+                <div class="flex items-center space-x-4">
+                    <div class="w-10 h-10 bg-yellow-100 rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-sign-out-alt text-yellow-600"></i>
+                    </div>
+                    <div>
+                        <div class="font-medium text-gray-800">Sign Out</div>
+                        <div class="text-sm text-gray-600">Sign out of your account</div>
+                    </div>
+                </div>
+                <i class="fa-solid fa-chevron-right text-gray-400"></i>
+            </div>
+            
+            <div class="setting-item px-6 py-4 flex items-center justify-between cursor-pointer transition-colors">
+                <div class="flex items-center space-x-4">
+                    <div class="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-user-slash text-orange-600"></i>
+                    </div>
+                    <div>
+                        <div class="font-medium text-gray-800">Deactivate Account</div>
+                        <div class="text-sm text-gray-600">Temporarily disable your account</div>
+                    </div>
+                </div>
+                <i class="fa-solid fa-chevron-right text-gray-400"></i>
+            </div>
+            
+            <div class="setting-item px-6 py-4 flex items-center justify-between cursor-pointer transition-colors">
+                <div class="flex items-center space-x-4">
+                    <div class="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-trash text-red-600"></i>
+                    </div>
+                    <div>
+                        <div class="font-medium text-red-600">Delete Account</div>
+                        <div class="text-sm text-gray-600">Permanently delete your account</div>
+                    </div>
+                </div>
+                <i class="fa-solid fa-chevron-right text-gray-400"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <div id="bottom-navigation" class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-6 py-2">
+        <div class="flex justify-around items-center">
+            <button class="flex flex-col items-center py-2 px-3 text-gray-400">
+                <i class="fa-solid fa-home text-xl mb-1"></i>
+                <span class="text-xs">Home</span>
+            </button>
+            <button class="flex flex-col items-center py-2 px-3 text-gray-400">
+                <i class="fa-solid fa-link text-xl mb-1"></i>
+                <span class="text-xs">Links</span>
+            </button>
+            <button class="flex flex-col items-center py-2 px-3 text-gray-400">
+                <i class="fa-solid fa-calendar text-xl mb-1"></i>
+                <span class="text-xs">Calendar</span>
+            </button>
+            <button class="flex flex-col items-center py-2 px-3 text-gray-400">
+                <i class="fa-solid fa-bell text-xl mb-1"></i>
+                <span class="text-xs">Requests</span>
+            </button>
+            <button class="flex flex-col items-center py-2 px-3 text-blue-600">
+                <i class="fa-solid fa-user text-xl mb-1"></i>
+                <span class="text-xs">Profile</span>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Toggle switch functionality
+            const toggleSwitches = document.querySelectorAll('.toggle-switch');
+            toggleSwitches.forEach(toggle => {
+                toggle.addEventListener('click', function() {
+                    const slider = this.querySelector('div');
+                    if (this.classList.contains('active')) {
+                        this.classList.remove('active');
+                        this.style.background = '#d1d5db';
+                        slider.style.transform = 'translateX(0)';
+                    } else {
+                        this.classList.add('active');
+                        this.style.background = '#6e92a0';
+                        slider.style.transform = 'translateX(24px)';
+                    }
+                });
+            });
+
+            // Setting item click animations
+            const settingItems = document.querySelectorAll('.setting-item');
+            settingItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    this.style.transform = 'scale(0.98)';
+                    setTimeout(() => {
+                        this.style.transform = 'scale(1)';
+                    }, 150);
+                });
+            });
+
+            // Back button functionality
+            const backButton = document.querySelector('.fa-arrow-left').closest('button');
+            backButton.addEventListener('click', function() {
+                // Navigate back or to dashboard
+                window.history.back();
+            });
+
+            // Profile edit button
+            const editButton = document.querySelector('button:contains("Edit")');
+            if (editButton) {
+                editButton.addEventListener('click', function() {
+                    // Navigate to profile edit screen
+                    console.log('Navigate to profile edit');
+                });
+            }
+
+            // Initialize active toggle switches
+            const activeToggles = document.querySelectorAll('.toggle-switch.active');
+            activeToggles.forEach(toggle => {
+                toggle.style.background = '#6e92a0';
+                const slider = toggle.querySelector('div');
+                slider.style.transform = 'translateX(24px)';
+            });
+
+            // Add slide-up animation to sections
+            const sections = document.querySelectorAll('[id$="-settings"], [id$="-section"]');
+            sections.forEach((section, index) => {
+                section.style.animationDelay = `${index * 0.1}s`;
+                section.classList.add('slide-up');
+            });
+        });
+    </script>
+
+</body>
+</html>
