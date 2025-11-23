@@ -9,8 +9,9 @@ import {
     Lightbulb, Wand2, Bot, Minimize2, LineChart, Bell, Eye, ExternalLink,
     Save, RotateCcw, HelpCircle, Check
 } from 'lucide-react';
+import ProtectedRoute from '@/components/ProtectedRoute';
 
-export default function Preferences() {
+function PreferencesContent() {
     const router = useRouter();
     const [mounted, setMounted] = useState(false);
     const [workDays, setWorkDays] = useState(['monday', 'tuesday', 'wednesday', 'thursday', 'friday']);
@@ -645,5 +646,13 @@ export default function Preferences() {
                 </div>
             </div>
         </div>
+    );
+}
+
+export default function Preferences() {
+    return (
+        <ProtectedRoute>
+            <PreferencesContent />
+        </ProtectedRoute>
     );
 }

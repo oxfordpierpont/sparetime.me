@@ -5,8 +5,9 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Check, ChevronRight, Calendar } from 'lucide-react';
+import ProtectedRoute from '@/components/ProtectedRoute';
 
-export default function ConnectCalendar() {
+function ConnectCalendarContent() {
     const router = useRouter();
     const [connected, setConnected] = useState({
         google: false,
@@ -81,5 +82,13 @@ export default function ConnectCalendar() {
                 <div className="h-full bg-primary w-2/3 transition-all duration-500"></div>
             </div>
         </div>
+    );
+}
+
+export default function ConnectCalendar() {
+    return (
+        <ProtectedRoute>
+            <ConnectCalendarContent />
+        </ProtectedRoute>
     );
 }
